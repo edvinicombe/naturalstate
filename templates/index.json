@@ -12,13 +12,14 @@
     "homepage": {
       "type": "homepage-main",
       "settings": {
+        "hero_image": "shopify://shop_images/feeltherun.png",
         "hero_eyebrow": "New Season",
-        "hero_heading": "Engineered for the long run",
+        "hero_heading": "feel the run",
         "hero_btn_1": "Shop Now",
         "hero_btn_2": "Our Story",
         "hero_btn_2_url": "",
-        "products_eyebrow": "The Range",
-        "products_heading": "Shop the essentials",
+        "products_eyebrow": "Drop 01",
+        "products_heading": "Shop",
         "collection": "drop-1",
         "products_limit": 8,
         "story_layout": "default",
