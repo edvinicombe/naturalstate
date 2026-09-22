@@ -1,0 +1,68 @@
+{%- if section.settings.announcement != blank -%}
+  <div class="announcement-bar">{{ section.settings.announcement }}</div>
+{%- endif -%}
+
+<header class="site-header">
+  <div class="page-width">
+    <div class="site-header__inner">
+
+      <button class="mobile-toggle" id="DrawerOpen" aria-label="Open menu">
+        <svg width="22" height="22" fill="none" viewBox="0 0 24 24"><path d="M3 6h18M3 12h18M3 18h18" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg>
+      </button>
+
+      <a href="{{ routes.root_url }}" class="site-header__logo">
+        {%- if settings.logo -%}
+          <img src="{{ settings.logo | image_url: width: 400 }}" alt="{{ shop.name }}" width="{{ settings.logo_width }}">
+        {%- else -%}
+          <img src="{{ 'logo-ns.png' | asset_url }}" alt="{{ shop.name }}" width="{{ settings.logo_width }}">
+        {%- endif -%}
+      </a>
+
+      <nav aria-label="Main">
+        <ul class="site-nav">
+          {%- for link in linklists[section.settings.menu].links -%}
+            <li><a href="{{ link.url }}">{{ link.title }}</a></li>
+          {%- endfor -%}
+        </ul>
+      </nav>
+
+      <div class="header-icons">
+        <a href="{{ routes.search_url }}" aria-label="Search">
+          <svg width="19" height="19" fill="none" viewBox="0 0 24 24"><circle cx="11" cy="11" r="7" stroke="currentColor" stroke-width="1.5"/><path d="M21 21l-4.3-4.3" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg>
+        </a>
+        <a href="{{ routes.account_url }}" aria-label="Account">
+          <svg width="19" height="19" fill="none" viewBox="0 0 24 24"><circle cx="12" cy="8" r="4" stroke="currentColor" stroke-width="1.5"/><path d="M4 20c0-4 3.5-6 8-6s8 2 8 6" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg>
+        </a>
+        <a href="{{ routes.cart_url }}" aria-label="Cart ({{ cart.item_count }} items)">
+          <svg width="19" height="19" fill="none" viewBox="0 0 24 24"><path d="M6 8h12l-1 12H7L6 8Z" stroke="currentColor" stroke-width="1.5" stroke-linejoin="round"/><path d="M9 8a3 3 0 0 1 6 0" stroke="currentColor" stroke-width="1.5"/></svg>
+          {%- if cart.item_count > 0 -%}
+            <span class="cart-count">{{ cart.item_count }}</span>
+          {%- endif -%}
+        </a>
+      </div>
+
+    </div>
+  </div>
+</header>
+
+<div class="mobile-drawer" id="MobileDrawer" aria-hidden="true">
+  <button class="mobile-drawer__close" id="DrawerClose" aria-label="Close menu">
+    <svg width="24" height="24" fill="none" viewBox="0 0 24 24"><path d="M6 6l12 12M18 6L6 18" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg>
+  </button>
+  <nav>
+    {%- for link in linklists[section.settings.menu].links -%}
+      <a href="{{ link.url }}">{{ link.title }}</a>
+    {%- endfor -%}
+    <a href="{{ routes.cart_url }}">Bag ({{ cart.item_count }})</a>
+  </nav>
+</div>
+
+{% schema %}
+{
+  "name": "Header",
+  "settings": [
+    { "type": "link_list", "id": "menu", "label": "Navigation menu", "default": "main-menu" },
+    { "type": "text",      "id": "announcement", "label": "Announcement bar text", "default": "Free UK shipping on orders over £75" }
+  ]
+}
+{% endschema %}

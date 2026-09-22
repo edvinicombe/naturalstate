@@ -1,0 +1,20 @@
+<div class="page-width section-pad--sm">
+  <h1 class="h2" style="margin-bottom:40px;">Search</h1>
+  <form action="{{ routes.search_url }}" method="get" class="search-form">
+    <input type="search" name="q" value="{{ search.terms | escape }}" placeholder="Search products...">
+    <button type="submit" class="btn">Go</button>
+  </form>
+  {%- if search.performed -%}
+    <p style="color:var(--muted);margin-bottom:40px;font-size:0.88rem;">{{ search.results_count }} result{{ search.results_count | plural: '', 's' }} for "{{ search.terms }}"</p>
+    <div class="product-grid">
+      {%- for item in search.results -%}
+        {%- if item.object_type == 'product' -%}{%- render 'product-card', product: item -%}{%- endif -%}
+      {%- else -%}
+        <p style="color:var(--muted);">No results found.</p>
+      {%- endfor -%}
+    </div>
+  {%- endif -%}
+</div>
+{% schema %}
+{ "name": "Search", "settings": [] }
+{% endschema %}

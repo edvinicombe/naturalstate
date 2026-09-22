@@ -1,0 +1,66 @@
+<div class="story-hero page-width">
+  <img class="motto" src="{{ 'motto-run-free.png' | asset_url }}" alt="Run Free" loading="eager">
+  <p>{{ section.settings.intro }}</p>
+</div>
+
+<div class="page-width">
+  <div class="story-block" style="padding-block:80px;">
+    <div class="story-block__img">
+      {%- if section.settings.image_1 -%}<img src="{{ section.settings.image_1 | image_url: width: 1200 }}" alt="" loading="lazy">{%- endif -%}
+    </div>
+    <div class="story-block__text">
+      <p class="eyebrow">{{ section.settings.eyebrow_1 }}</p>
+      <h2 class="h2" style="margin-bottom:20px;">{{ section.settings.heading_1 }}</h2>
+      <p>{{ section.settings.text_1 }}</p>
+    </div>
+  </div>
+
+  <hr class="divider">
+
+  <div class="story-block reversed" style="padding-block:80px;">
+    <div class="story-block__img">
+      {%- if section.settings.image_2 -%}<img src="{{ section.settings.image_2 | image_url: width: 1200 }}" alt="" loading="lazy">{%- endif -%}
+    </div>
+    <div class="story-block__text">
+      <p class="eyebrow">{{ section.settings.eyebrow_2 }}</p>
+      <h2 class="h2" style="margin-bottom:20px;">{{ section.settings.heading_2 }}</h2>
+      <p>{{ section.settings.text_2 }}</p>
+    </div>
+  </div>
+
+  <div class="stat-strip">
+    <div><div class="stat-strip__n">{{ section.settings.stat_1_n }}</div><div class="stat-strip__l">{{ section.settings.stat_1_l }}</div></div>
+    <div><div class="stat-strip__n">{{ section.settings.stat_2_n }}</div><div class="stat-strip__l">{{ section.settings.stat_2_l }}</div></div>
+    <div><div class="stat-strip__n">{{ section.settings.stat_3_n }}</div><div class="stat-strip__l">{{ section.settings.stat_3_l }}</div></div>
+  </div>
+</div>
+
+<div class="newsletter-block" style="margin-top:96px;">
+  <h2 class="h2" style="margin-bottom:14px;">Run Free.</h2>
+  <p>It's more than our motto. Here's how to be part of it.</p>
+  <a href="{{ routes.root_url }}#products" class="btn btn--lg">Shop the Collection</a>
+</div>
+
+{% schema %}
+{
+  "name": "Our Story",
+  "settings": [
+    { "type": "textarea",     "id": "intro",     "label": "Intro text", "default": "Natural State Running Gear was born on dirt roads and forgotten trails — built for runners who measure success in miles, not metrics." },
+    { "type": "image_picker", "id": "image_1",   "label": "Image 1" },
+    { "type": "text",         "id": "eyebrow_1", "label": "Eyebrow 1", "default": "The Beginning" },
+    { "type": "text",         "id": "heading_1", "label": "Heading 1", "default": "Started on a single trail" },
+    { "type": "textarea",     "id": "text_1",    "label": "Text 1",    "default": "It started with one runner, frustrated by gear that couldn't keep up. We set out to build kit that disappears on the run — light, durable, honest." },
+    { "type": "image_picker", "id": "image_2",   "label": "Image 2" },
+    { "type": "text",         "id": "eyebrow_2", "label": "Eyebrow 2", "default": "Our Craft" },
+    { "type": "text",         "id": "heading_2", "label": "Heading 2", "default": "No shortcuts. Just gear that works." },
+    { "type": "textarea",     "id": "text_2",    "label": "Text 2",    "default": "Every product goes through hundreds of miles of real-world testing. If it doesn't survive the trail, it doesn't make the cut." },
+    { "type": "text", "id": "stat_1_n", "label": "Stat 1 number", "default": "2019" },
+    { "type": "text", "id": "stat_1_l", "label": "Stat 1 label",  "default": "Founded" },
+    { "type": "text", "id": "stat_2_n", "label": "Stat 2 number", "default": "100%" },
+    { "type": "text", "id": "stat_2_l", "label": "Stat 2 label",  "default": "Trail Tested" },
+    { "type": "text", "id": "stat_3_n", "label": "Stat 3 number", "default": "∞" },
+    { "type": "text", "id": "stat_3_l", "label": "Stat 3 label",  "default": "Miles to go" }
+  ],
+  "presets": [{ "name": "Our Story" }]
+}
+{% endschema %}

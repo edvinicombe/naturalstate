@@ -1,0 +1,137 @@
+<!-- ═══════════════════════════════════════
+     HERO
+══════════════════════════════════════════ -->
+<section class="hero">
+  {%- if section.settings.hero_image -%}
+    <img class="hero__bg" src="{{ section.settings.hero_image | image_url: width: 2400 }}" alt="" loading="eager">
+  {%- endif -%}
+  <div class="hero__content page-width">
+    {%- if section.settings.hero_eyebrow != blank -%}
+      <p class="eyebrow">{{ section.settings.hero_eyebrow }}</p>
+    {%- endif -%}
+    <h1 class="h1" style="color:var(--text);margin-bottom:28px;">{{ section.settings.hero_heading }}</h1>
+    <div class="hero__actions">
+      {%- if section.settings.hero_btn_1 != blank -%}
+        <a href="#products" class="btn btn--lg">{{ section.settings.hero_btn_1 }}</a>
+      {%- endif -%}
+      {%- if section.settings.hero_btn_2 != blank -%}
+        <a href="{{ section.settings.hero_btn_2_url }}" class="btn btn--ghost btn--lg">{{ section.settings.hero_btn_2 }}</a>
+      {%- endif -%}
+    </div>
+  </div>
+</section>
+
+<!-- ═══════════════════════════════════════
+     PRODUCTS
+══════════════════════════════════════════ -->
+<section class="section-pad" id="products">
+  <div class="page-width">
+    <div class="section-header">
+      <div>
+        {%- if section.settings.products_eyebrow != blank -%}
+          <p class="eyebrow" style="margin-bottom:10px;">{{ section.settings.products_eyebrow }}</p>
+        {%- endif -%}
+        <h2 class="h2">{{ section.settings.products_heading }}</h2>
+      </div>
+    </div>
+
+    <div class="product-grid">
+      {%- assign source = section.settings.collection -%}
+      {%- if source != blank -%}
+        {%- for product in source.products limit: section.settings.products_limit -%}
+          {%- render 'product-card', product: product -%}
+        {%- endfor -%}
+      {%- else -%}
+        {%- for i in (1..section.settings.products_limit) -%}
+          <div class="product-card">
+            <div class="product-card__media" style="display:flex;align-items:center;justify-content:center;">
+              <span style="color:var(--muted);font-size:0.8rem;">Add products in Customize</span>
+            </div>
+            <p class="product-card__title">Sample Product</p>
+            <p class="product-card__price">£0.00</p>
+          </div>
+        {%- endfor -%}
+      {%- endif -%}
+    </div>
+  </div>
+</section>
+
+<hr class="divider">
+
+<!-- ═══════════════════════════════════════
+     STORY BLOCK
+══════════════════════════════════════════ -->
+<section class="section-pad">
+  <div class="page-width">
+    <div class="story-block {% if section.settings.story_layout == 'reversed' %}reversed{% endif %}">
+      <div class="story-block__img">
+        {%- if section.settings.story_image -%}
+          <img src="{{ section.settings.story_image | image_url: width: 1200 }}" alt="" loading="lazy">
+        {%- endif -%}
+      </div>
+      <div class="story-block__text">
+        {%- if section.settings.story_eyebrow != blank -%}
+          <p class="eyebrow">{{ section.settings.story_eyebrow }}</p>
+        {%- endif -%}
+        <h2 class="h2" style="margin-bottom:20px;">{{ section.settings.story_heading }}</h2>
+        <p>{{ section.settings.story_text }}</p>
+        {%- if section.settings.story_btn != blank -%}
+          <a href="{{ section.settings.story_btn_url }}" class="btn btn--ghost" style="margin-top:20px;">{{ section.settings.story_btn }}</a>
+        {%- endif -%}
+      </div>
+    </div>
+  </div>
+</section>
+
+<hr class="divider">
+
+<!-- ═══════════════════════════════════════
+     NEWSLETTER
+══════════════════════════════════════════ -->
+<div class="newsletter-block">
+  <h2 class="h2" style="margin-bottom:14px;">{{ section.settings.email_heading }}</h2>
+  <p>{{ section.settings.email_text }}</p>
+  {%- form 'customer', id: 'HomepageSignup' -%}
+    <input type="hidden" name="contact[tags]" value="newsletter">
+    <div class="newsletter-form">
+      <input type="email" name="contact[email]" placeholder="Your email address" required>
+      <button type="submit" class="btn">{{ section.settings.email_btn }}</button>
+    </div>
+  {%- endform -%}
+</div>
+
+{% schema %}
+{
+  "name": "Homepage",
+  "settings": [
+    { "type": "header",     "content": "Hero" },
+    { "type": "image_picker", "id": "hero_image",   "label": "Background image" },
+    { "type": "text",         "id": "hero_eyebrow",  "label": "Eyebrow",  "default": "New Season" },
+    { "type": "text",         "id": "hero_heading",  "label": "Heading",  "default": "Engineered for the long run" },
+    { "type": "text",         "id": "hero_btn_1",    "label": "Primary button label", "default": "Shop Now" },
+    { "type": "text",         "id": "hero_btn_2",    "label": "Secondary button label", "default": "Our Story" },
+    { "type": "url",          "id": "hero_btn_2_url","label": "Secondary button link" },
+
+    { "type": "header",     "content": "Products" },
+    { "type": "text",         "id": "products_eyebrow", "label": "Eyebrow",  "default": "The Range" },
+    { "type": "text",         "id": "products_heading", "label": "Heading",  "default": "Shop the essentials" },
+    { "type": "collection",   "id": "collection",       "label": "Collection" },
+    { "type": "range",        "id": "products_limit",   "label": "Number of products", "min": 2, "max": 12, "step": 2, "default": 8 },
+
+    { "type": "header",     "content": "Brand story" },
+    { "type": "image_picker", "id": "story_image",   "label": "Image" },
+    { "type": "select",       "id": "story_layout",  "label": "Image position", "options": [{"value":"default","label":"Left"},{"value":"reversed","label":"Right"}], "default": "default" },
+    { "type": "text",         "id": "story_eyebrow", "label": "Eyebrow",  "default": "Built for this" },
+    { "type": "text",         "id": "story_heading", "label": "Heading",  "default": "Made by runners, for runners" },
+    { "type": "textarea",     "id": "story_text",    "label": "Text",     "default": "Every piece is tested on real roads and trails before it reaches you. No shortcuts — just gear that moves the way you do." },
+    { "type": "text",         "id": "story_btn",     "label": "Button label", "default": "Our Story" },
+    { "type": "url",          "id": "story_btn_url", "label": "Button link" },
+
+    { "type": "header",     "content": "Email sign-up" },
+    { "type": "text",         "id": "email_heading", "label": "Heading", "default": "Run with us" },
+    { "type": "text",         "id": "email_text",    "label": "Subtext",  "default": "Early access to drops, race tips, and stories from the road." },
+    { "type": "text",         "id": "email_btn",     "label": "Button label", "default": "Sign Up" }
+  ],
+  "presets": [{ "name": "Homepage" }]
+}
+{% endschema %}

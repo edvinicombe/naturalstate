@@ -1,0 +1,28 @@
+<a href="{{ product.url }}" class="product-card">
+  <div class="product-card__media">
+    {%- if product.compare_at_price > product.price -%}
+      <span class="product-card__badge">Sale</span>
+    {%- elsif product.tags contains 'new' -%}
+      <span class="product-card__badge">New</span>
+    {%- endif -%}
+    {%- if product.featured_image -%}
+      <img class="img-primary"
+           src="{{ product.featured_image | image_url: width: 800 }}"
+           alt="{{ product.featured_image.alt | default: product.title | escape }}"
+           loading="lazy" width="800" height="1000">
+    {%- endif -%}
+    {%- if product.images[1] -%}
+      <img class="img-secondary"
+           src="{{ product.images[1] | image_url: width: 800 }}"
+           alt="" loading="lazy" width="800" height="1000">
+    {%- endif -%}
+  </div>
+  <p class="product-card__title">{{ product.title }}</p>
+  <p class="product-card__price">
+    {%- if product.compare_at_price > product.price -%}
+      <s>{{ product.compare_at_price | money }}</s>{{ product.price | money }}
+    {%- else -%}
+      {{ product.price | money }}
+    {%- endif -%}
+  </p>
+</a>

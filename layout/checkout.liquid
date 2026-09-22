@@ -1,0 +1,14 @@
+<!doctype html>
+<html lang="{{ request.locale.iso_code }}">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>{{ page_title }}</title>
+  {{ content_for_header }}
+  <style>
+    body { background: #ffffff !important; font-family: -apple-system,"Helvetica Neue",Arial,sans-serif; color: #1a1a1a; }
+    button[type="submit"] { background: #0a0a0a !important; border-color: #0a0a0a !important; color: #fff !important; }
+  </style>
+</head>
+<body>{{ content_for_layout }}</body>
+</html>

@@ -1,0 +1,109 @@
+<div class="page-width">
+  <nav class="breadcrumb" style="padding-top:32px;">
+    <a href="{{ routes.root_url }}">Home</a>
+    {%- if product.collections.first -%} / <a href="{{ product.collections.first.url }}">{{ product.collections.first.title }}</a>{%- endif -%}
+    / {{ product.title }}
+  </nav>
+
+  <div class="product-layout">
+
+    <!-- Gallery -->
+    <div>
+      <div class="gallery__main">
+        <img id="GalleryMain" src="{{ product.featured_image | image_url: width: 1400 }}" alt="{{ product.featured_image.alt | escape }}" loading="eager">
+      </div>
+      {%- if product.images.size > 1 -%}
+        <div class="gallery__thumbs">
+          {%- for img in product.images limit: 5 -%}
+            <div class="gallery__thumb {% if forloop.first %}active{% endif %}"
+                 data-src="{{ img | image_url: width: 1400 }}">
+              <img src="{{ img | image_url: width: 200 }}" alt="{{ img.alt | escape }}" loading="lazy">
+            </div>
+          {%- endfor -%}
+        </div>
+      {%- endif -%}
+    </div>
+
+    <!-- Info -->
+    <div class="product-info">
+      {%- if product.vendor != blank -%}
+        <p class="eyebrow product-info__eyebrow">{{ product.vendor }}</p>
+      {%- endif -%}
+      <h1 class="product-info__title">{{ product.title }}</h1>
+
+      <div class="product-info__price">
+        {%- if product.compare_at_price > product.price -%}
+          <span class="price-sale">{{ product.price | money }}</span>
+          <s>{{ product.compare_at_price | money }}</s>
+        {%- else -%}
+          {{ product.price | money }}
+        {%- endif -%}
+      </div>
+
+      {%- if product.description != blank -%}
+        <div class="product-info__desc">{{ product.description }}</div>
+      {%- endif -%}
+
+      {%- form 'product', product -%}
+        {%- for option in product.options_with_values -%}
+          <div style="margin-bottom:24px;">
+            <div class="option-label">
+              <span>{{ option.name }}</span>
+              {%- if option.name == 'Size' -%}<span>Size guide</span>{%- endif -%}
+            </div>
+            <div class="swatches">
+              {%- for value in option.values -%}
+                <button type="button" class="swatch {% if value == option.selected_value %}active{% endif %}"
+                        data-value="{{ value | escape }}">{{ value }}</button>
+              {%- endfor -%}
+            </div>
+          </div>
+        {%- endfor -%}
+
+        <select name="id" id="VariantSelect" style="display:none;">
+          {%- for variant in product.variants -%}
+            <option value="{{ variant.id }}"
+                    data-price="{{ variant.price | money }}"
+                    {% if variant == product.selected_or_first_available_variant %}selected{% endif %}
+                    {% unless variant.available %}disabled{% endunless %}>
+              {{ variant.title }} — {{ variant.price | money }}
+            </option>
+          {%- endfor -%}
+        </select>
+
+        <div class="product-actions">
+          <button type="submit" id="AddToCart" class="btn btn--full btn--lg"
+                  {% unless product.selected_or_first_available_variant.available %}disabled{% endunless %}>
+            {%- if product.selected_or_first_available_variant.available -%}
+              Add to Bag — {{ product.selected_or_first_available_variant.price | money }}
+            {%- else -%}
+              Sold Out
+            {%- endif -%}
+          </button>
+        </div>
+      {%- endform -%}
+
+      <div class="accordion">
+        {%- if product.metafields.custom.details != blank -%}
+          <details>
+            <summary>Details &amp; Fit</summary>
+            <div class="body">{{ product.metafields.custom.details }}</div>
+          </details>
+        {%- endif -%}
+        <details>
+          <summary>Shipping &amp; Returns</summary>
+          <div class="body">Free UK shipping on orders over £75. Free returns within 30 days — run in them, then decide.</div>
+        </details>
+        <details>
+          <summary>Materials &amp; Care</summary>
+          <div class="body">{{ product.metafields.custom.materials | default: 'Engineered performance fabric. Machine wash cold, hang dry.' }}</div>
+        </details>
+      </div>
+    </div>
+
+  </div>
+</div>
+
+{% schema %}
+{ "name": "Product", "settings": [] }
+{% endschema %}

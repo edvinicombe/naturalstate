@@ -1,0 +1,15 @@
+{
+  "current": {
+    "logo_width": 130,
+    "color_background": "#0a0a0a",
+    "color_surface": "#161616",
+    "color_border": "#2e2e2e",
+    "color_text": "#f5f3ef",
+    "color_text_muted": "#9a9a9a",
+    "color_accent": "#f5f3ef",
+    "color_accent_text": "#0a0a0a",
+    "font_heading": "assistant_n6",
+    "font_body": "assistant_n4",
+    "page_width": 1480
+  }
+}
