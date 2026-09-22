@@ -12,9 +12,9 @@
 
       <a href="{{ routes.root_url }}" class="site-header__logo">
         {%- if settings.logo -%}
-          <img src="{{ settings.logo | image_url: width: 400 }}" alt="{{ shop.name }}" width="{{ settings.logo_width }}">
+          <img src="{{ settings.logo | image_url: width: 400 }}" alt="{{ shop.name }}">
         {%- else -%}
-          <img src="{{ 'logo-ns.png' | asset_url }}" alt="{{ shop.name }}" width="{{ settings.logo_width }}">
+          <img src="{{ 'logo-ns.svg' | asset_url }}" alt="{{ shop.name }}">
         {%- endif -%}
       </a>
 

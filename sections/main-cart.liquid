@@ -4,7 +4,7 @@
   {%- if cart.item_count > 0 -%}
     <div class="cart-layout">
       <div>
-        {%- form 'cart' -%}
+        {%- form 'cart', cart -%}
           {%- for item in cart.items -%}
             <div class="cart-line">
               <div class="cart-line__img">
