@@ -31,6 +31,34 @@
       {%- endif -%}
       <h1 class="product-info__title">{{ product.title }}</h1>
 
+      {%- assign ns_gender = '' -%}
+      {%- if product.tags contains 'mens' -%}
+        {%- assign ns_gender = 'mens' -%}
+      {%- elsif product.tags contains 'womens' -%}
+        {%- assign ns_gender = 'womens' -%}
+      {%- endif -%}
+      {%- assign ns_paired = product.metafields.custom.paired_product.value -%}
+
+      {%- if ns_gender != '' -%}
+        <div class="gender-switch" role="tablist" aria-label="Shop by gender">
+          {%- if ns_gender == 'mens' -%}
+            <a href="{{ product.url }}" class="gender-switch__tab active" aria-current="page">Men's</a>
+            {%- if ns_paired -%}
+              <a href="{{ ns_paired.url }}" class="gender-switch__tab">Women's</a>
+            {%- else -%}
+              <span class="gender-switch__tab disabled">Women's</span>
+            {%- endif -%}
+          {%- else -%}
+            {%- if ns_paired -%}
+              <a href="{{ ns_paired.url }}" class="gender-switch__tab">Men's</a>
+            {%- else -%}
+              <span class="gender-switch__tab disabled">Men's</span>
+            {%- endif -%}
+            <a href="{{ product.url }}" class="gender-switch__tab active" aria-current="page">Women's</a>
+          {%- endif -%}
+        </div>
+      {%- endif -%}
+
       <div class="product-info__price">
         {%- if product.compare_at_price > product.price -%}
           <span class="price-sale">{{ product.price | money }}</span>
@@ -82,6 +110,18 @@
           </button>
         </div>
       {%- endform -%}
+
+      <button type="button" id="SaveProduct" class="btn btn--ghost btn--full save-btn"
+              data-handle="{{ product.handle }}"
+              data-title="{{ product.title | escape }}"
+              data-image="{{ product.featured_image | image_url: width: 600 }}"
+              data-price="{{ product.price | money }}"
+              data-url="{{ product.url }}">
+        <svg class="save-btn__icon" width="16" height="16" viewBox="0 0 24 24" fill="none">
+          <path d="M12 21C12 21 4 16.5 4 10.5C4 7 6.5 4.5 9.5 4.5C11 4.5 12 5.3 12 5.3C12 5.3 13 4.5 14.5 4.5C17.5 4.5 20 7 20 10.5C20 16.5 12 21 12 21Z" stroke="currentColor" stroke-width="1.5" stroke-linejoin="round"/>
+        </svg>
+        <span class="save-btn__label">Save</span>
+      </button>
 
       <div class="accordion">
         {%- if product.metafields.custom.details != blank -%}
