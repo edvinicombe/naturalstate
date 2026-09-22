@@ -1,6 +1,7 @@
 {
   "current": {
-    "logo_width": 130,
+    "logo_height": 80,
+    "footer_logo_width": 260,
     "color_background": "#0a0a0a",
     "color_surface": "#161616",
     "color_border": "#2e2e2e",

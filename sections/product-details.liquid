@@ -1,0 +1,34 @@
+<div class="page-width">
+  <hr class="divider">
+  <div class="story-block product-details" style="padding-block:80px;">
+    <div class="story-block__img">
+      {%- assign details_image = product.metafields.custom.story_image.value | default: product.images[1] | default: product.featured_image -%}
+      {%- if details_image -%}
+        <img src="{{ details_image | image_url: width: 1200 }}" alt="{{ product.title | escape }}" loading="lazy">
+      {%- endif -%}
+    </div>
+    <div class="story-block__text">
+      <p class="eyebrow">{{ section.settings.eyebrow }}</p>
+      <h2 class="h2" style="margin-bottom:20px;">{{ section.settings.heading }}</h2>
+      <div class="product-details__body">
+        {%- if product.metafields.custom.story != blank -%}
+          {{ product.metafields.custom.story }}
+        {%- else -%}
+          <p>{{ section.settings.fallback_text }}</p>
+        {%- endif -%}
+      </div>
+    </div>
+  </div>
+</div>
+
+{% schema %}
+{
+  "name": "Product Details",
+  "settings": [
+    { "type": "text",     "id": "eyebrow",       "label": "Eyebrow", "default": "The Details" },
+    { "type": "text",     "id": "heading",       "label": "Heading", "default": "More About This Product" },
+    { "type": "textarea", "id": "fallback_text", "label": "Fallback text (used when a product has no custom story set)", "default": "Every piece is designed and tested by runners who put it through real miles before it ever reaches the shop floor — built to hold up on the roads and trails you actually run." }
+  ],
+  "presets": [{ "name": "Product Details" }]
+}
+{% endschema %}
