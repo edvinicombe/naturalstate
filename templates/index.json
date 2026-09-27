@@ -22,7 +22,9 @@
         "products_heading": "Shop",
         "collection": "drop-1",
         "products_limit": 8,
-        "story_eyebrow": "Built for this",
+        "story_image_1": "shopify://shop_images/ed-running-1.jpg",
+        "story_image_3": "shopify://shop_images/ed-running-2.jpg",
+        "story_eyebrow": "Our story",
         "story_heading": "Made by runners, for runners",
         "story_text": "Every piece is tested on real roads and trails before it reaches you. No shortcuts — just gear that moves the way you do."
       }
