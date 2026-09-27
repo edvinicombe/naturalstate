@@ -1,6 +1,11 @@
 <footer class="site-footer">
   <div class="page-width">
-    <div class="footer-center">
+    <div class="footer-row">
+
+      <div class="footer-motto">
+        <img src="{{ 'motto-feel-the-run.svg' | asset_url }}" alt="Feel The Run" loading="lazy">
+        <p>{{ section.settings.tagline }}</p>
+      </div>
 
       <div class="footer-newsletter">
         <h4>Stay in the pack</h4>
@@ -14,10 +19,16 @@
         {%- endform -%}
       </div>
 
-      <div class="footer-motto">
-        <img src="{{ 'motto-feel-the-run.svg' | asset_url }}" alt="Feel The Run" loading="lazy">
-        <p>{{ section.settings.tagline }}</p>
-      </div>
+      {%- if settings.social_instagram != blank -%}
+        <a href="{{ settings.social_instagram }}" class="footer-instagram" aria-label="Follow us on Instagram">
+          <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+            <rect x="2" y="2" width="20" height="20" rx="5" ry="5"/>
+            <path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"/>
+            <line x1="17.5" y1="6.5" x2="17.51" y2="6.5"/>
+          </svg>
+          <span>Follow us on Instagram</span>
+        </a>
+      {%- endif -%}
 
     </div>
 

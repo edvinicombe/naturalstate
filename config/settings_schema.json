@@ -29,11 +29,11 @@
         "type": "range",
         "id": "footer_logo_width",
         "label": "Footer logo width",
-        "min": 100,
-        "max": 400,
-        "step": 10,
-        "unit": "px",
-        "default": 260
+        "min": 4,
+        "max": 20,
+        "step": 0.5,
+        "unit": "rem",
+        "default": 9
       }
     ]
   },
@@ -44,43 +44,43 @@
         "type": "color",
         "id": "color_background",
         "label": "Background",
-        "default": "#0a0a0a"
+        "default": "#ffffff"
       },
       {
         "type": "color",
         "id": "color_surface",
         "label": "Surface / card",
-        "default": "#161616"
+        "default": "#f4f3f0"
       },
       {
         "type": "color",
         "id": "color_border",
         "label": "Border",
-        "default": "#2e2e2e"
+        "default": "#e0ddd6"
       },
       {
         "type": "color",
         "id": "color_text",
         "label": "Primary text",
-        "default": "#f5f3ef"
+        "default": "#141414"
       },
       {
         "type": "color",
         "id": "color_text_muted",
         "label": "Muted text",
-        "default": "#9a9a9a"
+        "default": "#6e6e6e"
       },
       {
         "type": "color",
         "id": "color_accent",
         "label": "Accent (buttons)",
-        "default": "#f5f3ef"
+        "default": "#141414"
       },
       {
         "type": "color",
         "id": "color_accent_text",
         "label": "Text on accent",
-        "default": "#0a0a0a"
+        "default": "#ffffff"
       }
     ]
   },
