@@ -59,26 +59,31 @@
 <hr class="divider">
 
 <!-- ═══════════════════════════════════════
-     STORY BLOCK
+     STORY COLLAGE
 ══════════════════════════════════════════ -->
-<section class="section-pad">
-  <div class="page-width">
-    <div class="story-block {% if section.settings.story_layout == 'reversed' %}reversed{% endif %}">
-      <div class="story-block__img">
-        {%- if section.settings.story_image -%}
-          <img src="{{ section.settings.story_image | image_url: width: 1200 }}" alt="" loading="lazy">
-        {%- endif -%}
-      </div>
-      <div class="story-block__text">
-        {%- if section.settings.story_eyebrow != blank -%}
-          <p class="eyebrow">{{ section.settings.story_eyebrow }}</p>
-        {%- endif -%}
-        <h2 class="h2" style="margin-bottom:20px;">{{ section.settings.story_heading }}</h2>
-        <p>{{ section.settings.story_text }}</p>
-        {%- if section.settings.story_btn != blank -%}
-          <a href="{{ section.settings.story_btn_url }}" class="btn btn--ghost" style="margin-top:20px;">{{ section.settings.story_btn }}</a>
-        {%- endif -%}
-      </div>
+<section class="story-collage section-pad">
+  <div class="story-collage__grid">
+    <div class="story-collage__cell story-collage__img-1">
+      {%- if section.settings.story_image_1 -%}
+        <img src="{{ section.settings.story_image_1 | image_url: width: 900 }}" alt="" loading="lazy">
+      {%- endif -%}
+    </div>
+    <div class="story-collage__cell story-collage__text">
+      {%- if section.settings.story_eyebrow != blank -%}
+        <p class="eyebrow">{{ section.settings.story_eyebrow }}</p>
+      {%- endif -%}
+      <h2 class="h2">{{ section.settings.story_heading }}</h2>
+      <p>{{ section.settings.story_text }}</p>
+    </div>
+    <div class="story-collage__cell story-collage__img-2">
+      {%- if section.settings.story_image_2 -%}
+        <img src="{{ section.settings.story_image_2 | image_url: width: 900 }}" alt="" loading="lazy">
+      {%- endif -%}
+    </div>
+    <div class="story-collage__cell story-collage__img-3">
+      {%- if section.settings.story_image_3 -%}
+        <img src="{{ section.settings.story_image_3 | image_url: width: 1600 }}" alt="" loading="lazy">
+      {%- endif -%}
     </div>
   </div>
 </section>
@@ -101,14 +106,13 @@
     { "type": "collection",   "id": "collection",       "label": "Collection" },
     { "type": "range",        "id": "products_limit",   "label": "Number of products", "min": 2, "max": 12, "step": 2, "default": 8 },
 
-    { "type": "header",     "content": "Brand story" },
-    { "type": "image_picker", "id": "story_image",   "label": "Image" },
-    { "type": "select",       "id": "story_layout",  "label": "Image position", "options": [{"value":"default","label":"Left"},{"value":"reversed","label":"Right"}], "default": "default" },
+    { "type": "header",     "content": "Brand story collage" },
+    { "type": "image_picker", "id": "story_image_1", "label": "Image 1 (tall, left)" },
+    { "type": "image_picker", "id": "story_image_2", "label": "Image 2 (offset, right)" },
+    { "type": "image_picker", "id": "story_image_3", "label": "Image 3 (wide, bottom)" },
     { "type": "text",         "id": "story_eyebrow", "label": "Eyebrow",  "default": "Built for this" },
     { "type": "text",         "id": "story_heading", "label": "Heading",  "default": "Made by runners, for runners" },
-    { "type": "textarea",     "id": "story_text",    "label": "Text",     "default": "Every piece is tested on real roads and trails before it reaches you. No shortcuts — just gear that moves the way you do." },
-    { "type": "text",         "id": "story_btn",     "label": "Button label", "default": "Our Story" },
-    { "type": "url",          "id": "story_btn_url", "label": "Button link" }
+    { "type": "textarea",     "id": "story_text",    "label": "Text",     "default": "Every piece is tested on real roads and trails before it reaches you. No shortcuts — just gear that moves the way you do." }
   ],
   "presets": [{ "name": "Homepage" }]
 }

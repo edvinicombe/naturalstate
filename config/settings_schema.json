@@ -19,11 +19,11 @@
         "type": "range",
         "id": "logo_height",
         "label": "Header logo height",
-        "min": 40,
-        "max": 140,
-        "step": 5,
-        "unit": "px",
-        "default": 80
+        "min": 2,
+        "max": 7,
+        "step": 0.25,
+        "unit": "rem",
+        "default": 3.5
       },
       {
         "type": "range",
