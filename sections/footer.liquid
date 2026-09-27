@@ -1,40 +1,22 @@
 <footer class="site-footer">
   <div class="page-width">
-    <div class="footer-grid">
+    <div class="footer-center">
 
-      <div class="footer-col footer-motto">
-        <img src="{{ 'motto-feel-the-run.svg' | asset_url }}" alt="Feel The Run" loading="lazy">
-        <p>{{ section.settings.tagline }}</p>
-      </div>
-
-      <div class="footer-col">
-        <h4>Shop</h4>
-        <ul>
-          {%- for link in linklists[section.settings.shop_menu].links -%}
-            <li><a href="{{ link.url }}">{{ link.title }}</a></li>
-          {%- endfor -%}
-        </ul>
-      </div>
-
-      <div class="footer-col">
-        <h4>Company</h4>
-        <ul>
-          {%- for link in linklists[section.settings.company_menu].links -%}
-            <li><a href="{{ link.url }}">{{ link.title }}</a></li>
-          {%- endfor -%}
-        </ul>
-      </div>
-
-      <div class="footer-col">
+      <div class="footer-newsletter">
         <h4>Stay in the pack</h4>
         <p style="color:var(--muted);font-size:0.85rem;margin-bottom:16px;line-height:1.6;">Early drops and runner news, straight to your inbox.</p>
         {%- form 'customer', id: 'FooterSignup' -%}
           <input type="hidden" name="contact[tags]" value="newsletter">
-          <div class="newsletter-form" style="max-width:100%;">
+          <div class="newsletter-form">
             <input type="email" name="contact[email]" placeholder="Your email" required>
             <button type="submit" class="btn" style="padding:13px 20px;">Join</button>
           </div>
         {%- endform -%}
+      </div>
+
+      <div class="footer-motto">
+        <img src="{{ 'motto-feel-the-run.svg' | asset_url }}" alt="Feel The Run" loading="lazy">
+        <p>{{ section.settings.tagline }}</p>
       </div>
 
     </div>
@@ -67,9 +49,7 @@
 {
   "name": "Footer",
   "settings": [
-    { "type": "link_list", "id": "shop_menu",    "label": "Shop menu",    "default": "footer" },
-    { "type": "link_list", "id": "company_menu", "label": "Company menu", "default": "footer" },
-    { "type": "text",      "id": "tagline", "label": "Footer tagline", "default": "Gear built for runners who chase open roads and quiet trails." }
+    { "type": "text", "id": "tagline", "label": "Footer tagline", "default": "Gear built for runners who chase open roads and quiet trails." }
   ]
 }
 {% endschema %}

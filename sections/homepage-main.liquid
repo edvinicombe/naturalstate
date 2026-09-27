@@ -14,9 +14,6 @@
       {%- if section.settings.hero_btn_1 != blank -%}
         <a href="#products" class="btn btn--lg">{{ section.settings.hero_btn_1 }}</a>
       {%- endif -%}
-      {%- if section.settings.hero_btn_2 != blank -%}
-        <a href="{{ section.settings.hero_btn_2_url }}" class="btn btn--ghost btn--lg">{{ section.settings.hero_btn_2 }}</a>
-      {%- endif -%}
     </div>
   </div>
 </section>
@@ -97,8 +94,6 @@
     { "type": "text",         "id": "hero_eyebrow",  "label": "Eyebrow",  "default": "New Season" },
     { "type": "text",         "id": "hero_heading",  "label": "Heading",  "default": "Engineered for the long run" },
     { "type": "text",         "id": "hero_btn_1",    "label": "Primary button label", "default": "Shop Now" },
-    { "type": "text",         "id": "hero_btn_2",    "label": "Secondary button label", "default": "Our Story" },
-    { "type": "url",          "id": "hero_btn_2_url","label": "Secondary button link" },
 
     { "type": "header",     "content": "Products" },
     { "type": "text",         "id": "products_eyebrow", "label": "Eyebrow",  "default": "The Range" },

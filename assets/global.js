@@ -124,61 +124,82 @@ document.addEventListener('DOMContentLoaded', function () {
     });
   }
 
-  /* ── Saved products grid (Saved page) ── */
+  /* ── Saved products drawer ── */
   var savedGrid = document.getElementById('SavedGrid');
-  if (savedGrid) {
-    var savedEmpty = document.getElementById('SavedEmpty');
+  var savedEmpty = document.getElementById('SavedEmpty');
+
+  function renderSavedGrid() {
+    if (!savedGrid) return;
+    savedGrid.innerHTML = '';
     var savedItems = getSaved();
 
     if (savedItems.length === 0) {
       if (savedEmpty) savedEmpty.style.display = 'block';
-    } else {
-      savedItems.forEach(function (p) {
-        var card = document.createElement('a');
-        card.href = p.url;
-        card.className = 'product-card';
-
-        var media = document.createElement('div');
-        media.className = 'product-card__media';
-        var img = document.createElement('img');
-        img.className = 'img-primary';
-        img.loading = 'lazy';
-        img.src = p.image;
-        img.alt = p.title;
-        media.appendChild(img);
-        card.appendChild(media);
-
-        var title = document.createElement('p');
-        title.className = 'product-card__title';
-        title.textContent = p.title;
-        card.appendChild(title);
-
-        var price = document.createElement('p');
-        price.className = 'product-card__price';
-        price.textContent = p.price;
-        card.appendChild(price);
-
-        var remove = document.createElement('button');
-        remove.type = 'button';
-        remove.className = 'saved-remove';
-        remove.dataset.handle = p.handle;
-        remove.setAttribute('aria-label', 'Remove from saved');
-        remove.textContent = 'Remove';
-        card.appendChild(remove);
-
-        savedGrid.appendChild(card);
-      });
-
-      savedGrid.querySelectorAll('.saved-remove').forEach(function (btn) {
-        btn.addEventListener('click', function (e) {
-          e.preventDefault();
-          e.stopPropagation();
-          setSaved(getSaved().filter(function (p) { return p.handle !== btn.dataset.handle; }));
-          updateSavedCount();
-          btn.closest('.product-card').remove();
-          if (getSaved().length === 0 && savedEmpty) savedEmpty.style.display = 'block';
-        });
-      });
+      return;
     }
+    if (savedEmpty) savedEmpty.style.display = 'none';
+
+    savedItems.forEach(function (p) {
+      var card = document.createElement('a');
+      card.href = p.url;
+      card.className = 'product-card';
+
+      var media = document.createElement('div');
+      media.className = 'product-card__media';
+      var img = document.createElement('img');
+      img.className = 'img-primary';
+      img.loading = 'lazy';
+      img.src = p.image;
+      img.alt = p.title;
+      media.appendChild(img);
+      card.appendChild(media);
+
+      var title = document.createElement('p');
+      title.className = 'product-card__title';
+      title.textContent = p.title;
+      card.appendChild(title);
+
+      var price = document.createElement('p');
+      price.className = 'product-card__price';
+      price.textContent = p.price;
+      card.appendChild(price);
+
+      var remove = document.createElement('button');
+      remove.type = 'button';
+      remove.className = 'saved-remove';
+      remove.dataset.handle = p.handle;
+      remove.setAttribute('aria-label', 'Remove from saved');
+      remove.textContent = 'Remove';
+      card.appendChild(remove);
+
+      savedGrid.appendChild(card);
+    });
+
+    savedGrid.querySelectorAll('.saved-remove').forEach(function (btn) {
+      btn.addEventListener('click', function (e) {
+        e.preventDefault();
+        e.stopPropagation();
+        setSaved(getSaved().filter(function (p) { return p.handle !== btn.dataset.handle; }));
+        updateSavedCount();
+        btn.closest('.product-card').remove();
+        if (getSaved().length === 0 && savedEmpty) savedEmpty.style.display = 'block';
+      });
+    });
   }
+
+  renderSavedGrid();
+
+  var savedDrawer = document.getElementById('SavedDrawer');
+  function openSavedDrawer() {
+    renderSavedGrid();
+    savedDrawer?.classList.add('open');
+  }
+  document.getElementById('SavedOpen')?.addEventListener('click', openSavedDrawer);
+  document.getElementById('SavedOpenMobile')?.addEventListener('click', function () {
+    drawer?.classList.remove('open');
+    openSavedDrawer();
+  });
+  document.getElementById('SavedDrawerClose')?.addEventListener('click', function () {
+    savedDrawer?.classList.remove('open');
+  });
 });
