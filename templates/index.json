@@ -22,12 +22,9 @@
         "products_heading": "Shop",
         "collection": "drop-1",
         "products_limit": 8,
-        "story_layout": "default",
         "story_eyebrow": "Built for this",
         "story_heading": "Made by runners, for runners",
-        "story_text": "Every piece is tested on real roads and trails before it reaches you. No shortcuts — just gear that moves the way you do.",
-        "story_btn": "Our Story",
-        "story_btn_url": ""
+        "story_text": "Every piece is tested on real roads and trails before it reaches you. No shortcuts — just gear that moves the way you do."
       }
     }
   },
