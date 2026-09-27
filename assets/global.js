@@ -106,11 +106,12 @@ document.addEventListener('DOMContentLoaded', function () {
 
   var saveBtn = document.getElementById('SaveProduct');
   if (saveBtn) {
-    var saveLabel = saveBtn.querySelector('.save-btn__label');
-    if (isSaved(saveBtn.dataset.handle)) {
-      saveBtn.classList.add('active');
-      if (saveLabel) saveLabel.textContent = 'Saved';
+    function setSaveState(saved) {
+      saveBtn.classList.toggle('active', saved);
+      saveBtn.setAttribute('aria-pressed', saved ? 'true' : 'false');
+      saveBtn.setAttribute('aria-label', saved ? 'Remove from saved' : 'Save product');
     }
+    setSaveState(isSaved(saveBtn.dataset.handle));
     saveBtn.addEventListener('click', function () {
       var product = {
         handle: saveBtn.dataset.handle,
@@ -119,9 +120,7 @@ document.addEventListener('DOMContentLoaded', function () {
         price: saveBtn.dataset.price,
         url: saveBtn.dataset.url
       };
-      var nowSaved = toggleSaved(product);
-      saveBtn.classList.toggle('active', nowSaved);
-      if (saveLabel) saveLabel.textContent = nowSaved ? 'Saved' : 'Save';
+      setSaveState(toggleSaved(product));
     });
   }
 

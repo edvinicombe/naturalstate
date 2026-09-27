@@ -83,23 +83,6 @@
   </div>
 </section>
 
-<hr class="divider">
-
-<!-- ═══════════════════════════════════════
-     NEWSLETTER
-══════════════════════════════════════════ -->
-<div class="newsletter-block">
-  <h2 class="h2" style="margin-bottom:14px;">{{ section.settings.email_heading }}</h2>
-  <p>{{ section.settings.email_text }}</p>
-  {%- form 'customer', id: 'HomepageSignup' -%}
-    <input type="hidden" name="contact[tags]" value="newsletter">
-    <div class="newsletter-form">
-      <input type="email" name="contact[email]" placeholder="Your email address" required>
-      <button type="submit" class="btn">{{ section.settings.email_btn }}</button>
-    </div>
-  {%- endform -%}
-</div>
-
 {% schema %}
 {
   "name": "Homepage",
@@ -125,12 +108,7 @@
     { "type": "text",         "id": "story_heading", "label": "Heading",  "default": "Made by runners, for runners" },
     { "type": "textarea",     "id": "story_text",    "label": "Text",     "default": "Every piece is tested on real roads and trails before it reaches you. No shortcuts — just gear that moves the way you do." },
     { "type": "text",         "id": "story_btn",     "label": "Button label", "default": "Our Story" },
-    { "type": "url",          "id": "story_btn_url", "label": "Button link" },
-
-    { "type": "header",     "content": "Email sign-up" },
-    { "type": "text",         "id": "email_heading", "label": "Heading", "default": "Run with us" },
-    { "type": "text",         "id": "email_text",    "label": "Subtext",  "default": "Early access to drops, race tips, and stories from the road." },
-    { "type": "text",         "id": "email_btn",     "label": "Button label", "default": "Sign Up" }
+    { "type": "url",          "id": "story_btn_url", "label": "Button link" }
   ],
   "presets": [{ "name": "Homepage" }]
 }
