@@ -41,6 +41,13 @@
 
     <div class="footer-bottom">
       <span>&copy; {{ 'now' | date: '%Y' }} {{ shop.name }}</span>
+      {%- if shop.enabled_payment_types.size > 0 -%}
+        <div class="footer-payments">
+          {%- for type in shop.enabled_payment_types -%}
+            {{ type | payment_type_svg_tag: class: 'footer-payments__icon' }}
+          {%- endfor -%}
+        </div>
+      {%- endif -%}
       <div class="footer-social">
         {%- if settings.social_instagram != blank -%}
           <a href="{{ settings.social_instagram }}" aria-label="Instagram">Instagram</a>
