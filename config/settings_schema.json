@@ -23,7 +23,7 @@
         "max": 7,
         "step": 0.25,
         "unit": "rem",
-        "default": 3.5
+        "default": 3
       },
       {
         "type": "range",
