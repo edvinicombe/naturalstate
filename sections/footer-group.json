@@ -14,8 +14,6 @@
     "footer": {
       "type": "footer",
       "settings": {
-        "shop_menu": "footer",
-        "company_menu": "footer",
         "tagline": "Alternative running apparel for those chasing nothing but the feeling."
       }
     }
