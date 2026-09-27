@@ -124,9 +124,6 @@ h1,h2,h3,h4,h5 {
   border-bottom: 1px solid var(--border);
 }
 .site-header--transparent {
-  position: static;
-  height: var(--header-h);
-  margin-bottom: calc(-1 * var(--header-h));
   background: transparent;
   backdrop-filter: none;
   -webkit-backdrop-filter: none;
@@ -250,6 +247,7 @@ h1,h2,h3,h4,h5 {
 .hero {
   position: relative;
   min-height: 90vh;
+  margin-top: calc(-1 * var(--header-h));
   display: flex;
   align-items: flex-end;
   overflow: hidden;
