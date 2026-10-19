@@ -203,6 +203,14 @@ document.addEventListener('DOMContentLoaded', function () {
     savedDrawer?.classList.remove('open');
   });
 
+  /* ── Footer country selector: submit on change ── */
+  document.querySelectorAll('[data-localization-select]').forEach(function (sel) {
+    sel.addEventListener('change', function () {
+      var form = sel.closest('form');
+      if (form) form.submit();
+    });
+  });
+
   /* ── Reviews: side panel ── */
   var reviewPanel = document.getElementById('ReviewPanel');
   var reviewLastFocus = null;

@@ -115,32 +115,5 @@
         "default": 1480
       }
     ]
-  },
-  {
-    "name": "Social media",
-    "settings": [
-      {
-        "type": "paragraph",
-        "content": "Paste your profile links so the footer icons point to your accounts. Until a link is added, the icon points to that platform's homepage."
-      },
-      {
-        "type": "url",
-        "id": "social_instagram",
-        "label": "Instagram link",
-        "info": "e.g. https://instagram.com/yourhandle"
-      },
-      {
-        "type": "url",
-        "id": "social_strava",
-        "label": "Strava link",
-        "info": "e.g. https://www.strava.com/clubs/yourclub"
-      },
-      {
-        "type": "url",
-        "id": "social_tiktok",
-        "label": "TikTok link",
-        "info": "e.g. https://www.tiktok.com/@yourhandle"
-      }
-    ]
   }
 ]
