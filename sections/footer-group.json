@@ -20,7 +20,8 @@
             "icon": "help",
             "heading": "Get help buying",
             "text": "If you have any questions about our gear, get in touch.",
-            "link_label": "Contact us"
+            "link_label": "Contact us",
+            "link": ""
           }
         },
         "delivery": {
@@ -29,7 +30,8 @@
             "icon": "delivery",
             "heading": "Free UK delivery",
             "text": "Orders over £75 ship free within the UK.",
-            "link_label": "Learn more"
+            "link_label": "Learn more",
+            "link": ""
           }
         },
         "returns": {
@@ -38,7 +40,8 @@
             "icon": "returns",
             "heading": "Free & easy returns",
             "text": "Returns are accepted within 30 days. Run in them, then decide.",
-            "link_label": "Learn more"
+            "link_label": "Learn more",
+            "link": ""
           }
         }
       },
@@ -81,7 +84,7 @@
         "newsletter_button": "Subscribe",
         "newsletter_legal": "<p>By subscribing, you accept our <a href=\"/policies/terms-of-service\">Terms</a> and <a href=\"/policies/privacy-policy\">Privacy Policy</a>.</p>",
         "newsletter_success": "Thanks for subscribing!",
-        "newsletter_bg": "#f4f3f0",
+        "newsletter_bg": "#FFF3F6",
         "tagline": "Alternative running apparel for those chasing nothing but the feeling.",
         "show_localization": true,
         "localization_heading": "Shipping to",
