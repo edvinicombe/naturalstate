@@ -5,7 +5,7 @@
     <button type="submit" class="btn">Go</button>
   </form>
   {%- if search.performed -%}
-    <p style="color:var(--muted);margin-bottom:40px;font-size:0.88rem;">{{ search.results_count }} result{{ search.results_count | plural: '', 's' }} for "{{ search.terms }}"</p>
+    <p style="color:var(--muted);margin-bottom:40px;font-size:0.88rem;">{{ search.results_count }} result{% if search.results_count != 1 %}s{% endif %} for "{{ search.terms }}"</p>
     <div class="product-grid">
       {%- for item in search.results -%}
         {%- if item.object_type == 'product' -%}{%- render 'product-card', product: item -%}{%- endif -%}

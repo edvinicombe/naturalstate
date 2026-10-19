@@ -1,15 +1,57 @@
 <footer class="site-footer">
   <div class="page-width">
-    <div class="footer-row">
+    <div class="footer-grid">
 
-      <div class="footer-motto">
+      <div class="footer-col footer-motto">
         <img src="{{ 'motto-feel-the-run.svg' | asset_url }}" alt="Feel The Run" loading="lazy">
         <p>{{ section.settings.tagline }}</p>
       </div>
 
-      <div class="footer-newsletter">
+      {%- assign shop_links = linklists[section.settings.shop_menu].links -%}
+      {%- if shop_links.size > 0 -%}
+        <div class="footer-col">
+          <h4>Shop</h4>
+          <ul>
+            {%- for link in shop_links -%}
+              <li><a href="{{ link.url }}">{{ link.title }}</a></li>
+            {%- endfor -%}
+          </ul>
+        </div>
+      {%- endif -%}
+
+      {%- assign company_links = linklists[section.settings.company_menu].links -%}
+      {%- if company_links.size > 0 -%}
+        <div class="footer-col">
+          <h4>Company</h4>
+          <ul>
+            {%- for link in company_links -%}
+              <li><a href="{{ link.url }}">{{ link.title }}</a></li>
+            {%- endfor -%}
+          </ul>
+        </div>
+      {%- endif -%}
+
+      {%- assign help_links = linklists[section.settings.help_menu].links -%}
+      {%- if help_links.size > 0 or shop.policies.size > 0 -%}
+        <div class="footer-col">
+          <h4>Help</h4>
+          <ul>
+            {%- if help_links.size > 0 -%}
+              {%- for link in help_links -%}
+                <li><a href="{{ link.url }}">{{ link.title }}</a></li>
+              {%- endfor -%}
+            {%- else -%}
+              {%- for policy in shop.policies -%}
+                <li><a href="{{ policy.url }}">{{ policy.title }}</a></li>
+              {%- endfor -%}
+            {%- endif -%}
+          </ul>
+        </div>
+      {%- endif -%}
+
+      <div class="footer-col footer-newsletter">
         <h4>Stay in the pack</h4>
-        <p style="color:var(--muted);font-size:0.85rem;margin-bottom:16px;line-height:1.6;">Early drops and runner news, straight to your inbox.</p>
+        <p>Early drops and runner news, straight to your inbox.</p>
         {%- form 'customer', id: 'FooterSignup' -%}
           <input type="hidden" name="contact[tags]" value="newsletter">
           <div class="newsletter-form">
@@ -18,17 +60,6 @@
           </div>
         {%- endform -%}
       </div>
-
-      {%- if settings.social_instagram != blank -%}
-        <a href="{{ settings.social_instagram }}" class="footer-instagram" aria-label="Follow us on Instagram">
-          <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
-            <rect x="2" y="2" width="20" height="20" rx="5" ry="5"/>
-            <path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"/>
-            <line x1="17.5" y1="6.5" x2="17.51" y2="6.5"/>
-          </svg>
-          <span>Follow us on Instagram</span>
-        </a>
-      {%- endif -%}
 
     </div>
 
@@ -43,13 +74,19 @@
       {%- endif -%}
       <div class="footer-social">
         {%- if settings.social_instagram != blank -%}
-          <a href="{{ settings.social_instagram }}" aria-label="Instagram">Instagram</a>
+          <a href="{{ settings.social_instagram }}" aria-label="Instagram" target="_blank" rel="noopener">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="2" width="20" height="20" rx="5" ry="5"/><path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"/><line x1="17.5" y1="6.5" x2="17.51" y2="6.5"/></svg>
+          </a>
         {%- endif -%}
         {%- if settings.social_strava != blank -%}
-          <a href="{{ settings.social_strava }}" aria-label="Strava">Strava</a>
+          <a href="{{ settings.social_strava }}" aria-label="Strava" target="_blank" rel="noopener">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M6 14.5L11.5 3.5 17 14.5"/><path d="M13.5 14.5l2.75 5.5 2.75-5.5"/></svg>
+          </a>
         {%- endif -%}
         {%- if settings.social_tiktok != blank -%}
-          <a href="{{ settings.social_tiktok }}" aria-label="TikTok">TikTok</a>
+          <a href="{{ settings.social_tiktok }}" aria-label="TikTok" target="_blank" rel="noopener">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M14.5 3v11.2a4 4 0 1 1-4-4"/><path d="M14.5 3c.3 2.7 2.1 4.5 5 4.7"/></svg>
+          </a>
         {%- endif -%}
       </div>
     </div>
@@ -60,7 +97,10 @@
 {
   "name": "Footer",
   "settings": [
-    { "type": "text", "id": "tagline", "label": "Footer tagline", "default": "Gear built for runners who chase open roads and quiet trails." }
+    { "type": "text",      "id": "tagline",      "label": "Footer tagline", "default": "Gear built for runners who chase open roads and quiet trails." },
+    { "type": "link_list", "id": "shop_menu",    "label": "Shop menu",    "default": "main-menu" },
+    { "type": "link_list", "id": "company_menu", "label": "Company menu", "default": "footer" },
+    { "type": "link_list", "id": "help_menu",    "label": "Help menu", "info": "Optional. If left empty, the Help column lists your store policies (refund, shipping, privacy, terms) automatically." }
   ]
 }
 {% endschema %}
