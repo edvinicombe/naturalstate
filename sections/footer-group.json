@@ -118,9 +118,9 @@
         "link_terms": {
           "type": "link",
           "settings": {
-            "label": "Terms of service",
-            "url": "/policies/terms-of-service",
-            "new_tab": false
+            "heading": "Help",
+            "menu": "customer-account-main-menu",
+            "show_policies": true
           }
         }
       },
@@ -136,7 +136,7 @@
         "link_terms"
       ],
       "settings": {
-        "show_newsletter": true,
+        "show_newsletter": false,
         "newsletter_heading": "Stay in the pack",
         "newsletter_text": "Early drops and runner news, straight to your inbox.",
         "newsletter_placeholder": "Your email address",
