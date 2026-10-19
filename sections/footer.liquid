@@ -73,21 +73,18 @@
         </div>
       {%- endif -%}
       <div class="footer-social">
-        {%- if settings.social_instagram != blank -%}
-          <a href="{{ settings.social_instagram }}" aria-label="Instagram" target="_blank" rel="noopener">
-            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="2" width="20" height="20" rx="5" ry="5"/><path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"/><line x1="17.5" y1="6.5" x2="17.51" y2="6.5"/></svg>
-          </a>
-        {%- endif -%}
-        {%- if settings.social_strava != blank -%}
-          <a href="{{ settings.social_strava }}" aria-label="Strava" target="_blank" rel="noopener">
-            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M6 14.5L11.5 3.5 17 14.5"/><path d="M13.5 14.5l2.75 5.5 2.75-5.5"/></svg>
-          </a>
-        {%- endif -%}
-        {%- if settings.social_tiktok != blank -%}
-          <a href="{{ settings.social_tiktok }}" aria-label="TikTok" target="_blank" rel="noopener">
-            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M14.5 3v11.2a4 4 0 1 1-4-4"/><path d="M14.5 3c.3 2.7 2.1 4.5 5 4.7"/></svg>
-          </a>
-        {%- endif -%}
+        {%- assign instagram_url = settings.social_instagram | default: 'https://www.instagram.com/' -%}
+        {%- assign strava_url = settings.social_strava | default: 'https://www.strava.com/' -%}
+        {%- assign tiktok_url = settings.social_tiktok | default: 'https://www.tiktok.com/' -%}
+        <a href="{{ instagram_url }}" aria-label="Instagram" target="_blank" rel="noopener">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="2" width="20" height="20" rx="5" ry="5"/><path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"/><line x1="17.5" y1="6.5" x2="17.51" y2="6.5"/></svg>
+        </a>
+        <a href="{{ strava_url }}" aria-label="Strava" target="_blank" rel="noopener">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M6 14.5L11.5 3.5 17 14.5"/><path d="M13.5 14.5l2.75 5.5 2.75-5.5"/></svg>
+        </a>
+        <a href="{{ tiktok_url }}" aria-label="TikTok" target="_blank" rel="noopener">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M14.5 3v11.2a4 4 0 1 1-4-4"/><path d="M14.5 3c.3 2.7 2.1 4.5 5 4.7"/></svg>
+        </a>
       </div>
     </div>
   </div>

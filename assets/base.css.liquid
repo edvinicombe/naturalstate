@@ -764,7 +764,6 @@ h1,h2,h3,h4,h5 {
 .stars__star { color: var(--border); font-size: 1rem; }
 .stars__star.is-on { color: var(--text); }
 
-.reviews { border-top: 1px solid var(--border); }
 .reviews__head {
   display: flex;
   align-items: flex-end;
@@ -787,27 +786,11 @@ h1,h2,h3,h4,h5 {
 .reviews__empty-title { font-weight: 700; font-size: 1.05rem; margin: 0 0 8px; }
 .reviews__empty p:last-child { color: var(--muted); margin: 0; }
 
-.review-form__details { border-top: 1px solid var(--border); border-bottom: 1px solid var(--border); }
-.review-form__details summary {
-  list-style: none;
-  cursor: pointer;
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  padding: 18px 0;
-  font-size: 0.78rem;
-  font-weight: 700;
-  letter-spacing: 0.12em;
-  text-transform: uppercase;
-}
-.review-form__details summary::-webkit-details-marker { display: none; }
-.review-form__details summary::after { content: "+"; font-size: 1.1rem; font-weight: 300; color: var(--muted); }
-.review-form__details[open] summary::after { content: "\2212"; }
-.review-form__fields { display: grid; gap: 20px; padding: 8px 0 32px; max-width: 640px; }
-.review-form__row { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; }
+.review-form__fields { display: grid; gap: 20px; }
 .review-form__field { display: grid; gap: 8px; font-size: 0.82rem; font-weight: 600; }
 .review-form__field em { font-style: normal; font-weight: 400; color: var(--muted); }
 .review-form__field input,
+.review-form__field select,
 .review-form__field textarea {
   width: 100%;
   background: var(--bg);
@@ -819,7 +802,59 @@ h1,h2,h3,h4,h5 {
   border-radius: 0;
 }
 .review-form__field input:focus,
+.review-form__field select:focus,
 .review-form__field textarea:focus { outline: none; border-color: var(--text); }
+.review-form__hint { font-size: 0.78rem; color: var(--muted); line-height: 1.6; margin: 0; }
+.review__badges { display: flex; flex-wrap: wrap; gap: 8px; margin: 12px 0 0; }
+.review__badge { font-size: 0.7rem; letter-spacing: 0.04em; border: 1px solid var(--border); padding: 4px 10px; color: var(--muted); }
+.reviews__empty .btn { margin-top: 24px; }
+
+/* Review side panel */
+html.no-scroll { overflow: hidden; }
+.review-panel {
+  position: fixed;
+  inset: 0;
+  z-index: 400;
+  visibility: hidden;
+  transition: visibility 0s linear 0.3s;
+}
+.review-panel.is-open { visibility: visible; transition-delay: 0s; }
+.review-panel__overlay {
+  position: absolute;
+  inset: 0;
+  background: rgba(0,0,0,0.4);
+  opacity: 0;
+  transition: opacity 0.3s ease;
+}
+.review-panel.is-open .review-panel__overlay { opacity: 1; }
+.review-panel__sheet {
+  position: absolute;
+  top: 0; right: 0; bottom: 0;
+  width: 100%;
+  max-width: 480px;
+  background: var(--bg);
+  display: flex;
+  flex-direction: column;
+  transform: translateX(100%);
+  transition: transform 0.3s cubic-bezier(.4,0,.2,1);
+}
+.review-panel.is-open .review-panel__sheet { transform: translateX(0); }
+.review-panel__head {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 22px 28px;
+  border-bottom: 1px solid var(--border);
+}
+.review-panel__title { font-size: 1.1rem; text-transform: none; letter-spacing: 0; }
+.review-panel__close { background: none; border: none; color: var(--text); padding: 4px; display: flex; }
+.review-panel__body { flex: 1; overflow-y: auto; padding: 28px; }
+.review-panel__product { display: flex; align-items: center; gap: 16px; margin-bottom: 28px; }
+.review-panel__product img { width: 64px; height: 80px; object-fit: cover; background: var(--surface); }
+.review-panel__product p { margin: 0; font-weight: 600; font-size: 0.95rem; }
+@media (max-width: 520px) {
+  .review-panel__head, .review-panel__body { padding-inline: 20px; }
+}
 .review-form__notice { padding: 16px 18px; margin: 0 0 20px; font-size: 0.9rem; }
 .review-form__notice--success { background: var(--surface); }
 .review-form__notice--error { border: 1px solid var(--border); }
@@ -838,11 +873,10 @@ h1,h2,h3,h4,h5 {
 @media (max-width: 899px) {
   .reviews__head { flex-direction: column; align-items: flex-start; }
   .reviews__list { grid-template-columns: 1fr; }
-  .review-form__row { grid-template-columns: 1fr; }
 }
 
 /* ── Reassurance strip ── */
-.reassurance { border-top: 1px solid var(--border); padding-block: 56px; }
+.reassurance { background: #fafafa; padding-block: 56px; }
 .reassurance__grid {
   display: grid;
   grid-template-columns: repeat(3, 1fr);

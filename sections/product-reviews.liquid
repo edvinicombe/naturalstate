@@ -23,7 +23,9 @@
           </div>
         {%- endif -%}
       </div>
-      <button type="button" class="btn btn--ghost" data-review-open>Write a review</button>
+      {%- if review_count > 0 -%}
+        <button type="button" class="btn btn--ghost" data-review-open>Write a review</button>
+      {%- endif -%}
     </div>
 
     {%- if review_count > 0 -%}
@@ -41,6 +43,12 @@
               {{ review.author.value | escape }}
               {%- if review.date.value != blank %} &middot; {{ review.date.value | date: '%-d %B %Y' }}{% endif -%}
             </p>
+            {%- if review.verified.value or review.ownership.value != blank -%}
+              <p class="review__badges">
+                {%- if review.verified.value -%}<span class="review__badge">Verified purchase</span>{%- endif -%}
+                {%- if review.ownership.value != blank -%}<span class="review__badge">Owned for {{ review.ownership.value | escape | downcase }}</span>{%- endif -%}
+              </p>
+            {%- endif -%}
           </article>
         {%- endfor -%}
       </div>
@@ -48,57 +56,97 @@
       <div class="reviews__empty">
         <p class="reviews__empty-title">{{ section.settings.empty_title }}</p>
         <p>{{ section.settings.empty_text }}</p>
+        <button type="button" class="btn" data-review-open>Write the first review</button>
       </div>
     {%- endif -%}
 
-    {%- form 'contact', id: 'ReviewForm', class: 'review-form' -%}
-      {%- if form.posted_successfully? -%}
-        <p class="review-form__notice review-form__notice--success" role="status">{{ section.settings.success_text }}</p>
-      {%- endif -%}
-      {%- if form.errors -%}
-        <div class="review-form__notice review-form__notice--error" role="alert">{{ form.errors | default_errors }}</div>
-      {%- endif -%}
+    {%- form 'contact', id: 'ReviewForm', class: 'review-panel-form' -%}
+      <div class="review-panel" id="ReviewPanel" role="dialog" aria-modal="true" aria-labelledby="ReviewPanelTitle" aria-hidden="true" data-open-on-load="{% if form.posted_successfully? or form.errors %}true{% else %}false{% endif %}">
+        <div class="review-panel__overlay" data-review-close></div>
+        <div class="review-panel__sheet">
 
-      <details class="review-form__details" id="ReviewDetails" {% if form.errors %}open{% endif %}>
-        <summary>Write a review</summary>
-
-        <div class="review-form__fields">
-          <input type="hidden" name="contact[Product]" value="{{ product.title | escape }} ({{ shop.url }}{{ product.url }})">
-
-          <fieldset class="star-input">
-            <legend>Your rating</legend>
-            <div class="star-input__stars">
-              {%- for i in (1..5) reversed -%}
-                <input type="radio" id="ReviewRating{{ i }}" name="contact[Rating]" value="{{ i }}" required>
-                <label for="ReviewRating{{ i }}" title="{{ i }} star{% if i > 1 %}s{% endif %}"><span class="visually-hidden">{{ i }} star{% if i > 1 %}s{% endif %}</span>&#9733;</label>
-              {%- endfor -%}
-            </div>
-          </fieldset>
-
-          <div class="review-form__row">
-            <label class="review-form__field">
-              <span>Name</span>
-              <input type="text" name="contact[name]" autocomplete="name" required>
-            </label>
-            <label class="review-form__field">
-              <span>Email <em>(never published)</em></span>
-              <input type="email" name="contact[email]" autocomplete="email" required>
-            </label>
+          <div class="review-panel__head">
+            <h2 class="review-panel__title" id="ReviewPanelTitle">Write a review</h2>
+            <button type="button" class="review-panel__close" data-review-close aria-label="Close">
+              <svg width="22" height="22" fill="none" viewBox="0 0 24 24"><path d="M6 6l12 12M18 6L6 18" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg>
+            </button>
           </div>
 
-          <label class="review-form__field">
-            <span>Review title</span>
-            <input type="text" name="contact[Review title]">
-          </label>
+          <div class="review-panel__body">
+            {%- if form.posted_successfully? -%}
+              <p class="review-form__notice review-form__notice--success" role="status">{{ section.settings.success_text }}</p>
+              <button type="button" class="btn btn--full" data-review-close>Close</button>
+            {%- else -%}
+              <div class="review-panel__product">
+                {%- if product.featured_image -%}
+                  <img src="{{ product.featured_image | image_url: width: 160 }}" alt="" width="64" height="80" loading="lazy">
+                {%- endif -%}
+                <p>{{ product.title }}</p>
+              </div>
 
-          <label class="review-form__field">
-            <span>Your review</span>
-            <textarea name="contact[body]" rows="5" required></textarea>
-          </label>
+              {%- if form.errors -%}
+                <div class="review-form__notice review-form__notice--error" role="alert">{{ form.errors | default_errors }}</div>
+              {%- endif -%}
 
-          <button type="submit" class="btn">Submit review</button>
+              <div class="review-form__fields">
+                <input type="hidden" name="contact[Product]" value="{{ product.title | escape }} ({{ shop.url }}{{ product.url }})">
+
+                <fieldset class="star-input">
+                  <legend>Overall rating</legend>
+                  <div class="star-input__stars">
+                    {%- for i in (1..5) reversed -%}
+                      <input type="radio" id="ReviewRating{{ i }}" name="contact[Rating]" value="{{ i }}" required>
+                      <label for="ReviewRating{{ i }}" title="{{ i }} star{% if i > 1 %}s{% endif %}"><span class="visually-hidden">{{ i }} star{% if i > 1 %}s{% endif %}</span>&#9733;</label>
+                    {%- endfor -%}
+                  </div>
+                </fieldset>
+
+                <label class="review-form__field">
+                  <span>How long have you owned this product?</span>
+                  <select name="contact[Length of ownership]" required>
+                    <option value="" disabled selected>Select length of ownership</option>
+                    <option>Less than 1 month</option>
+                    <option>1 to 3 months</option>
+                    <option>3 to 6 months</option>
+                    <option>6 to 12 months</option>
+                    <option>More than 1 year</option>
+                  </select>
+                </label>
+
+                <label class="review-form__field">
+                  <span>Review title</span>
+                  <input type="text" name="contact[Review title]">
+                </label>
+
+                <label class="review-form__field">
+                  <span>Your review</span>
+                  <textarea name="contact[body]" rows="5" required></textarea>
+                </label>
+
+                <label class="review-form__field">
+                  <span>Name</span>
+                  <input type="text" name="contact[name]" autocomplete="name" required>
+                </label>
+
+                <label class="review-form__field">
+                  <span>Email <em>(never published)</em></span>
+                  <input type="email" name="contact[email]" autocomplete="email" required>
+                </label>
+
+                <label class="review-form__field">
+                  <span>Order number <em>(optional)</em></span>
+                  <input type="text" name="contact[Order number]" placeholder="e.g. #1042">
+                </label>
+
+                <p class="review-form__hint">We check reviews against your order before publishing, so please use the email you bought with.</p>
+
+                <button type="submit" class="btn btn--full btn--lg">Submit review</button>
+              </div>
+            {%- endif -%}
+          </div>
+
         </div>
-      </details>
+      </div>
     {%- endform -%}
 
   </div>
@@ -111,7 +159,7 @@
     { "type": "text",     "id": "heading",     "label": "Heading", "default": "Reviews" },
     { "type": "text",     "id": "empty_title", "label": "Empty state title", "default": "No reviews yet" },
     { "type": "textarea", "id": "empty_text",  "label": "Empty state text", "default": "Be the first to share what you think of this product." },
-    { "type": "textarea", "id": "success_text", "label": "Message after a review is submitted", "default": "Thank you! Your review has been sent to us and will appear here once it has been approved." }
+    { "type": "textarea", "id": "success_text", "label": "Message after a review is submitted", "default": "Thank you! Your review has been sent to us and will appear here once it has been checked and approved." }
   ],
   "presets": [{ "name": "Product Reviews" }]
 }
