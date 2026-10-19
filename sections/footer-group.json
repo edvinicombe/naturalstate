@@ -55,16 +55,68 @@
     "footer": {
       "type": "footer",
       "blocks": {
-        "shop": {
-          "type": "link_column",
+        "col_shop": {
+          "type": "column",
           "settings": {
-            "heading": "Shop",
-            "menu": "main-menu",
-            "show_policies": false
+            "heading": "Shop"
           }
         },
-        "help": {
-          "type": "link_column",
+        "link_all": {
+          "type": "link",
+          "settings": {
+            "label": "All products",
+            "url": "/collections/all",
+            "new_tab": false
+          }
+        },
+        "link_drop": {
+          "type": "link",
+          "settings": {
+            "label": "Drop 01",
+            "url": "/collections/drop-1",
+            "new_tab": false
+          }
+        },
+        "link_story": {
+          "type": "link",
+          "settings": {
+            "label": "Our story",
+            "url": "/pages/our-story",
+            "new_tab": false
+          }
+        },
+        "col_help": {
+          "type": "column",
+          "settings": {
+            "heading": "Help"
+          }
+        },
+        "link_delivery": {
+          "type": "link",
+          "settings": {
+            "label": "Delivery",
+            "url": "/policies/shipping-policy",
+            "new_tab": false
+          }
+        },
+        "link_returns": {
+          "type": "link",
+          "settings": {
+            "label": "Returns & refunds",
+            "url": "/policies/refund-policy",
+            "new_tab": false
+          }
+        },
+        "link_privacy": {
+          "type": "link",
+          "settings": {
+            "label": "Privacy policy",
+            "url": "/policies/privacy-policy",
+            "new_tab": false
+          }
+        },
+        "link_terms": {
+          "type": "link",
           "settings": {
             "heading": "Help",
             "menu": "customer-account-main-menu",
@@ -73,8 +125,15 @@
         }
       },
       "block_order": [
-        "shop",
-        "help"
+        "col_shop",
+        "link_all",
+        "link_drop",
+        "link_story",
+        "col_help",
+        "link_delivery",
+        "link_returns",
+        "link_privacy",
+        "link_terms"
       ],
       "settings": {
         "show_newsletter": false,
@@ -90,10 +149,11 @@
         "localization_heading": "Shipping to",
         "show_payment_icons": true,
         "copyright_text": "",
-        "legal_menu": "",
         "social_instagram": "",
         "social_strava": "",
-        "social_tiktok": ""
+        "social_tiktok": "",
+        "footer_bg": "#000000",
+        "footer_text": "#ffffff"
       }
     }
   },
