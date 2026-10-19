@@ -51,11 +51,46 @@
     },
     "footer": {
       "type": "footer",
+      "blocks": {
+        "shop": {
+          "type": "link_column",
+          "settings": {
+            "heading": "Shop",
+            "menu": "main-menu",
+            "show_policies": false
+          }
+        },
+        "help": {
+          "type": "link_column",
+          "settings": {
+            "heading": "Help",
+            "menu": "",
+            "show_policies": true
+          }
+        }
+      },
+      "block_order": [
+        "shop",
+        "help"
+      ],
       "settings": {
+        "show_newsletter": true,
+        "newsletter_heading": "Stay in the pack",
+        "newsletter_text": "Early drops and runner news, straight to your inbox.",
+        "newsletter_placeholder": "Your email address",
+        "newsletter_button": "Subscribe",
+        "newsletter_legal": "<p>By subscribing, you accept our <a href=\"/policies/terms-of-service\">Terms</a> and <a href=\"/policies/privacy-policy\">Privacy Policy</a>.</p>",
+        "newsletter_success": "Thanks for subscribing!",
+        "newsletter_bg": "#f4f3f0",
         "tagline": "Alternative running apparel for those chasing nothing but the feeling.",
-        "shop_menu": "main-menu",
-        "company_menu": "footer",
-        "help_menu": ""
+        "show_localization": true,
+        "localization_heading": "Shipping to",
+        "show_payment_icons": true,
+        "copyright_text": "",
+        "legal_menu": "",
+        "social_instagram": "",
+        "social_strava": "",
+        "social_tiktok": ""
       }
     }
   },

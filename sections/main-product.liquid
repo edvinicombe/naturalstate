@@ -81,6 +81,8 @@
         {%- endif -%}
       </div>
 
+      {%- render 'review-summary' -%}
+
       {%- if product.description != blank -%}
         <div class="product-info__desc">{{ product.description }}</div>
       {%- endif -%}

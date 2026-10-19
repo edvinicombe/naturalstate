@@ -29,7 +29,7 @@
   "order": [
     "main",
     "details",
-    "related",
-    "reviews"
+    "reviews",
+    "related"
   ]
 }

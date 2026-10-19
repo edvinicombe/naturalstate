@@ -1,0 +1,20 @@
+{%- assign summary_reviews = product.metafields.custom.reviews.value -%}
+{%- assign summary_count = summary_reviews.size | default: 0 -%}
+{%- if summary_count > 0 -%}
+  {%- assign summary_total = 0 -%}
+  {%- for review in summary_reviews -%}
+    {%- assign r = review.rating.value -%}
+    {%- if r.value -%}{%- assign r = r.value -%}{%- endif -%}
+    {%- assign summary_total = summary_total | plus: r -%}
+  {%- endfor -%}
+  {%- assign summary_average = summary_total | times: 1.0 | divided_by: summary_count | round: 1 -%}
+  <a href="#reviews" class="rating-summary" aria-label="{{ summary_average }} out of 5 stars, {{ summary_count }} review{% if summary_count != 1 %}s{% endif %}. Read reviews">
+    {%- render 'review-stars', rating: summary_average, decorative: true -%}
+    <span>{{ summary_average }} ({{ summary_count }})</span>
+  </a>
+{%- else -%}
+  <button type="button" class="rating-summary rating-summary--empty" data-review-open>
+    {%- render 'review-stars', rating: 0, decorative: true -%}
+    <span>Be the first to write a review</span>
+  </button>
+{%- endif -%}

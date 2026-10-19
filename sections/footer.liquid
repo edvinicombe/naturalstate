@@ -1,90 +1,134 @@
 <footer class="site-footer">
-  <div class="page-width">
+
+  {%- if section.settings.show_newsletter -%}
+    <div class="footer-newsletter-band" style="background: {{ section.settings.newsletter_bg }};">
+      <div class="page-width footer-newsletter-band__inner">
+        <div class="footer-newsletter-band__copy">
+          {%- if section.settings.newsletter_heading != blank -%}
+            <h2 class="h2">{{ section.settings.newsletter_heading }}</h2>
+          {%- endif -%}
+          {%- if section.settings.newsletter_text != blank -%}
+            <p>{{ section.settings.newsletter_text }}</p>
+          {%- endif -%}
+        </div>
+        <div class="footer-newsletter-band__form">
+          {%- form 'customer', id: 'FooterSignup' -%}
+            {%- if form.posted_successfully? -%}
+              <p class="footer-newsletter__success" role="status">{{ section.settings.newsletter_success }}</p>
+            {%- else -%}
+              {%- if form.errors -%}
+                <div class="footer-newsletter__error" role="alert">{{ form.errors | default_errors }}</div>
+              {%- endif -%}
+              <input type="hidden" name="contact[tags]" value="newsletter">
+              <div class="newsletter-form">
+                <input type="email" name="contact[email]" placeholder="{{ section.settings.newsletter_placeholder | escape }}" aria-label="{{ section.settings.newsletter_placeholder | escape }}" required>
+                <button type="submit" class="btn">{{ section.settings.newsletter_button }}</button>
+              </div>
+              {%- if section.settings.newsletter_legal != blank -%}
+                <div class="footer-newsletter__legal">{{ section.settings.newsletter_legal }}</div>
+              {%- endif -%}
+            {%- endif -%}
+          {%- endform -%}
+        </div>
+      </div>
+    </div>
+  {%- endif -%}
+
+  <div class="page-width footer-main">
     <div class="footer-grid">
 
-      <div class="footer-col footer-motto">
-        <img src="{{ 'motto-feel-the-run.svg' | asset_url }}" alt="Feel The Run" loading="lazy">
-        <p>{{ section.settings.tagline }}</p>
+      <div class="footer-col footer-brand">
+        {%- if section.settings.logo -%}
+          <img src="{{ section.settings.logo | image_url: width: 600 }}" alt="{{ shop.name | escape }}" width="{{ section.settings.logo.width }}" height="{{ section.settings.logo.height }}" loading="lazy">
+        {%- else -%}
+          <img src="{{ 'motto-feel-the-run.svg' | asset_url }}" alt="Feel The Run" width="966" height="959" loading="lazy">
+        {%- endif -%}
+        {%- if section.settings.tagline != blank -%}
+          <p>{{ section.settings.tagline }}</p>
+        {%- endif -%}
       </div>
 
-      {%- assign shop_links = linklists[section.settings.shop_menu].links -%}
-      {%- if shop_links.size > 0 -%}
-        <div class="footer-col">
-          <h4>Shop</h4>
-          <ul>
-            {%- for link in shop_links -%}
-              <li><a href="{{ link.url }}">{{ link.title }}</a></li>
-            {%- endfor -%}
-          </ul>
-        </div>
-      {%- endif -%}
-
-      {%- assign company_links = linklists[section.settings.company_menu].links -%}
-      {%- if company_links.size > 0 -%}
-        <div class="footer-col">
-          <h4>Company</h4>
-          <ul>
-            {%- for link in company_links -%}
-              <li><a href="{{ link.url }}">{{ link.title }}</a></li>
-            {%- endfor -%}
-          </ul>
-        </div>
-      {%- endif -%}
-
-      {%- assign help_links = linklists[section.settings.help_menu].links -%}
-      {%- if help_links.size > 0 or shop.policies.size > 0 -%}
-        <div class="footer-col">
-          <h4>Help</h4>
-          <ul>
-            {%- if help_links.size > 0 -%}
-              {%- for link in help_links -%}
+      {%- for block in section.blocks -%}
+        {%- assign column_links = linklists[block.settings.menu].links -%}
+        {%- if column_links.size > 0 or block.settings.show_policies and shop.policies.size > 0 -%}
+          <div class="footer-col" {{ block.shopify_attributes }}>
+            {%- if block.settings.heading != blank -%}
+              <h4>{{ block.settings.heading }}</h4>
+            {%- endif -%}
+            <ul>
+              {%- for link in column_links -%}
                 <li><a href="{{ link.url }}">{{ link.title }}</a></li>
               {%- endfor -%}
-            {%- else -%}
-              {%- for policy in shop.policies -%}
-                <li><a href="{{ policy.url }}">{{ policy.title }}</a></li>
+              {%- if block.settings.show_policies -%}
+                {%- for policy in shop.policies -%}
+                  <li><a href="{{ policy.url }}">{{ policy.title }}</a></li>
+                {%- endfor -%}
+              {%- endif -%}
+            </ul>
+          </div>
+        {%- endif -%}
+      {%- endfor -%}
+
+      {%- if section.settings.show_localization and localization.available_countries.size > 1 -%}
+        <div class="footer-col footer-localization">
+          {%- if section.settings.localization_heading != blank -%}
+            <h4>{{ section.settings.localization_heading }}</h4>
+          {%- endif -%}
+          {%- form 'localization', id: 'FooterLocalization' -%}
+            <label class="visually-hidden" for="FooterCountry">Country/region</label>
+            <select id="FooterCountry" name="country_code" data-localization-select>
+              {%- for country in localization.available_countries -%}
+                <option value="{{ country.iso_code }}" {% if country.iso_code == localization.country.iso_code %}selected{% endif %}>
+                  {{- country.name }} ({{ country.currency.iso_code }})
+                </option>
               {%- endfor -%}
-            {%- endif -%}
-          </ul>
+            </select>
+            <noscript><button type="submit" class="btn">Update</button></noscript>
+          {%- endform -%}
         </div>
       {%- endif -%}
-
-      <div class="footer-col footer-newsletter">
-        <h4>Stay in the pack</h4>
-        <p>Early drops and runner news, straight to your inbox.</p>
-        {%- form 'customer', id: 'FooterSignup' -%}
-          <input type="hidden" name="contact[tags]" value="newsletter">
-          <div class="newsletter-form">
-            <input type="email" name="contact[email]" placeholder="Your email" required>
-            <button type="submit" class="btn" style="padding:13px 20px;">Join</button>
-          </div>
-        {%- endform -%}
-      </div>
 
     </div>
 
     <div class="footer-bottom">
-      <span>&copy; {{ 'now' | date: '%Y' }} {{ shop.name }}</span>
-      {%- if shop.enabled_payment_types.size > 0 -%}
+      <div class="footer-social">
+        {%- assign instagram_url = section.settings.social_instagram | default: 'https://www.instagram.com/' -%}
+        {%- assign strava_url = section.settings.social_strava | default: 'https://www.strava.com/' -%}
+        {%- assign tiktok_url = section.settings.social_tiktok | default: 'https://www.tiktok.com/' -%}
+        <a href="{{ instagram_url }}" aria-label="Instagram" target="_blank" rel="noopener">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="2" width="20" height="20" rx="5" ry="5"/><path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"/><line x1="17.5" y1="6.5" x2="17.51" y2="6.5"/></svg>
+        </a>
+        <a href="{{ strava_url }}" aria-label="Strava" target="_blank" rel="noopener">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor"><path d="M15.387 17.944l-2.089-4.116h-3.065L15.387 24l5.15-10.172h-3.066m-7.008-5.599l2.836 5.598h4.172L10.463 0l-7 13.828h4.169"/></svg>
+        </a>
+        <a href="{{ tiktok_url }}" aria-label="TikTok" target="_blank" rel="noopener">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M14.5 3v11.2a4 4 0 1 1-4-4"/><path d="M14.5 3c.3 2.7 2.1 4.5 5 4.7"/></svg>
+        </a>
+      </div>
+
+      {%- if section.settings.show_payment_icons and shop.enabled_payment_types.size > 0 -%}
         <div class="footer-payments">
           {%- for type in shop.enabled_payment_types -%}
             {{ type | payment_type_svg_tag: class: 'footer-payments__icon' }}
           {%- endfor -%}
         </div>
       {%- endif -%}
-      <div class="footer-social">
-        {%- assign instagram_url = settings.social_instagram | default: 'https://www.instagram.com/' -%}
-        {%- assign strava_url = settings.social_strava | default: 'https://www.strava.com/' -%}
-        {%- assign tiktok_url = settings.social_tiktok | default: 'https://www.tiktok.com/' -%}
-        <a href="{{ instagram_url }}" aria-label="Instagram" target="_blank" rel="noopener">
-          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="2" width="20" height="20" rx="5" ry="5"/><path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"/><line x1="17.5" y1="6.5" x2="17.51" y2="6.5"/></svg>
-        </a>
-        <a href="{{ strava_url }}" aria-label="Strava" target="_blank" rel="noopener">
-          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M6 14.5L11.5 3.5 17 14.5"/><path d="M13.5 14.5l2.75 5.5 2.75-5.5"/></svg>
-        </a>
-        <a href="{{ tiktok_url }}" aria-label="TikTok" target="_blank" rel="noopener">
-          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M14.5 3v11.2a4 4 0 1 1-4-4"/><path d="M14.5 3c.3 2.7 2.1 4.5 5 4.7"/></svg>
-        </a>
+
+      <div class="footer-legal">
+        {%- if section.settings.copyright_text != blank -%}
+          <span>{{ section.settings.copyright_text }}</span>
+        {%- else -%}
+          <span>&copy; {{ 'now' | date: '%Y' }} {{ shop.name }}</span>
+        {%- endif -%}
+        {%- assign legal_links = linklists[section.settings.legal_menu].links -%}
+        {%- if legal_links.size > 0 -%}
+          {%- for link in legal_links -%}
+            <a href="{{ link.url }}">{{ link.title }}</a>
+          {%- endfor -%}
+        {%- else -%}
+          {%- if shop.terms_of_service -%}<a href="{{ shop.terms_of_service.url }}">{{ shop.terms_of_service.title }}</a>{%- endif -%}
+          {%- if shop.privacy_policy -%}<a href="{{ shop.privacy_policy.url }}">{{ shop.privacy_policy.title }}</a>{%- endif -%}
+        {%- endif -%}
       </div>
     </div>
   </div>
@@ -93,11 +137,47 @@
 {% schema %}
 {
   "name": "Footer",
+  "max_blocks": 3,
   "settings": [
-    { "type": "text",      "id": "tagline",      "label": "Footer tagline", "default": "Gear built for runners who chase open roads and quiet trails." },
-    { "type": "link_list", "id": "shop_menu",    "label": "Shop menu",    "default": "main-menu" },
-    { "type": "link_list", "id": "company_menu", "label": "Company menu", "default": "footer" },
-    { "type": "link_list", "id": "help_menu",    "label": "Help menu", "info": "Optional. If left empty, the Help column lists your store policies (refund, shipping, privacy, terms) automatically." }
+    { "type": "header", "content": "Newsletter band" },
+    { "type": "checkbox", "id": "show_newsletter", "label": "Show newsletter band", "default": true },
+    { "type": "text",     "id": "newsletter_heading", "label": "Heading", "default": "Stay in the pack" },
+    { "type": "textarea", "id": "newsletter_text", "label": "Text", "default": "Early drops and runner news, straight to your inbox." },
+    { "type": "text",     "id": "newsletter_placeholder", "label": "Email field placeholder", "default": "Your email address" },
+    { "type": "text",     "id": "newsletter_button", "label": "Button label", "default": "Subscribe" },
+    { "type": "richtext", "id": "newsletter_legal", "label": "Small print under the form", "info": "Links can be added and edited here.", "default": "<p>By subscribing, you accept our <a href=\"/policies/terms-of-service\">Terms</a> and <a href=\"/policies/privacy-policy\">Privacy Policy</a>.</p>" },
+    { "type": "text",     "id": "newsletter_success", "label": "Message after signing up", "default": "Thanks for subscribing!" },
+    { "type": "color",    "id": "newsletter_bg", "label": "Band background", "default": "#f4f3f0" },
+
+    { "type": "header", "content": "Brand" },
+    { "type": "image_picker", "id": "logo", "label": "Logo", "info": "Optional. Leave empty to use the Feel The Run logo. Size is set in Theme settings > Logo." },
+    { "type": "textarea", "id": "tagline", "label": "Description", "default": "Gear built for runners who chase open roads and quiet trails." },
+
+    { "type": "header", "content": "Shipping country selector" },
+    { "type": "checkbox", "id": "show_localization", "label": "Show country/region selector", "info": "Only appears when more than one country is enabled in Shopify Markets.", "default": true },
+    { "type": "text", "id": "localization_heading", "label": "Heading", "default": "Shipping to" },
+
+    { "type": "header", "content": "Bottom bar" },
+    { "type": "checkbox", "id": "show_payment_icons", "label": "Show accepted payment icons", "default": true },
+    { "type": "text", "id": "copyright_text", "label": "Copyright text", "info": "Leave empty to show the year and store name." },
+    { "type": "link_list", "id": "legal_menu", "label": "Legal links menu", "info": "Optional. If empty, your Terms of service and Privacy policy are linked automatically." },
+
+    { "type": "header", "content": "Social links" },
+    { "type": "url", "id": "social_instagram", "label": "Instagram link", "info": "Until set, the icon links to instagram.com" },
+    { "type": "url", "id": "social_strava", "label": "Strava link", "info": "Until set, the icon links to strava.com" },
+    { "type": "url", "id": "social_tiktok", "label": "TikTok link", "info": "Until set, the icon links to tiktok.com" }
+  ],
+  "blocks": [
+    {
+      "type": "link_column",
+      "name": "Link column",
+      "limit": 3,
+      "settings": [
+        { "type": "text", "id": "heading", "label": "Heading", "default": "Shop" },
+        { "type": "link_list", "id": "menu", "label": "Menu", "info": "Edit the links themselves in Online Store > Navigation." },
+        { "type": "checkbox", "id": "show_policies", "label": "Also list store policies", "info": "Adds your refund, shipping, privacy and terms pages from Settings > Policies.", "default": false }
+      ]
+    }
   ]
 }
 {% endschema %}
