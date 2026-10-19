@@ -203,15 +203,39 @@ document.addEventListener('DOMContentLoaded', function () {
     savedDrawer?.classList.remove('open');
   });
 
-  /* ── Reviews: "Write a review" opens and scrolls to the form ── */
-  var reviewDetails = document.getElementById('ReviewDetails');
-  document.querySelectorAll('[data-review-open]').forEach(function (btn) {
-    btn.addEventListener('click', function () {
-      if (!reviewDetails) return;
-      reviewDetails.open = true;
-      reviewDetails.scrollIntoView({ behavior: 'smooth', block: 'center' });
-      var first = reviewDetails.querySelector('input:not([type=hidden])');
+  /* ── Reviews: side panel ── */
+  var reviewPanel = document.getElementById('ReviewPanel');
+  var reviewLastFocus = null;
+
+  function openReviewPanel() {
+    if (!reviewPanel) return;
+    reviewLastFocus = document.activeElement;
+    reviewPanel.classList.add('is-open');
+    reviewPanel.setAttribute('aria-hidden', 'false');
+    document.documentElement.classList.add('no-scroll');
+    setTimeout(function () {
+      var first = reviewPanel.querySelector('input:not([type=hidden]), select, textarea') ||
+                  reviewPanel.querySelector('[data-review-close]');
       if (first) first.focus({ preventScroll: true });
-    });
+    }, 60);
+  }
+
+  function closeReviewPanel() {
+    if (!reviewPanel) return;
+    reviewPanel.classList.remove('is-open');
+    reviewPanel.setAttribute('aria-hidden', 'true');
+    document.documentElement.classList.remove('no-scroll');
+    if (reviewLastFocus && reviewLastFocus.focus) reviewLastFocus.focus({ preventScroll: true });
+  }
+
+  document.querySelectorAll('[data-review-open]').forEach(function (btn) {
+    btn.addEventListener('click', openReviewPanel);
   });
+  document.querySelectorAll('[data-review-close]').forEach(function (el) {
+    el.addEventListener('click', closeReviewPanel);
+  });
+  document.addEventListener('keydown', function (e) {
+    if (e.key === 'Escape' && reviewPanel && reviewPanel.classList.contains('is-open')) closeReviewPanel();
+  });
+  if (reviewPanel && reviewPanel.dataset.openOnLoad === 'true') openReviewPanel();
 });

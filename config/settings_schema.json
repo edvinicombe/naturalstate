@@ -121,7 +121,7 @@
     "settings": [
       {
         "type": "paragraph",
-        "content": "Paste a profile link to show its icon in the footer. Leave a field empty to hide that icon."
+        "content": "Paste your profile links so the footer icons point to your accounts. Until a link is added, the icon points to that platform's homepage."
       },
       {
         "type": "url",
