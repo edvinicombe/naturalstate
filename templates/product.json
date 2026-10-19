@@ -9,9 +9,27 @@
  */
 {
   "sections": {
-    "main": { "type": "main-product", "settings": {} },
-    "details": { "type": "product-details", "settings": {} },
-    "related": { "type": "related-products", "settings": {} }
+    "main": {
+      "type": "main-product",
+      "settings": {}
+    },
+    "details": {
+      "type": "product-details",
+      "settings": {}
+    },
+    "related": {
+      "type": "related-products",
+      "settings": {}
+    },
+    "reviews": {
+      "type": "product-reviews",
+      "settings": {}
+    }
   },
-  "order": ["main", "details", "related"]
+  "order": [
+    "main",
+    "details",
+    "related",
+    "reviews"
+  ]
 }

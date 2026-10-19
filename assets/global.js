@@ -202,4 +202,16 @@ document.addEventListener('DOMContentLoaded', function () {
   document.getElementById('SavedDrawerClose')?.addEventListener('click', function () {
     savedDrawer?.classList.remove('open');
   });
+
+  /* ── Reviews: "Write a review" opens and scrolls to the form ── */
+  var reviewDetails = document.getElementById('ReviewDetails');
+  document.querySelectorAll('[data-review-open]').forEach(function (btn) {
+    btn.addEventListener('click', function () {
+      if (!reviewDetails) return;
+      reviewDetails.open = true;
+      reviewDetails.scrollIntoView({ behavior: 'smooth', block: 'center' });
+      var first = reviewDetails.querySelector('input:not([type=hidden])');
+      if (first) first.focus({ preventScroll: true });
+    });
+  });
 });

@@ -1,14 +1,21 @@
-{%- assign related_products = product.collections.first.products | where_exp: 'p', 'p.id != product.id' -%}
-{%- if related_products.size > 0 -%}
+{%- assign related_count = 0 -%}
+{%- capture related_cards -%}
+  {%- for p in product.collections.first.products limit: 9 -%}
+    {%- if p.id != product.id and related_count < section.settings.limit -%}
+      {%- render 'product-card', product: p -%}
+      {%- assign related_count = related_count | plus: 1 -%}
+    {%- endif -%}
+  {%- endfor -%}
+{%- endcapture -%}
+
+{%- if related_count > 0 -%}
   <section class="section-pad" id="you-might-also-like">
     <div class="page-width">
       <div class="section-header">
         <h2 class="h2">{{ section.settings.heading }}</h2>
       </div>
       <div class="product-grid">
-        {%- for p in related_products limit: section.settings.limit -%}
-          {%- render 'product-card', product: p -%}
-        {%- endfor -%}
+        {{ related_cards }}
       </div>
     </div>
   </section>
