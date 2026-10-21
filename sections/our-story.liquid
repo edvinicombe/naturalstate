@@ -4,7 +4,7 @@
 </div>
 
 <div class="page-width">
-  <div class="story-block" style="padding-block:80px;">
+  <div class="story-block">
     <div class="story-block__img">
       {%- if section.settings.image_1 -%}<img src="{{ section.settings.image_1 | image_url: width: 1200 }}" alt="" loading="lazy">{%- endif -%}
     </div>
@@ -15,7 +15,7 @@
     </div>
   </div>
 
-  <div class="story-block reversed" style="padding-block:80px;">
+  <div class="story-block reversed">
     <div class="story-block__img">
       {%- if section.settings.image_2 -%}<img src="{{ section.settings.image_2 | image_url: width: 1200 }}" alt="" loading="lazy">{%- endif -%}
     </div>
@@ -33,7 +33,7 @@
   </div>
 </div>
 
-<div class="newsletter-block" style="margin-top:96px;">
+<div class="newsletter-block">
   <h2 class="h2" style="margin-bottom:16px;">Run Free.</h2>
   <p>It's more than our motto. Here's how to be part of it.</p>
   <a href="{{ routes.root_url }}#products" class="btn btn--lg">Shop the Collection</a>
