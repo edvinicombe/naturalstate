@@ -118,9 +118,9 @@
         "link_terms": {
           "type": "link",
           "settings": {
-            "heading": "Help",
-            "menu": "customer-account-main-menu",
-            "show_policies": true
+            "label": "Terms of service",
+            "url": "/policies/terms-of-service",
+            "new_tab": false
           }
         }
       },
@@ -153,7 +153,10 @@
         "social_strava": "",
         "social_tiktok": "",
         "footer_bg": "#000000",
-        "footer_text": "#ffffff"
+        "footer_text": "#ffffff",
+        "logo_white": true,
+        "ship_to_countries": "GB|United Kingdom\nIE|Ireland\nFR|France\nDE|Germany\nES|Spain\nIT|Italy\nNL|Netherlands\nUS|United States",
+        "ship_to_note": "Your country is pre-filled at checkout."
       }
     }
   },

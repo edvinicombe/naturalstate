@@ -35,15 +35,16 @@
         <div class="summary-row"><span style="color:var(--muted)">Subtotal</span><span>{{ cart.total_price | money }}</span></div>
         <div class="summary-row"><span style="color:var(--muted)">Shipping</span><span style="color:var(--muted)">Calculated at checkout</span></div>
         <div class="summary-row total"><span>Total</span><span>{{ cart.total_price | money }}</span></div>
-        <form action="{{ routes.cart_url }}" method="post" style="margin-top:20px;">
+        <form action="{{ routes.cart_url }}" method="post" style="margin-top:24px;">
           <button type="submit" name="checkout" class="btn btn--full btn--lg">Checkout</button>
         </form>
+        <p class="cart-shipto" data-ship-to-note hidden>Shipping to <strong data-ship-to-label></strong>. Change this in the footer.</p>
         <a href="{{ routes.root_url }}" style="display:block;text-align:center;margin-top:16px;font-size:0.82rem;color:var(--muted);text-decoration:underline;">Continue Shopping</a>
       </div>
     </div>
   {%- else -%}
     <div class="cart-empty">
-      <p style="margin-bottom:28px;">Your bag is empty.</p>
+      <p style="margin-bottom:32px;">Your bag is empty.</p>
       <a href="{{ routes.root_url }}" class="btn">Start Shopping</a>
     </div>
   {%- endif -%}
