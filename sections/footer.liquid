@@ -45,14 +45,28 @@
             <img class="{{ logo_class }}" src="{{ section.settings.logo | image_url: width: 600 }}" alt="{{ shop.name | escape }}" width="{{ section.settings.logo.width }}" height="{{ section.settings.logo.height }}" loading="lazy">
           {%- else -%}
             {%- if section.settings.logo_white -%}
-              <img class="{{ logo_class }}" src="{{ 'motto-feel-the-run-white.svg' | asset_url }}" alt="Feel The Run" width="966" height="959" loading="lazy">
+              <img class="{{ logo_class }}" src="{{ 'motto-feel-the-run-white.svg' | asset_url }}" alt="Feel The Run" width="966" height="960" loading="lazy">
             {%- else -%}
-              <img src="{{ 'motto-feel-the-run.svg' | asset_url }}" alt="Feel The Run" width="966" height="959" loading="lazy">
+              <img src="{{ 'motto-feel-the-run.svg' | asset_url }}" alt="Feel The Run" width="966" height="960" loading="lazy">
             {%- endif -%}
           {%- endif -%}
           {%- if section.settings.tagline != blank -%}
             <p>{{ section.settings.tagline }}</p>
           {%- endif -%}
+          <div class="footer-social">
+            {%- assign instagram_url = section.settings.social_instagram | default: 'https://www.instagram.com/' -%}
+            {%- assign strava_url = section.settings.social_strava | default: 'https://www.strava.com/' -%}
+            {%- assign tiktok_url = section.settings.social_tiktok | default: 'https://www.tiktok.com/' -%}
+            <a href="{{ instagram_url }}" aria-label="Instagram" target="_blank" rel="noopener">
+              <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="2" width="20" height="20" rx="5" ry="5"/><path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"/><line x1="17.5" y1="6.5" x2="17.51" y2="6.5"/></svg>
+            </a>
+            <a href="{{ strava_url }}" aria-label="Strava" target="_blank" rel="noopener">
+              <svg width="24" height="24" viewBox="0 0 24 24" fill="currentColor"><path d="M15.387 17.944l-2.089-4.116h-3.065L15.387 24l5.15-10.172h-3.066m-7.008-5.599l2.836 5.598h4.172L10.463 0l-7 13.828h4.169"/></svg>
+            </a>
+            <a href="{{ tiktok_url }}" aria-label="TikTok" target="_blank" rel="noopener">
+              <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M14.5 3v11.2a4 4 0 1 1-4-4"/><path d="M14.5 3c.3 2.7 2.1 4.5 5 4.7"/></svg>
+            </a>
+          </div>
         </div>
 
         {%- for column in section.blocks -%}
@@ -90,11 +104,10 @@
               {%- form 'localization', id: 'FooterLocalization' -%}
                 <label class="visually-hidden" for="FooterCountry">Shipping destination</label>
                 <div class="footer-localization__field">
-                  <svg class="footer-localization__icon" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="9"/><path d="M3 12h18"/><path d="M12 3a14 14 0 0 1 0 18a14 14 0 0 1 0-18z"/></svg>
                   <select id="FooterCountry" name="country_code" data-localization-select>
                     {%- for country in localization.available_countries -%}
                       <option value="{{ country.iso_code }}" {% if country.iso_code == localization.country.iso_code %}selected{% endif %}>
-                        {{- country.name }} ({{ country.currency.iso_code }})
+                        {%- render 'flag-emoji', code: country.iso_code %} {{ country.name }} ({{ country.currency.iso_code }})
                       </option>
                     {%- endfor -%}
                   </select>
@@ -105,14 +118,13 @@
               {%- comment -%} One market: a destination dropdown that pre-fills the checkout country. {%- endcomment -%}
               <label class="visually-hidden" for="FooterShipTo">Shipping destination</label>
               <div class="footer-localization__field">
-                <svg class="footer-localization__icon" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="9"/><path d="M3 12h18"/><path d="M12 3a14 14 0 0 1 0 18a14 14 0 0 1 0-18z"/></svg>
                 <select id="FooterShipTo" data-ship-to-select>
                   {%- for line in ship_to_lines -%}
                     {%- assign parts = line | split: '|' -%}
                     {%- assign ship_code = parts[0] | strip -%}
                     {%- assign ship_name = parts[1] | strip -%}
                     {%- if ship_code != blank and ship_name != blank -%}
-                      <option value="{{ ship_code }}" data-name="{{ ship_name | escape }}" {% if ship_code == localization.country.iso_code %}selected{% endif %}>{{ ship_name }}</option>
+                      <option value="{{ ship_code }}" data-name="{{ ship_name | escape }}" {% if ship_code == localization.country.iso_code %}selected{% endif %}>{%- render 'flag-emoji', code: ship_code %} {{ ship_name }}</option>
                     {%- endif -%}
                   {%- endfor -%}
                 </select>
@@ -122,7 +134,7 @@
               {%- endif -%}
             {%- else -%}
               <p class="footer-localization__static">
-                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="9"/><path d="M3 12h18"/><path d="M12 3a14 14 0 0 1 0 18a14 14 0 0 1 0-18z"/></svg>
+                <span>{%- render 'flag-emoji', code: localization.country.iso_code %}</span>
                 <span>{{ localization.country.name }} ({{ localization.country.currency.iso_code }})</span>
               </p>
             {%- endif -%}
@@ -132,21 +144,13 @@
       </div>
 
       <div class="footer-bottom">
-        <div class="footer-social">
-          {%- assign instagram_url = section.settings.social_instagram | default: 'https://www.instagram.com/' -%}
-          {%- assign strava_url = section.settings.social_strava | default: 'https://www.strava.com/' -%}
-          {%- assign tiktok_url = section.settings.social_tiktok | default: 'https://www.tiktok.com/' -%}
-          <a href="{{ instagram_url }}" aria-label="Instagram" target="_blank" rel="noopener">
-            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="2" width="20" height="20" rx="5" ry="5"/><path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"/><line x1="17.5" y1="6.5" x2="17.51" y2="6.5"/></svg>
-          </a>
-          <a href="{{ strava_url }}" aria-label="Strava" target="_blank" rel="noopener">
-            <svg width="24" height="24" viewBox="0 0 24 24" fill="currentColor"><path d="M15.387 17.944l-2.089-4.116h-3.065L15.387 24l5.15-10.172h-3.066m-7.008-5.599l2.836 5.598h4.172L10.463 0l-7 13.828h4.169"/></svg>
-          </a>
-          <a href="{{ tiktok_url }}" aria-label="TikTok" target="_blank" rel="noopener">
-            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M14.5 3v11.2a4 4 0 1 1-4-4"/><path d="M14.5 3c.3 2.7 2.1 4.5 5 4.7"/></svg>
-          </a>
+        <div class="footer-legal">
+          {%- if section.settings.copyright_text != blank -%}
+            <span>{{ section.settings.copyright_text }}</span>
+          {%- else -%}
+            <span>&copy; {{ 'now' | date: '%Y' }} {{ shop.name }}</span>
+          {%- endif -%}
         </div>
-
         {%- if section.settings.show_payment_icons and shop.enabled_payment_types.size > 0 -%}
           <div class="footer-payments">
             {%- for type in shop.enabled_payment_types -%}
@@ -155,13 +159,6 @@
           </div>
         {%- endif -%}
 
-        <div class="footer-legal">
-          {%- if section.settings.copyright_text != blank -%}
-            <span>{{ section.settings.copyright_text }}</span>
-          {%- else -%}
-            <span>&copy; {{ 'now' | date: '%Y' }} {{ shop.name }}</span>
-          {%- endif -%}
-        </div>
       </div>
 
     </div>
