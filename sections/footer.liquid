@@ -40,14 +40,11 @@
       <div class="footer-grid">
 
         <div class="footer-col footer-brand">
+          {%- capture logo_class -%}{%- if section.settings.logo_white -%}footer-logo--white{%- endif -%}{%- endcapture -%}
           {%- if section.settings.logo -%}
-            <img src="{{ section.settings.logo | image_url: width: 600 }}" alt="{{ shop.name | escape }}" width="{{ section.settings.logo.width }}" height="{{ section.settings.logo.height }}" loading="lazy">
+            <img class="{{ logo_class }}" src="{{ section.settings.logo | image_url: width: 600 }}" alt="{{ shop.name | escape }}" width="{{ section.settings.logo.width }}" height="{{ section.settings.logo.height }}" loading="lazy">
           {%- else -%}
-            {%- if section.settings.footer_bg.lightness < 50 -%}
-              <img src="{{ 'motto-feel-the-run-light.svg' | asset_url }}" alt="Feel The Run" width="966" height="959" loading="lazy">
-            {%- else -%}
-              <img src="{{ 'motto-feel-the-run.svg' | asset_url }}" alt="Feel The Run" width="966" height="959" loading="lazy">
-            {%- endif -%}
+            <img class="{{ logo_class }}" src="{{ 'motto-feel-the-run.svg' | asset_url }}" alt="Feel The Run" width="966" height="959" loading="lazy">
           {%- endif -%}
           {%- if section.settings.tagline != blank -%}
             <p>{{ section.settings.tagline }}</p>
@@ -79,15 +76,17 @@
         {%- endfor -%}
 
         {%- if section.settings.show_localization -%}
+          {%- assign ship_to_lines = section.settings.ship_to_countries | newline_to_br | split: '<br />' -%}
           <div class="footer-col footer-localization">
             {%- if section.settings.localization_heading != blank -%}
               <h4>{{ section.settings.localization_heading }}</h4>
             {%- endif -%}
             {%- if localization.available_countries.size > 1 -%}
+              {%- comment -%} Several Shopify Markets countries: use Shopify's own form so currency and checkout country both follow. {%- endcomment -%}
               {%- form 'localization', id: 'FooterLocalization' -%}
-                <label class="visually-hidden" for="FooterCountry">Country/region</label>
+                <label class="visually-hidden" for="FooterCountry">Shipping destination</label>
                 <div class="footer-localization__field">
-                  <svg class="footer-localization__icon" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="9"/><path d="M3 12h18"/><path d="M12 3a14 14 0 0 1 0 18a14 14 0 0 1 0-18z"/></svg>
+                  <svg class="footer-localization__icon" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="9"/><path d="M3 12h18"/><path d="M12 3a14 14 0 0 1 0 18a14 14 0 0 1 0-18z"/></svg>
                   <select id="FooterCountry" name="country_code" data-localization-select>
                     {%- for country in localization.available_countries -%}
                       <option value="{{ country.iso_code }}" {% if country.iso_code == localization.country.iso_code %}selected{% endif %}>
@@ -98,9 +97,28 @@
                 </div>
                 <noscript><button type="submit" class="btn">Update</button></noscript>
               {%- endform -%}
+            {%- elsif ship_to_lines.size > 0 and section.settings.ship_to_countries != blank -%}
+              {%- comment -%} One market: a destination dropdown that pre-fills the checkout country. {%- endcomment -%}
+              <label class="visually-hidden" for="FooterShipTo">Shipping destination</label>
+              <div class="footer-localization__field">
+                <svg class="footer-localization__icon" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="9"/><path d="M3 12h18"/><path d="M12 3a14 14 0 0 1 0 18a14 14 0 0 1 0-18z"/></svg>
+                <select id="FooterShipTo" data-ship-to-select>
+                  {%- for line in ship_to_lines -%}
+                    {%- assign parts = line | split: '|' -%}
+                    {%- assign ship_code = parts[0] | strip -%}
+                    {%- assign ship_name = parts[1] | strip -%}
+                    {%- if ship_code != blank and ship_name != blank -%}
+                      <option value="{{ ship_code }}" data-name="{{ ship_name | escape }}" {% if ship_code == localization.country.iso_code %}selected{% endif %}>{{ ship_name }}</option>
+                    {%- endif -%}
+                  {%- endfor -%}
+                </select>
+              </div>
+              {%- if section.settings.ship_to_note != blank -%}
+                <p class="footer-localization__note">{{ section.settings.ship_to_note }}</p>
+              {%- endif -%}
             {%- else -%}
               <p class="footer-localization__static">
-                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="9"/><path d="M3 12h18"/><path d="M12 3a14 14 0 0 1 0 18a14 14 0 0 1 0-18z"/></svg>
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="9"/><path d="M3 12h18"/><path d="M12 3a14 14 0 0 1 0 18a14 14 0 0 1 0-18z"/></svg>
                 <span>{{ localization.country.name }} ({{ localization.country.currency.iso_code }})</span>
               </p>
             {%- endif -%}
@@ -115,13 +133,13 @@
           {%- assign strava_url = section.settings.social_strava | default: 'https://www.strava.com/' -%}
           {%- assign tiktok_url = section.settings.social_tiktok | default: 'https://www.tiktok.com/' -%}
           <a href="{{ instagram_url }}" aria-label="Instagram" target="_blank" rel="noopener">
-            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="2" width="20" height="20" rx="5" ry="5"/><path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"/><line x1="17.5" y1="6.5" x2="17.51" y2="6.5"/></svg>
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="2" width="20" height="20" rx="5" ry="5"/><path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"/><line x1="17.5" y1="6.5" x2="17.51" y2="6.5"/></svg>
           </a>
           <a href="{{ strava_url }}" aria-label="Strava" target="_blank" rel="noopener">
-            <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor"><path d="M15.387 17.944l-2.089-4.116h-3.065L15.387 24l5.15-10.172h-3.066m-7.008-5.599l2.836 5.598h4.172L10.463 0l-7 13.828h4.169"/></svg>
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="currentColor"><path d="M15.387 17.944l-2.089-4.116h-3.065L15.387 24l5.15-10.172h-3.066m-7.008-5.599l2.836 5.598h4.172L10.463 0l-7 13.828h4.169"/></svg>
           </a>
           <a href="{{ tiktok_url }}" aria-label="TikTok" target="_blank" rel="noopener">
-            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M14.5 3v11.2a4 4 0 1 1-4-4"/><path d="M14.5 3c.3 2.7 2.1 4.5 5 4.7"/></svg>
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M14.5 3v11.2a4 4 0 1 1-4-4"/><path d="M14.5 3c.3 2.7 2.1 4.5 5 4.7"/></svg>
           </a>
         </div>
 
@@ -166,12 +184,15 @@
     { "type": "color", "id": "footer_text", "label": "Text", "default": "#ffffff" },
 
     { "type": "header", "content": "Brand" },
-    { "type": "image_picker", "id": "logo", "label": "Logo", "info": "Optional. Leave empty to use the Feel The Run logo, which switches to a light version automatically on a dark footer. Size is set in Theme settings > Logo." },
+    { "type": "image_picker", "id": "logo", "label": "Logo", "info": "Optional. Leave empty to use the Feel The Run logo. Size is set in Theme settings > Logo." },
+    { "type": "checkbox", "id": "logo_white", "label": "Show the logo in white", "info": "Turns whatever logo is used solid white, so it reads on a dark footer.", "default": true },
     { "type": "textarea", "id": "tagline", "label": "Description", "default": "Gear built for runners who chase open roads and quiet trails." },
 
     { "type": "header", "content": "Shipping to" },
-    { "type": "checkbox", "id": "show_localization", "label": "Show \"Shipping to\" column", "info": "Visitors choose the country they shop from, and Shopify carries that choice (currency and shipping country) through to checkout. The list comes from the countries enabled in Settings > Markets.", "default": true },
+    { "type": "checkbox", "id": "show_localization", "label": "Show \"Shipping to\" column", "info": "If more than one country is enabled in Settings > Markets, Shopify's own country selector is used (it changes currency too). Otherwise the list below is used.", "default": true },
     { "type": "text", "id": "localization_heading", "label": "Heading", "default": "Shipping to" },
+    { "type": "textarea", "id": "ship_to_countries", "label": "Countries to offer", "info": "One per line as CODE|Name, e.g. GB|United Kingdom. The visitor's pick is pre-filled as the country at checkout. Only list countries you have shipping rates for.", "default": "GB|United Kingdom\nIE|Ireland\nFR|France\nDE|Germany\nES|Spain\nIT|Italy\nNL|Netherlands\nUS|United States" },
+    { "type": "text", "id": "ship_to_note", "label": "Note under the selector", "default": "Your country is pre-filled at checkout." },
 
     { "type": "header", "content": "Bottom bar" },
     { "type": "checkbox", "id": "show_payment_icons", "label": "Show accepted payment icons", "default": true },

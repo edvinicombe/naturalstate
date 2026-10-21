@@ -203,6 +203,42 @@ document.addEventListener('DOMContentLoaded', function () {
     savedDrawer?.classList.remove('open');
   });
 
+  /* ── Shipping destination: remember the choice and pre-fill the checkout country ── */
+  var SHIP_KEY = 'ns_ship_to';
+  var shipSelect = document.querySelector('[data-ship-to-select]');
+
+  function applyShipTo(name) {
+    document.querySelectorAll('form[action$="/cart"]').forEach(function (form) {
+      if (!form.querySelector('[name="checkout"]')) return;
+      var input = form.querySelector('input[name="checkout[shipping_address][country]"]');
+      if (!input) {
+        input = document.createElement('input');
+        input.type = 'hidden';
+        input.name = 'checkout[shipping_address][country]';
+        form.appendChild(input);
+      }
+      input.value = name;
+    });
+    document.querySelectorAll('[data-ship-to-label]').forEach(function (el) { el.textContent = name; });
+    document.querySelectorAll('[data-ship-to-note]').forEach(function (el) { el.hidden = !name; });
+  }
+
+  if (shipSelect) {
+    var storedShip = null;
+    try { storedShip = localStorage.getItem(SHIP_KEY); } catch (e) {}
+    if (storedShip) {
+      var match = Array.from(shipSelect.options).find(function (o) { return o.value === storedShip; });
+      if (match) shipSelect.value = storedShip;
+    }
+    var chosen = shipSelect.options[shipSelect.selectedIndex];
+    if (chosen) applyShipTo(chosen.dataset.name || chosen.text);
+    shipSelect.addEventListener('change', function () {
+      var opt = shipSelect.options[shipSelect.selectedIndex];
+      try { localStorage.setItem(SHIP_KEY, shipSelect.value); } catch (e) {}
+      applyShipTo(opt.dataset.name || opt.text);
+    });
+  }
+
   /* ── Footer country selector: submit on change ── */
   document.querySelectorAll('[data-localization-select]').forEach(function (sel) {
     sel.addEventListener('change', function () {
