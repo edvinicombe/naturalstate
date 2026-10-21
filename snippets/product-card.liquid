@@ -1,28 +1,102 @@
-<a href="{{ product.url }}" class="product-card">
+{%- liquid
+  assign base_variant = product.selected_or_first_available_variant
+  assign size_idx = 0
+  for opt in product.options
+    assign opt_name = opt | downcase
+    if opt_name == 'size'
+      assign size_idx = forloop.index0
+    endif
+  endfor
+  capture base_rest
+    for o in base_variant.options
+      unless forloop.index0 == size_idx
+        echo o | append: '|'
+      endunless
+    endfor
+  endcapture
+-%}
+<div class="product-card" data-product-card>
   <div class="product-card__media">
+    <a href="{{ product.url }}" class="product-card__media-link" aria-label="{{ product.title | escape }}" tabindex="-1">
+      {%- if product.featured_image -%}
+        <img class="img-primary"
+             src="{{ product.featured_image | image_url: width: 800 }}"
+             alt="{{ product.featured_image.alt | default: product.title | escape }}"
+             loading="lazy" width="800" height="1000">
+      {%- endif -%}
+      {%- if product.images[1] -%}
+        <img class="img-secondary"
+             src="{{ product.images[1] | image_url: width: 800 }}"
+             alt="" loading="lazy" width="800" height="1000">
+      {%- endif -%}
+    </a>
+
     {%- if product.compare_at_price > product.price -%}
       <span class="product-card__badge">Sale</span>
     {%- elsif product.tags contains 'new' -%}
       <span class="product-card__badge">New</span>
     {%- endif -%}
-    {%- if product.featured_image -%}
-      <img class="img-primary"
-           src="{{ product.featured_image | image_url: width: 800 }}"
-           alt="{{ product.featured_image.alt | default: product.title | escape }}"
-           loading="lazy" width="800" height="1000">
-    {%- endif -%}
-    {%- if product.images[1] -%}
-      <img class="img-secondary"
-           src="{{ product.images[1] | image_url: width: 800 }}"
-           alt="" loading="lazy" width="800" height="1000">
+
+    <button type="button" class="card-save" data-save aria-pressed="false" aria-label="Save {{ product.title | escape }}"
+            data-handle="{{ product.handle }}"
+            data-title="{{ product.title | escape }}"
+            data-image="{{ product.featured_image | image_url: width: 600 }}"
+            data-price="{{ product.price | money }}"
+            data-url="{{ product.url }}">
+      <svg class="card-save__icon" width="24" height="24" viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78Z" stroke="currentColor" stroke-width="1.5" stroke-linejoin="round"/></svg>
+    </button>
+
+    {%- if product.available -%}
+      <div class="quick-add" data-add-url="{{ routes.cart_add_url }}.js" data-cart-url="{{ routes.cart_url }}.js">
+        {%- if product.has_only_default_variant -%}
+          <button type="button" class="quick-add__btn" data-quick-add data-variant-id="{{ product.variants.first.id }}" aria-label="Quick add {{ product.title | escape }} to bag">
+            <svg class="quick-add__icon" width="24" height="24" viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M12 5v14M5 12h14" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg>
+            <span class="quick-add__label">Quick add</span>
+          </button>
+        {%- else -%}
+          <button type="button" class="quick-add__btn" data-quick-add-toggle aria-expanded="false" aria-label="Quick add {{ product.title | escape }} to bag">
+            <svg class="quick-add__icon" width="24" height="24" viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M12 5v14M5 12h14" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg>
+            <span class="quick-add__label">Quick add</span>
+          </button>
+          <div class="quick-add__panel" role="group" aria-label="Choose {{ product.options[size_idx] | escape }}">
+            <div class="quick-add__panel-head">
+              <span>Select {{ product.options[size_idx] | downcase }}</span>
+              <button type="button" class="quick-add__close" data-quick-add-close aria-label="Close">
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M6 6l12 12M18 6L6 18" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg>
+              </button>
+            </div>
+            <div class="quick-add__sizes">
+              {%- for value in product.options_with_values[size_idx].values -%}
+                {%- assign strict_id = '' -%}
+                {%- assign any_id = '' -%}
+                {%- for v in product.variants -%}
+                  {%- if v.options[size_idx] == value and v.available -%}
+                    {%- if any_id == blank -%}{%- assign any_id = v.id -%}{%- endif -%}
+                    {%- capture v_rest -%}
+                      {%- for o in v.options -%}{%- unless forloop.index0 == size_idx -%}{{ o }}|{%- endunless -%}{%- endfor -%}
+                    {%- endcapture -%}
+                    {%- if v_rest == base_rest -%}{%- assign strict_id = v.id -%}{%- break -%}{%- endif -%}
+                  {%- endif -%}
+                {%- endfor -%}
+                {%- if strict_id != blank -%}{%- assign pick_id = strict_id -%}{%- else -%}{%- assign pick_id = any_id -%}{%- endif -%}
+                <button type="button" class="quick-add__size" data-quick-add data-variant-id="{{ pick_id }}"{% if pick_id == blank %} disabled{% endif %}>{{ value }}</button>
+              {%- endfor -%}
+            </div>
+          </div>
+        {%- endif -%}
+        <span class="visually-hidden" data-quick-add-status role="status" aria-live="polite"></span>
+      </div>
     {%- endif -%}
   </div>
-  <p class="product-card__title">{{ product.title }}</p>
-  <p class="product-card__price">
-    {%- if product.compare_at_price > product.price -%}
-      <s>{{ product.compare_at_price | money }}</s>{{ product.price | money }}
-    {%- else -%}
-      {{ product.price | money }}
-    {%- endif -%}
-  </p>
-</a>
+
+  <a href="{{ product.url }}" class="product-card__info">
+    <p class="product-card__title">{{ product.title }}</p>
+    <p class="product-card__price">
+      {%- if product.compare_at_price > product.price -%}
+        <s>{{ product.compare_at_price | money }}</s>{{ product.price | money }}
+      {%- else -%}
+        {{ product.price | money }}
+      {%- endif -%}
+    </p>
+  </a>
+</div>
