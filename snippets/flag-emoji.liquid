@@ -1,13 +1,14 @@
 {%- comment -%}
-  Flag emoji for a two-letter country code (regional indicator symbols). Param: code.
+  Flag emoji for a two-letter country code, built from regional indicator symbols
+  written as numeric HTML entities (keeps the file plain ASCII). Param: code.
 {%- endcomment -%}
 {%- assign flag_code = code | strip | upcase -%}
 {%- if flag_code.size == 2 -%}
   {%- assign flag_letters = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ' -%}
-  {%- assign flag_glyphs = '🇦,🇧,🇨,🇩,🇪,🇫,🇬,🇭,🇮,🇯,🇰,🇱,🇲,🇳,🇴,🇵,🇶,🇷,🇸,🇹,🇺,🇻,🇼,🇽,🇾,🇿' | split: ',' -%}
   {%- assign flag_a = flag_code | slice: 0 -%}
   {%- assign flag_b = flag_code | slice: 1 -%}
   {%- assign flag_ia = flag_letters | split: flag_a | first | size -%}
   {%- assign flag_ib = flag_letters | split: flag_b | first | size -%}
-  {{- flag_glyphs[flag_ia] }}{{ flag_glyphs[flag_ib] -}}
+  {{- flag_ia | plus: 127462 | prepend: '&#' | append: ';' -}}
+  {{- flag_ib | plus: 127462 | prepend: '&#' | append: ';' -}}
 {%- endif -%}
