@@ -44,7 +44,11 @@
           {%- if section.settings.logo -%}
             <img class="{{ logo_class }}" src="{{ section.settings.logo | image_url: width: 600 }}" alt="{{ shop.name | escape }}" width="{{ section.settings.logo.width }}" height="{{ section.settings.logo.height }}" loading="lazy">
           {%- else -%}
-            <img class="{{ logo_class }}" src="{{ 'motto-feel-the-run.svg' | asset_url }}" alt="Feel The Run" width="966" height="959" loading="lazy">
+            {%- if section.settings.logo_white -%}
+              <img class="{{ logo_class }}" src="{{ 'motto-feel-the-run-white.svg' | asset_url }}" alt="Feel The Run" width="966" height="959" loading="lazy">
+            {%- else -%}
+              <img src="{{ 'motto-feel-the-run.svg' | asset_url }}" alt="Feel The Run" width="966" height="959" loading="lazy">
+            {%- endif -%}
           {%- endif -%}
           {%- if section.settings.tagline != blank -%}
             <p>{{ section.settings.tagline }}</p>
@@ -185,7 +189,7 @@
 
     { "type": "header", "content": "Brand" },
     { "type": "image_picker", "id": "logo", "label": "Logo", "info": "Optional. Leave empty to use the Feel The Run logo. Size is set in Theme settings > Logo." },
-    { "type": "checkbox", "id": "logo_white", "label": "Show the logo in white", "info": "Turns whatever logo is used solid white, so it reads on a dark footer.", "default": true },
+    { "type": "checkbox", "id": "logo_white", "label": "Show the logo in white", "info": "Shows the logo in solid white so it reads on a dark footer. Untick for the original dark logo on a light footer.", "default": true },
     { "type": "textarea", "id": "tagline", "label": "Description", "default": "Gear built for runners who chase open roads and quiet trails." },
 
     { "type": "header", "content": "Shipping to" },
