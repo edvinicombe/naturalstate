@@ -31,7 +31,7 @@
       {%- endif -%}
       <div class="product-info__title-row">
         <h1 class="product-info__title">{{ product.title }}</h1>
-        <button type="button" id="SaveProduct" class="save-btn"
+        <button type="button" id="SaveProduct" class="save-btn" data-save
                 aria-label="Save product" aria-pressed="false"
                 data-handle="{{ product.handle }}"
                 data-title="{{ product.title | escape }}"

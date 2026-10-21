@@ -104,25 +104,137 @@ document.addEventListener('DOMContentLoaded', function () {
 
   updateSavedCount();
 
-  var saveBtn = document.getElementById('SaveProduct');
-  if (saveBtn) {
-    function setSaveState(saved) {
-      saveBtn.classList.toggle('active', saved);
-      saveBtn.setAttribute('aria-pressed', saved ? 'true' : 'false');
-      saveBtn.setAttribute('aria-label', saved ? 'Remove from saved' : 'Save product');
-    }
-    setSaveState(isSaved(saveBtn.dataset.handle));
-    saveBtn.addEventListener('click', function () {
-      var product = {
-        handle: saveBtn.dataset.handle,
-        title: saveBtn.dataset.title,
-        image: saveBtn.dataset.image,
-        price: saveBtn.dataset.price,
-        url: saveBtn.dataset.url
-      };
-      setSaveState(toggleSaved(product));
+  /* ── Save hearts: product page + product cards ── */
+  function refreshSaveButtons() {
+    document.querySelectorAll('[data-save]').forEach(function (btn) {
+      var saved = isSaved(btn.dataset.handle);
+      var title = btn.dataset.title || 'product';
+      btn.classList.toggle('active', saved);
+      btn.setAttribute('aria-pressed', saved ? 'true' : 'false');
+      btn.setAttribute('aria-label', (saved ? 'Remove from saved: ' : 'Save: ') + title);
     });
   }
+  refreshSaveButtons();
+  document.addEventListener('click', function (e) {
+    var btn = e.target.closest('[data-save]');
+    if (!btn) return;
+    e.preventDefault();
+    toggleSaved({
+      handle: btn.dataset.handle,
+      title: btn.dataset.title,
+      image: btn.dataset.image,
+      price: btn.dataset.price,
+      url: btn.dataset.url
+    });
+    refreshSaveButtons();
+  });
+
+  /* ── Quick add to bag (product cards) ── */
+  var ICON_PLUS = '<path d="M12 5v14M5 12h14" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/>';
+  var ICON_CHECK = '<path d="M5 12.5l4.5 4.5L19 7.5" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>';
+
+  function updateCartCount(count) {
+    document.querySelectorAll('[data-cart-count]').forEach(function (el) {
+      el.textContent = count;
+      el.hidden = count < 1;
+    });
+    document.querySelectorAll('[data-cart-count-text]').forEach(function (el) { el.textContent = count; });
+    document.querySelectorAll('[data-cart-link]').forEach(function (a) {
+      a.setAttribute('aria-label', 'Cart (' + count + ' items)');
+    });
+  }
+
+  function closeQuickAdd(except) {
+    document.querySelectorAll('.product-card.is-picking').forEach(function (card) {
+      if (card === except) return;
+      card.classList.remove('is-picking');
+      var toggle = card.querySelector('[data-quick-add-toggle]');
+      if (toggle) toggle.setAttribute('aria-expanded', 'false');
+    });
+  }
+
+  function quickAdd(trigger) {
+    var card = trigger.closest('[data-product-card]');
+    var wrap = trigger.closest('.quick-add');
+    if (!card || !wrap || wrap.classList.contains('is-busy')) return;
+    var main = wrap.querySelector('.quick-add__btn');
+    var label = main.querySelector('.quick-add__label');
+    var icon = main.querySelector('.quick-add__icon');
+    var status = wrap.querySelector('[data-quick-add-status]');
+
+    function reset(delay) {
+      setTimeout(function () {
+        main.disabled = false;
+        wrap.classList.remove('is-busy');
+        if (label) label.textContent = 'Quick add';
+        if (icon) icon.innerHTML = ICON_PLUS;
+      }, delay);
+    }
+
+    wrap.classList.add('is-busy');
+    main.disabled = true;
+    if (label) label.textContent = 'Adding…';
+
+    fetch(wrap.dataset.addUrl, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json', 'Accept': 'application/json' },
+      body: JSON.stringify({ items: [{ id: Number(trigger.dataset.variantId), quantity: 1 }] })
+    })
+      .then(function (res) {
+        return res.json().then(function (data) { return { ok: res.ok, data: data }; });
+      })
+      .then(function (r) {
+        if (!r.ok) throw new Error((r.data && (r.data.description || r.data.message)) || 'Could not add to bag');
+        return fetch(wrap.dataset.cartUrl, { headers: { 'Accept': 'application/json' } })
+          .then(function (res) { return res.json(); });
+      })
+      .then(function (cart) {
+        updateCartCount(cart.item_count);
+        closeQuickAdd();
+        if (label) label.textContent = 'Added';
+        if (icon) icon.innerHTML = ICON_CHECK;
+        if (status) status.textContent = 'Added to bag';
+        reset(2000);
+      })
+      .catch(function (err) {
+        if (label) label.textContent = 'Try again';
+        if (status) status.textContent = err.message;
+        reset(3000);
+      });
+  }
+
+  document.addEventListener('click', function (e) {
+    var add = e.target.closest('[data-quick-add]');
+    if (add) { e.preventDefault(); quickAdd(add); return; }
+
+    var toggle = e.target.closest('[data-quick-add-toggle]');
+    if (toggle) {
+      var card = toggle.closest('[data-product-card]');
+      var open = !card.classList.contains('is-picking');
+      closeQuickAdd(card);
+      card.classList.toggle('is-picking', open);
+      toggle.setAttribute('aria-expanded', open ? 'true' : 'false');
+      if (open) {
+        var first = card.querySelector('.quick-add__size:not(:disabled)');
+        if (first) first.focus({ preventScroll: true });
+      }
+      return;
+    }
+
+    var close = e.target.closest('[data-quick-add-close]');
+    if (close) {
+      var c = close.closest('[data-product-card]');
+      closeQuickAdd();
+      var t = c && c.querySelector('[data-quick-add-toggle]');
+      if (t) t.focus({ preventScroll: true });
+      return;
+    }
+
+    if (!e.target.closest('.quick-add')) closeQuickAdd();
+  });
+  document.addEventListener('keydown', function (e) {
+    if (e.key === 'Escape') closeQuickAdd();
+  });
 
   /* ── Saved products drawer ── */
   var savedGrid = document.getElementById('SavedGrid');
@@ -181,6 +293,7 @@ document.addEventListener('DOMContentLoaded', function () {
         e.stopPropagation();
         setSaved(getSaved().filter(function (p) { return p.handle !== btn.dataset.handle; }));
         updateSavedCount();
+        refreshSaveButtons();
         btn.closest('.product-card').remove();
         if (getSaved().length === 0 && savedEmpty) savedEmpty.style.display = 'block';
       });
