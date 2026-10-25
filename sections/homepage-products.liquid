@@ -1,0 +1,44 @@
+<section class="section-pad" id="products">
+  <div class="page-width">
+    <div class="section-header">
+      <div>
+        {%- if section.settings.products_eyebrow != blank -%}
+          <p class="eyebrow section-header__eyebrow">{{ section.settings.products_eyebrow }}</p>
+        {%- endif -%}
+        <h2 class="h2">{{ section.settings.products_heading }}</h2>
+      </div>
+    </div>
+
+    <div class="product-grid product-grid--3">
+      {%- assign source = section.settings.collection -%}
+      {%- if source != blank -%}
+        {%- for product in source.products limit: section.settings.products_limit -%}
+          {%- render 'product-card', product: product -%}
+        {%- endfor -%}
+      {%- else -%}
+        {%- for i in (1..section.settings.products_limit) -%}
+          <div class="product-card">
+            <div class="product-card__media product-card__media--empty">
+              <span>Add products in Customize</span>
+            </div>
+            <p class="product-card__title">Sample Product</p>
+            <p class="product-card__price">£0.00</p>
+          </div>
+        {%- endfor -%}
+      {%- endif -%}
+    </div>
+  </div>
+</section>
+
+{% schema %}
+{
+  "name": "Shop products",
+  "settings": [
+    { "type": "text",       "id": "products_eyebrow", "label": "Eyebrow",  "default": "The Range" },
+    { "type": "text",       "id": "products_heading", "label": "Heading",  "default": "Shop the essentials" },
+    { "type": "collection", "id": "collection",       "label": "Collection" },
+    { "type": "range",      "id": "products_limit",   "label": "Number of products", "info": "Three per row on desktop, so multiples of 3 fill every row.", "min": 3, "max": 12, "step": 3, "default": 9 }
+  ],
+  "presets": [{ "name": "Shop products" }]
+}
+{% endschema %}

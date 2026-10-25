@@ -9,27 +9,184 @@
  */
 {
   "sections": {
-    "homepage": {
-      "type": "homepage-main",
+    "hero": {
+      "type": "homepage-hero",
       "settings": {
         "hero_image": "shopify://shop_images/feeltherun.png",
         "hero_eyebrow": "New Season",
         "hero_heading": "Alternative running apparel for those chasing nothing but the feeling",
-        "hero_btn_1": "Shop Now",
+        "hero_btn_1": "Shop Now"
+      }
+    },
+    "products": {
+      "type": "homepage-products",
+      "settings": {
         "products_eyebrow": "Feel the run collection",
         "products_heading": "Shop",
         "collection": "drop-1",
-        "products_limit": 8,
-        "story_image_1": "shopify://shop_images/ed-running-1_137d5ec0-d616-4424-99ad-2e90a05d4f4c.jpg",
-        "story_image_2": "shopify://shop_images/ed-running-3.jpg",
-        "story_image_3": "shopify://shop_images/ed-running-2_1a503148-dc08-4f97-aa5d-4b96448c7832.jpg",
-        "story_eyebrow": "Our story",
-        "story_heading": "Born from running free",
-        "story_text": "I’m Ed, a designer and runner. I created Natural State around the feeling I keep coming back to when I run — freedom, clarity and being completely yourself. Your natural state."
+        "products_limit": 9
+      }
+    },
+    "quality": {
+      "type": "homepage-quality",
+      "blocks": {
+        "hotspot_fabric": {
+          "type": "hotspot",
+          "settings": {
+            "x": 28,
+            "y": 38,
+            "title": "Breathable fabric",
+            "text": "Light, quick-drying material that moves with you mile after mile."
+          }
+        },
+        "hotspot_seams": {
+          "type": "hotspot",
+          "settings": {
+            "x": 56,
+            "y": 62,
+            "title": "Flat seams",
+            "text": "Placed away from friction points so nothing rubs on the long runs."
+          }
+        },
+        "hotspot_detail": {
+          "type": "hotspot",
+          "settings": {
+            "x": 78,
+            "y": 30,
+            "title": "Made to last",
+            "text": "Tested on real roads and trails before it ever reaches you."
+          }
+        },
+        "tile_fabric": {
+          "type": "tile",
+          "settings": {
+            "image": "shopify://shop_images/ed-running-1_137d5ec0-d616-4424-99ad-2e90a05d4f4c.jpg",
+            "title": "Fabric",
+            "text": "Chosen for feel first."
+          }
+        },
+        "tile_fit": {
+          "type": "tile",
+          "settings": {
+            "image": "shopify://shop_images/ed-running-3.jpg",
+            "title": "Fit",
+            "text": "Cut to move."
+          }
+        },
+        "tile_finish": {
+          "type": "tile",
+          "settings": {
+            "image": "shopify://shop_images/feeltherun.png",
+            "title": "Finish",
+            "text": "Details that hold up."
+          }
+        },
+        "tile_testing": {
+          "type": "tile",
+          "settings": {
+            "image": "shopify://shop_images/ed-running-2_1a503148-dc08-4f97-aa5d-4b96448c7832.jpg",
+            "title": "Tested on the run",
+            "text": "Every piece earns its place out on the trail."
+          }
+        },
+        "proof_tested": {
+          "type": "proof",
+          "settings": {
+            "number": "100%",
+            "label": "Trail tested"
+          }
+        },
+        "proof_returns": {
+          "type": "proof",
+          "settings": {
+            "number": "30",
+            "label": "Day returns"
+          }
+        },
+        "proof_delivery": {
+          "type": "proof",
+          "settings": {
+            "number": "Free",
+            "label": "UK delivery over £75"
+          }
+        }
+      },
+      "block_order": [
+        "hotspot_fabric",
+        "hotspot_seams",
+        "hotspot_detail",
+        "tile_fabric",
+        "tile_fit",
+        "tile_finish",
+        "tile_testing",
+        "proof_tested",
+        "proof_returns",
+        "proof_delivery"
+      ],
+      "settings": {
+        "eyebrow": "Built to last",
+        "heading": "Quality you can feel",
+        "intro": "Every detail is chosen, tested and tested again, so the gear gets out of your way and lets you run.",
+        "stage_image": "shopify://shop_images/ed-running-2_1a503148-dc08-4f97-aa5d-4b96448c7832.jpg",
+        "stage_alt": "Runner on a trail wearing Natural State"
+      }
+    },
+    "mission": {
+      "type": "homepage-mission",
+      "blocks": {
+        "tile_free": {
+          "type": "tile",
+          "settings": {
+            "image": "shopify://shop_images/ed-running-1_137d5ec0-d616-4424-99ad-2e90a05d4f4c.jpg",
+            "title": "Run free.",
+            "text": "No pace, no podium. Just the feeling."
+          }
+        },
+        "tile_disappear": {
+          "type": "tile",
+          "settings": {
+            "image": "shopify://shop_images/ed-running-3.jpg",
+            "title": "Made to disappear.",
+            "text": "Light and honest enough that you forget you’re wearing it."
+          }
+        },
+        "tile_miles": {
+          "type": "tile",
+          "settings": {
+            "image": "shopify://shop_images/ed-running-2_1a503148-dc08-4f97-aa5d-4b96448c7832.jpg",
+            "title": "Built on real miles.",
+            "text": "Tested on the roads and trails it was made for."
+          }
+        },
+        "tile_natural": {
+          "type": "tile",
+          "settings": {
+            "title": "Your natural state.",
+            "text": "Freedom, clarity and being completely yourself.",
+            "tile_bg": "#000000"
+          }
+        }
+      },
+      "block_order": [
+        "tile_free",
+        "tile_disappear",
+        "tile_miles",
+        "tile_natural"
+      ],
+      "settings": {
+        "eyebrow": "Natural State",
+        "heading": "Our mission",
+        "tagline": "Born from running free",
+        "text": "I’m Ed, a designer and runner. I created Natural State around the feeling I keep coming back to when I run: freedom, clarity and being completely yourself. Your natural state.",
+        "button_label": "Read our story",
+        "button_link": "/pages/our-story"
       }
     }
   },
   "order": [
-    "homepage"
+    "hero",
+    "products",
+    "quality",
+    "mission"
   ]
 }
