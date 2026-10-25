@@ -395,4 +395,56 @@ document.addEventListener('DOMContentLoaded', function () {
     if (e.key === 'Escape' && reviewPanel && reviewPanel.classList.contains('is-open')) closeReviewPanel();
   });
   if (reviewPanel && reviewPanel.dataset.openOnLoad === 'true') openReviewPanel();
+
+  /* ── Our mission: scroll rail controls ── */
+  document.querySelectorAll('[data-rail-wrap]').forEach(function (wrap) {
+    var rail = wrap.querySelector('[data-rail]');
+    var prev = wrap.querySelector('[data-rail-prev]');
+    var next = wrap.querySelector('[data-rail-next]');
+    var bar = wrap.querySelector('[data-rail-progress]');
+    if (!rail) return;
+
+    function step() {
+      var tile = rail.querySelector('li');
+      return tile ? tile.getBoundingClientRect().width + 16 : rail.clientWidth * 0.8;
+    }
+    function update() {
+      var max = rail.scrollWidth - rail.clientWidth;
+      var pos = max > 0 ? rail.scrollLeft / max : 1;
+      if (bar) bar.style.width = Math.max(rail.clientWidth / rail.scrollWidth, pos) * 100 + '%';
+      if (prev) prev.disabled = rail.scrollLeft <= 1;
+      if (next) next.disabled = rail.scrollLeft >= max - 1;
+    }
+    if (prev) prev.addEventListener('click', function () { rail.scrollBy({ left: -step(), behavior: 'smooth' }); });
+    if (next) next.addEventListener('click', function () { rail.scrollBy({ left: step(), behavior: 'smooth' }); });
+    rail.addEventListener('scroll', update, { passive: true });
+    window.addEventListener('resize', update);
+    update();
+  });
+
+  /* ── Quality showcase: hotspots ── */
+  document.querySelectorAll('[data-hotspots]').forEach(function (stage) {
+    var spots = stage.querySelectorAll('.hotspot');
+    function closeAll(except) {
+      spots.forEach(function (s) {
+        if (s === except) return;
+        s.classList.remove('is-open');
+        var d = s.querySelector('.hotspot__dot');
+        if (d) d.setAttribute('aria-expanded', 'false');
+      });
+    }
+    spots.forEach(function (spot) {
+      var dot = spot.querySelector('.hotspot__dot');
+      if (!dot) return;
+      dot.addEventListener('click', function (e) {
+        e.stopPropagation();
+        var open = !spot.classList.contains('is-open');
+        closeAll(spot);
+        spot.classList.toggle('is-open', open);
+        dot.setAttribute('aria-expanded', open ? 'true' : 'false');
+      });
+    });
+    document.addEventListener('click', function (e) { if (!stage.contains(e.target)) closeAll(); });
+    document.addEventListener('keydown', function (e) { if (e.key === 'Escape') closeAll(); });
+  });
 });
