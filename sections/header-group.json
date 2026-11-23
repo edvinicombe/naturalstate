@@ -20,18 +20,10 @@
             "label": "Catalog",
             "url": "/collections/all"
           }
-        },
-        "nav_story": {
-          "type": "nav_link",
-          "settings": {
-            "label": "Our story",
-            "url": "/pages/our-story"
-          }
         }
       },
       "block_order": [
-        "nav_catalog",
-        "nav_story"
+        "nav_catalog"
       ],
       "settings": {
         "announcement": "Free UK shipping on orders over £75"
