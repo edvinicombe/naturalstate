@@ -483,4 +483,33 @@ document.addEventListener('DOMContentLoaded', function () {
     });
     sync();
   });
+
+  /* ── Hero: background eases into a blur as the page scrolls ── */
+  var heroReduce = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  document.querySelectorAll('.hero').forEach(function (hero) {
+    var bg = hero.querySelector('.hero__bg');
+    if (!bg || heroReduce) return;
+    var MAX_BLUR = 20;      // px at full scroll
+    var MAX_SCALE = 0.1;    // grows a little so blurred edges never show
+    var current = 0, target = 0, raf = 0;
+
+    function paint() {
+      bg.style.setProperty('--hero-blur', (current * MAX_BLUR).toFixed(2) + 'px');
+      bg.style.setProperty('--hero-scale', (1 + current * MAX_SCALE).toFixed(4));
+    }
+    function tick() {
+      current += (target - current) * 0.05;   // low easing factor = slow, smooth catch-up
+      if (Math.abs(target - current) < 0.001) current = target;
+      paint();
+      raf = current === target ? 0 : requestAnimationFrame(tick);
+    }
+    function onScroll() {
+      var range = hero.offsetHeight * 0.7;
+      target = Math.min(Math.max(window.scrollY / range, 0), 1);
+      if (!raf) raf = requestAnimationFrame(tick);
+    }
+    window.addEventListener('scroll', onScroll, { passive: true });
+    window.addEventListener('resize', onScroll);
+    onScroll();
+  });
 });
