@@ -447,4 +447,19 @@ document.addEventListener('DOMContentLoaded', function () {
     document.addEventListener('click', function (e) { if (!stage.contains(e.target)) closeAll(); });
     document.addEventListener('keydown', function (e) { if (e.key === 'Escape') closeAll(); });
   });
+
+  /* ── Announcement marquee: constant speed in px/s whatever the screen or message length ── */
+  document.querySelectorAll('[data-marquee-speed]').forEach(function (bar) {
+    var speed = parseFloat(bar.getAttribute('data-marquee-speed')) || 22;
+    var track = bar.querySelector('.announcement-bar__track');
+    var group = bar.querySelector('.announcement-bar__group');
+    if (!track || !group) return;
+    function setSpeed() {
+      var w = group.getBoundingClientRect().width;
+      if (w) track.style.animationDuration = (w / speed) + 's';
+    }
+    setSpeed();
+    window.addEventListener('resize', setSpeed);
+    if (document.fonts && document.fonts.ready) document.fonts.ready.then(setSpeed);
+  });
 });
