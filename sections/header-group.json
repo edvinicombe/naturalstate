@@ -26,7 +26,8 @@
         "nav_catalog"
       ],
       "settings": {
-        "announcement": "Free UK shipping on orders over £75"
+        "announcement": "Free UK shipping on orders over £75",
+        "announcement_speed": 30
       }
     }
   },
