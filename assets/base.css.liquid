@@ -17,11 +17,14 @@
   --sp-9:  4.5rem;  --sp-10: 5rem;    --sp-11: 5.5rem;  --sp-12: 6rem;
   --sp-15: 7.5rem;
   --gap:         var(--sp-3);
+  --announce-h:  0px;            /* height of the announcement bar, when shown */
   --section-gap: var(--sp-10);   /* space between sections: 80px, 64px on phones */
   --header-h:    calc({{ settings.logo_height }}rem + var(--sp-6));
   --font-body:    {% if settings.font_body.family != blank %}{{ settings.font_body.family }},{% endif %} -apple-system, "Helvetica Neue", Arial, sans-serif;
   --font-heading: {% if settings.font_heading.family != blank %}{{ settings.font_heading.family }},{% endif %} -apple-system, "Helvetica Neue", Arial, sans-serif;
 }
+
+body:has(.announcement-bar) { --announce-h: var(--sp-5); }
 
 *, *::before, *::after { box-sizing: border-box; }
 html { -webkit-font-smoothing: antialiased; -moz-osx-font-smoothing: grayscale; }
@@ -350,7 +353,9 @@ h1,h2,h3,h4,h5 {
 /* ── Hero ── */
 .hero {
   position: relative;
-  min-height: 90vh;
+  /* Fill exactly what's left of the first screen below the announcement bar; the rest of the page starts below the fold. */
+  min-height: calc(100vh - var(--announce-h));
+  min-height: calc(100svh - var(--announce-h));
   margin-top: calc(-1 * var(--header-h));
   display: flex;
   align-items: flex-end;
@@ -391,6 +396,7 @@ h1,h2,h3,h4,h5 {
   position: relative;
   z-index: 2;
   width: 100%;
+  padding-top: calc(var(--header-h) + var(--sp-3));
   padding-bottom: var(--sp-9);
 }
 .hero__content { text-align: center; }
@@ -398,7 +404,6 @@ h1,h2,h3,h4,h5 {
 .hero__content h1 { color: #f5f3ef; margin-bottom: var(--sp-4); max-width: 34ch; margin-inline: auto; }
 .hero__actions { display: flex; gap: var(--sp-2); flex-wrap: wrap; justify-content: center; }
 @media (max-width: 749px) {
-  .hero { min-height: 75vh; }
   .hero__content { padding-bottom: var(--sp-6); }
   .hero__actions { flex-direction: column; align-items: center; }
   .hero__actions .btn { width: min(100%, 17.5rem); }
