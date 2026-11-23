@@ -462,4 +462,25 @@ document.addEventListener('DOMContentLoaded', function () {
     window.addEventListener('resize', setSpeed);
     if (document.fonts && document.fonts.ready) document.fonts.ready.then(setSpeed);
   });
+
+  /* ── Hero background video: play/pause, and no autoplay for reduced motion ── */
+  document.querySelectorAll('[data-hero-video]').forEach(function (video) {
+    var btn = video.parentElement.querySelector('[data-hero-video-toggle]');
+    function sync() {
+      if (!btn) return;
+      var paused = video.paused;
+      btn.setAttribute('aria-pressed', paused ? 'true' : 'false');
+      btn.setAttribute('aria-label', paused ? 'Play background video' : 'Pause background video');
+    }
+    if (window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
+      video.removeAttribute('autoplay');
+      video.pause();
+    }
+    video.addEventListener('play', sync);
+    video.addEventListener('pause', sync);
+    if (btn) btn.addEventListener('click', function () {
+      if (video.paused) { var p = video.play(); if (p && p.catch) p.catch(function () {}); } else { video.pause(); }
+    });
+    sync();
+  });
 });

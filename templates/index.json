@@ -18,7 +18,8 @@
         "btn_1_label": "Shop mens",
         "btn_1_link": "/collections/all/mens",
         "btn_2_label": "Shop womens",
-        "btn_2_link": "/collections/all/womens"
+        "btn_2_link": "/collections/all/womens",
+        "show_demo_video": true
       }
     },
     "split": {

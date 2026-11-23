@@ -1,5 +1,31 @@
-<section class="hero">
-  {%- if section.settings.hero_image -%}
+{%- liquid
+  assign hero_video = section.settings.hero_video
+  assign use_demo = false
+  if hero_video == blank and section.settings.show_demo_video
+    assign use_demo = true
+  endif
+  if section.settings.hero_image != blank
+    assign hero_poster = section.settings.hero_image | image_url: width: 1600
+  elsif hero_video != blank
+    assign hero_poster = hero_video.preview_image | image_url: width: 1600
+  endif
+-%}
+<section class="hero{% if hero_video != blank or use_demo %} hero--video{% endif %}">
+  {%- if hero_video != blank or use_demo -%}
+    <video class="hero__bg hero__video" autoplay muted loop playsinline preload="auto"{% if hero_poster != blank %} poster="{{ hero_poster }}"{% endif %} aria-hidden="true" data-hero-video>
+      {%- if hero_video != blank -%}
+        {%- for source in hero_video.sources -%}
+          {%- if source.format == 'mp4' -%}<source src="{{ source.url }}" type="{{ source.mime_type }}">{%- endif -%}
+        {%- endfor -%}
+      {%- else -%}
+        <source src="{{ 'hero-demo-running.mp4' | asset_url }}" type="video/mp4">
+      {%- endif -%}
+    </video>
+    <button type="button" class="hero__toggle" data-hero-video-toggle aria-label="Pause background video" aria-pressed="false">
+      <svg class="hero__toggle-pause" width="24" height="24" viewBox="0 -960 960 960" fill="currentColor" aria-hidden="true" focusable="false"><path d="M520-200v-560h240v560H520Zm-320 0v-560h240v560H200Zm400-80h80v-400h-80v400Zm-320 0h80v-400h-80v400Zm0-400v400-400Zm320 0v400-400Z"/></svg>
+      <svg class="hero__toggle-play" width="24" height="24" viewBox="0 -960 960 960" fill="currentColor" aria-hidden="true" focusable="false"><path d="M320-200v-560l440 280-440 280Zm80-280Zm0 134 210-134-210-134v268Z"/></svg>
+    </button>
+  {%- elsif section.settings.hero_image != blank -%}
     <img class="hero__bg" src="{{ section.settings.hero_image | image_url: width: 2400 }}" alt="" loading="eager" width="2400" height="1600">
   {%- endif -%}
   <div class="hero__content page-width">
@@ -22,7 +48,9 @@
 {
   "name": "Hero",
   "settings": [
-    { "type": "image_picker", "id": "hero_image",   "label": "Background image" },
+    { "type": "image_picker", "id": "hero_image",   "label": "Background image", "info": "Also shown while a video loads, and for visitors who prefer reduced motion." },
+    { "type": "video",        "id": "hero_video",   "label": "Background video", "info": "Optional. Upload an MP4 under Content > Files, then pick it here. Plays muted on a loop, behind the heading." },
+    { "type": "checkbox",     "id": "show_demo_video", "label": "Show demo running video", "info": "A placeholder trail-running clip used only until you pick your own video above. Untick to use the image alone.", "default": true },
     { "type": "text",         "id": "hero_eyebrow", "label": "Eyebrow",  "default": "New Season" },
     { "type": "text",         "id": "hero_heading", "label": "Heading",  "default": "Engineered for the long run" },
     { "type": "header", "content": "Buttons" },
