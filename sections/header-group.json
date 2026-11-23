@@ -20,10 +20,18 @@
             "label": "Catalog",
             "url": "/collections/all"
           }
+        },
+        "nav_mission": {
+          "type": "nav_link",
+          "settings": {
+            "label": "Our mission",
+            "url": "/#our-mission"
+          }
         }
       },
       "block_order": [
-        "nav_catalog"
+        "nav_catalog",
+        "nav_mission"
       ],
       "settings": {
         "announcement": "Free UK shipping on orders over £75",
