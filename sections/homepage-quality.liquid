@@ -17,6 +17,8 @@
     <div class="quality__stage" data-hotspots>
       {%- if section.settings.stage_image != blank -%}
         <img src="{{ section.settings.stage_image | image_url: width: 2000 }}" alt="{{ section.settings.stage_alt | escape }}" loading="lazy" width="2000" height="1125">
+      {%- elsif settings.show_demo_images -%}
+        <img src="{{ 'demo-quality-stage.jpg' | asset_url }}" alt="" loading="lazy" width="1200" height="800">
       {%- endif -%}
       {%- for block in section.blocks -%}
         {%- if block.type == 'hotspot' -%}
@@ -37,11 +39,16 @@
   {%- if tile_count > 0 -%}
     <div class="page-width">
       <div class="quality__tiles">
+        {%- assign tile_i = 0 -%}
         {%- for block in section.blocks -%}
           {%- if block.type == 'tile' -%}
+            {%- assign demo_idx = tile_i | modulo: 4 | plus: 1 -%}
+            {%- assign tile_i = tile_i | plus: 1 -%}
             <figure class="quality-tile" {{ block.shopify_attributes }}>
               {%- if block.settings.image != blank -%}
                 <img src="{{ block.settings.image | image_url: width: 1000 }}" alt="" loading="lazy" width="1000" height="1000">
+              {%- elsif settings.show_demo_images -%}
+                <img src="{{ 'demo-quality-' | append: demo_idx | append: '.jpg' | asset_url }}" alt="" loading="lazy" width="1200" height="800">
               {%- endif -%}
               <figcaption>
                 <h3>{{ block.settings.title }}</h3>
