@@ -15,16 +15,21 @@
         "hero_image": "shopify://shop_images/feeltherun.png",
         "hero_eyebrow": "New Season",
         "hero_heading": "Alternative running apparel for those chasing nothing but the feeling",
-        "hero_btn_1": "Shop Now"
+        "btn_1_label": "Shop mens",
+        "btn_1_link": "/collections/all/mens",
+        "btn_2_label": "Shop womens",
+        "btn_2_link": "/collections/all/womens"
       }
     },
-    "products": {
-      "type": "homepage-products",
+    "split": {
+      "type": "homepage-split",
       "settings": {
-        "products_eyebrow": "Feel the run collection",
-        "products_heading": "Shop",
-        "collection": "drop-1",
-        "products_limit": 9
+        "panel_1_title": "Running",
+        "panel_1_link": "/collections/all",
+        "panel_2_title": "Lifestyle",
+        "panel_2_link": "/collections/all",
+        "panel_1_image": "shopify://shop_images/ed-running-1_137d5ec0-d616-4424-99ad-2e90a05d4f4c.jpg",
+        "panel_2_image": "shopify://shop_images/ed-running-3.jpg"
       }
     },
     "quality": {
@@ -129,7 +134,8 @@
         "intro": "Every detail is chosen, tested and tested again, so the gear gets out of your way and lets you run.",
         "stage_image": "shopify://shop_images/ed-running-2_1a503148-dc08-4f97-aa5d-4b96448c7832.jpg",
         "stage_alt": "Runner on a trail wearing Natural State"
-      }
+      },
+      "disabled": true
     },
     "mission": {
       "type": "homepage-mission",
@@ -185,7 +191,7 @@
   },
   "order": [
     "hero",
-    "products",
+    "split",
     "quality",
     "mission"
   ]
