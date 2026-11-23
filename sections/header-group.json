@@ -13,8 +13,43 @@
   "sections": {
     "header": {
       "type": "header",
+      "blocks": {
+        "nav_catalog": {
+          "type": "nav_link",
+          "settings": {
+            "label": "Catalog",
+            "url": "/collections/all"
+          }
+        },
+        "nav_mens": {
+          "type": "nav_link",
+          "settings": {
+            "label": "Men’s",
+            "url": "/collections/all/mens"
+          }
+        },
+        "nav_womens": {
+          "type": "nav_link",
+          "settings": {
+            "label": "Women’s",
+            "url": "/collections/all/womens"
+          }
+        },
+        "nav_story": {
+          "type": "nav_link",
+          "settings": {
+            "label": "Our story",
+            "url": "/pages/our-story"
+          }
+        }
+      },
+      "block_order": [
+        "nav_catalog",
+        "nav_mens",
+        "nav_womens",
+        "nav_story"
+      ],
       "settings": {
-        "menu": "",
         "announcement": "Free UK shipping on orders over £75"
       }
     }

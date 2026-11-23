@@ -1,0 +1,67 @@
+{%- paginate collection.products by section.settings.per_page -%}
+  <div class="page-width collection">
+    <header class="collection__head">
+      <div>
+        <p class="eyebrow">{% if current_tags.size > 0 %}{{ current_tags | first | capitalize }}{% else %}Shop{% endif %}</p>
+        <h1 class="h2 collection__title">{{ collection.title }}</h1>
+        {%- if collection.description != blank -%}
+          <div class="collection__desc">{{ collection.description }}</div>
+        {%- endif -%}
+      </div>
+      <p class="collection__count">{{ collection.products_count }} product{% if collection.products_count != 1 %}s{% endif %}</p>
+    </header>
+
+    <div class="collection__bar">
+      {%- if section.settings.show_gender_filter -%}
+        {%- assign is_mens = false -%}
+        {%- assign is_womens = false -%}
+        {%- if current_tags contains 'mens' -%}{%- assign is_mens = true -%}{%- endif -%}
+        {%- if current_tags contains 'womens' -%}{%- assign is_womens = true -%}{%- endif -%}
+        <nav class="collection__chips" aria-label="Filter by">
+          <a href="{{ collection.url }}"{% unless is_mens or is_womens %} aria-current="true" class="is-active"{% endunless %}>All</a>
+          <a href="{{ collection.url }}/mens"{% if is_mens %} aria-current="true" class="is-active"{% endif %}>Men’s</a>
+          <a href="{{ collection.url }}/womens"{% if is_womens %} aria-current="true" class="is-active"{% endif %}>Women’s</a>
+        </nav>
+      {%- endif -%}
+      {%- if section.settings.show_sort and collection.sort_options.size > 1 -%}
+        <form class="collection__sort" method="get" action="{{ collection.url }}{% if current_tags.size > 0 %}/{{ current_tags | join: '+' }}{% endif %}">
+          <label for="CollectionSort" class="visually-hidden">Sort by</label>
+          <select id="CollectionSort" name="sort_by" onchange="this.form.submit()">
+            {%- for option in collection.sort_options -%}
+              <option value="{{ option.value }}"{% if option.value == collection.sort_by %} selected{% endif %}>{{ option.name }}</option>
+            {%- endfor -%}
+          </select>
+          <noscript><button type="submit" class="btn btn--ghost">Sort</button></noscript>
+        </form>
+      {%- endif -%}
+    </div>
+
+    {%- if collection.products.size > 0 -%}
+      <div class="product-grid{% if section.settings.columns == 3 %} product-grid--3{% endif %}">
+        {%- for product in collection.products -%}
+          {%- render 'product-card', product: product -%}
+        {%- endfor -%}
+      </div>
+      {%- if paginate.pages > 1 -%}
+        <div class="collection__pagination">{{ paginate | default_pagination }}</div>
+      {%- endif -%}
+    {%- else -%}
+      <div class="collection__empty">
+        <p>No products found here yet.</p>
+        <a href="{{ routes.all_products_collection_url }}" class="btn">View the full catalog</a>
+      </div>
+    {%- endif -%}
+  </div>
+{%- endpaginate -%}
+
+{% schema %}
+{
+  "name": "Collection",
+  "settings": [
+    { "type": "range", "id": "columns", "label": "Products per row (desktop)", "min": 3, "max": 4, "step": 1, "default": 3 },
+    { "type": "range", "id": "per_page", "label": "Products per page", "min": 12, "max": 48, "step": 12, "default": 24 },
+    { "type": "checkbox", "id": "show_gender_filter", "label": "Show All / Men’s / Women’s filter", "info": "Uses the product tags “mens” and “womens”.", "default": true },
+    { "type": "checkbox", "id": "show_sort", "label": "Show sort menu", "default": true }
+  ]
+}
+{% endschema %}
