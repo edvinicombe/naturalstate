@@ -676,6 +676,33 @@ h1,h2,h3,h4,h5 {
   .collection__head { flex-direction: column; align-items: flex-start; gap: var(--sp-1); }
 }
 
+/* ── Drop carousel (homepage) ── */
+.drop { --rail-pad: max(var(--sp-5), calc((100vw - var(--max-w)) / 2 + var(--sp-5))); overflow: hidden; scroll-margin-top: var(--sp-3); }
+.drop__all { font-size: 0.78rem; font-weight: 700; letter-spacing: 0.12em; text-transform: uppercase; border-bottom: 1.5px solid var(--text); padding-bottom: var(--sp-1); white-space: nowrap; }
+.drop__all:hover { opacity: 0.7; }
+.drop__rail {
+  display: flex;
+  gap: var(--gap);
+  margin: 0;
+  padding: 0 var(--rail-pad);
+  list-style: none;
+  overflow-x: auto;
+  scroll-snap-type: x mandatory;
+  scroll-padding-inline: var(--rail-pad);
+  scrollbar-width: none;
+  -webkit-overflow-scrolling: touch;
+}
+.drop__rail::-webkit-scrollbar { display: none; }
+.drop__rail:focus-visible { outline: 2px solid var(--text); outline-offset: -2px; }
+.drop__item { flex: 0 0 clamp(16rem, 28vw, 24rem); scroll-snap-align: start; min-width: 0; }
+.drop__controls { display: flex; align-items: center; justify-content: space-between; gap: var(--sp-4); margin-top: var(--sp-4); }
+@media (max-width: 749px) {
+  .drop { --rail-pad: var(--sp-3); }
+  .drop__rail { gap: var(--sp-2); }
+  .drop__item { flex-basis: 72vw; }
+  .drop__controls { gap: var(--sp-3); }
+}
+
 /* ── Our mission (homepage) ── */
 .mission { scroll-margin-top: var(--sp-3); --rail-pad: max(var(--sp-5), calc((100vw - var(--max-w)) / 2 + var(--sp-5))); overflow: hidden; }
 .mission__head {

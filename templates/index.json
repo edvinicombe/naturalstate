@@ -31,6 +31,15 @@
         "panel_2_link": "/collections/all"
       }
     },
+    "drop": {
+      "type": "homepage-drop",
+      "settings": {
+        "eyebrow": "Drop 01",
+        "heading": "Feel the run",
+        "collection": "drop-1",
+        "link_label": "Shop the drop"
+      }
+    },
     "quality": {
       "type": "homepage-quality",
       "blocks": {
@@ -181,12 +190,14 @@
         "text": "I’m Ed, a designer and runner. I created Natural State around the feeling I keep coming back to when I run: freedom, clarity and being completely yourself. Your natural state.",
         "button_label": "Read our story",
         "button_link": "/pages/our-story"
-      }
+      },
+      "disabled": true
     }
   },
   "order": [
     "hero",
     "split",
+    "drop",
     "quality",
     "mission"
   ]
