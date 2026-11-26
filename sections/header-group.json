@@ -17,7 +17,7 @@
         "nav_catalog": {
           "type": "nav_link",
           "settings": {
-            "label": "Catalog",
+            "label": "Drop 01",
             "url": "/collections/all"
           }
         },
