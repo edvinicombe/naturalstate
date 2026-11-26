@@ -16,7 +16,7 @@
         endif
       -%}
       <div class="mstory__state{% if forloop.first %} is-active{% endif %}" data-story-state style="--i: {{ forloop.index }}; --state-bg: {{ block.settings.bg_color }}; --state-fg: {{ block.settings.text_color }}; --state-overlay: {{ block.settings.overlay | divided_by: 100.0 }}; --state-gray: {% if block.settings.grayscale %}1{% else %}0{% endif %};" {{ block.shopify_attributes }}>
-        {%- if state_src != blank -%}
+        {%- if state_src -%}
           <img class="mstory__img" src="{{ state_src }}" alt="" loading="lazy" width="1200" height="1600">
         {%- endif -%}
         <div class="mstory__inner page-width">
