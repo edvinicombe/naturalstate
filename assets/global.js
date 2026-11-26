@@ -476,6 +476,21 @@ document.addEventListener('DOMContentLoaded', function () {
       video.removeAttribute('autoplay');
       video.pause();
     }
+    // Demo clips play one after another with a short fade between them
+    var playlist = (video.getAttribute('data-playlist') || '').split(',').filter(Boolean);
+    if (playlist.length > 1) {
+      var clip = 0;
+      video.style.transition = 'opacity 0.5s ease';
+      video.addEventListener('ended', function () {
+        clip = (clip + 1) % playlist.length;
+        video.style.opacity = '0';
+        setTimeout(function () {
+          video.src = playlist[clip];
+          var p = video.play(); if (p && p.catch) p.catch(function () {});
+        }, 500);
+      });
+      video.addEventListener('playing', function () { video.style.opacity = '1'; });
+    }
     video.addEventListener('play', sync);
     video.addEventListener('pause', sync);
     if (btn) btn.addEventListener('click', function () {
@@ -498,7 +513,7 @@ document.addEventListener('DOMContentLoaded', function () {
       bg.style.setProperty('--hero-scale', (1 + current * MAX_SCALE).toFixed(4));
     }
     function tick() {
-      current += (target - current) * 0.05;   // low easing factor = slow, smooth catch-up
+      current += (target - current) * 0.1;    // easing factor: higher = quicker catch-up
       if (Math.abs(target - current) < 0.001) current = target;
       paint();
       raf = current === target ? 0 : requestAnimationFrame(tick);
@@ -511,5 +526,98 @@ document.addEventListener('DOMContentLoaded', function () {
     window.addEventListener('scroll', onScroll, { passive: true });
     window.addEventListener('resize', onScroll);
     onScroll();
+  });
+
+  /* ── Mission story: pinned stage; backgrounds and words are scrubbed directly by scroll position ── */
+  document.querySelectorAll('[data-story]').forEach(function (sec) {
+    var reduce = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+    var stateEls = sec.querySelectorAll('[data-story-state]');
+    var dots = sec.querySelectorAll('[data-story-dot]');
+    if (reduce || stateEls.length < 2) return;
+
+    function clamp(v) { return Math.min(Math.max(v, 0), 1); }
+
+    // Split each headline into word spans (kept in line order) so words can reveal one by one
+    function splitWords(el) {
+      var words = [], line = 0, frag = document.createDocumentFragment();
+      Array.prototype.slice.call(el.childNodes).forEach(function (node) {
+        if (node.nodeType === 3) {
+          node.textContent.split(/(\s+)/).forEach(function (part) {
+            if (!part) return;
+            if (/^\s+$/.test(part)) { frag.appendChild(document.createTextNode(' ')); return; }
+            var w = document.createElement('span');
+            w.className = 'mstory__w';
+            w.textContent = part;
+            frag.appendChild(w);
+            words.push({ el: w, line: line });
+          });
+        } else if (node.nodeName === 'BR') {
+          frag.appendChild(node.cloneNode());
+          line++;
+        }
+      });
+      el.textContent = '';
+      el.appendChild(frag);
+      return words;
+    }
+
+    var STAGGER = 35;      // ms between words
+    var BASE = 150;        // ms before the first word, so the background leads
+    var states = Array.prototype.map.call(stateEls, function (el) {
+      var text = el.querySelector('.mstory__text');
+      var words = text ? splitWords(text) : [];
+      var last = 0;                        // a short beat between lines of one headline
+      words.forEach(function (w, k) { w.pos = k + w.line * 2; last = Math.max(last, w.pos); });
+      // supporting text and the button follow the headline in the same sequence
+      ['.mstory__body', '.mstory__cta'].forEach(function (sel) {
+        var extra = el.querySelector(sel);
+        if (extra) { last += 3; words.push({ el: extra, pos: last }); }
+      });
+      var label = el.querySelector('.mstory__label');
+      if (label) { label.classList.add('mstory__r'); label.style.setProperty('--d', BASE + 'ms'); }
+      // every item gets a fixed delay; the whole slide always plays out in full, whatever the scroll speed
+      words.forEach(function (w) {
+        w.el.classList.add('mstory__r');
+        w.el.style.setProperty('--d', (BASE + w.pos * STAGGER) + 'ms');
+      });
+      return { el: el, img: el.querySelector('.mstory__img') };
+    });
+
+    sec.setAttribute('data-ready', '');
+    var current = -2, ticking = false;
+
+    function update() {
+      ticking = false;
+      var r = sec.getBoundingClientRect();
+      var dist = r.height - window.innerHeight;
+      var hold = (parseFloat(sec.getAttribute('data-hold')) || 0) / 100 * window.innerHeight;   // extra scroll spent on the last slide
+      var travel = dist - hold;
+      var p = travel > 0 ? clamp(-r.top / travel) : 0;
+      var x = p * states.length;           // 0 .. n, one unit per slide
+      var raw = x + 0.12;                  // a slide takes over slightly before its boundary
+      var idx = Math.min(states.length - 1, Math.floor(raw));
+
+      // the first slide's words start once the section scrolls into view
+      if (r.top > window.innerHeight * 0.35) idx = -1;
+
+      // hysteresis so hovering on a boundary doesn't flicker
+      if (current >= 0 && idx !== current && idx >= 0 && Math.abs(raw - (current + 0.5)) < 0.5 + 0.04) idx = current;
+
+      states.forEach(function (s, i) {
+        if (s.img) s.img.style.transform = 'scale(' + (1.12 - 0.12 * clamp((x - i + 0.25) / 1.25)).toFixed(4) + ')';
+      });
+
+      if (idx === current) return;
+      current = idx;
+      stateEls.forEach(function (el, i) {
+        el.classList.toggle('is-in', i <= Math.max(idx, 0));    // earlier slides stay underneath
+        el.classList.toggle('is-active', i === idx);            // the slide whose words are showing
+      });
+      dots.forEach(function (d, i) { d.classList.toggle('is-active', i === Math.max(idx, 0)); });
+    }
+    function onScroll() { if (!ticking) { ticking = true; requestAnimationFrame(update); } }
+    window.addEventListener('scroll', onScroll, { passive: true });
+    window.addEventListener('resize', onScroll);
+    update();
   });
 });

@@ -12,13 +12,14 @@
 -%}
 <section class="hero{% if hero_video != blank or use_demo %} hero--video{% endif %}">
   {%- if hero_video != blank or use_demo -%}
-    <video class="hero__bg hero__video" autoplay muted loop playsinline preload="auto"{% if hero_poster != blank %} poster="{{ hero_poster }}"{% endif %} aria-hidden="true" data-hero-video>
+    {%- capture demo_playlist -%}{{ 'hero-demo-1.mp4' | asset_url }},{{ 'hero-demo-2.mp4' | asset_url }},{{ 'hero-demo-3.mp4' | asset_url }}{%- endcapture -%}
+    <video class="hero__bg hero__video" autoplay muted{% unless use_demo %} loop{% endunless %} playsinline preload="auto"{% if hero_poster != blank %} poster="{{ hero_poster }}"{% endif %} aria-hidden="true" data-hero-video{% if use_demo %} data-playlist="{{ demo_playlist | strip }}"{% endif %}>
       {%- if hero_video != blank -%}
         {%- for source in hero_video.sources -%}
           {%- if source.format == 'mp4' -%}<source src="{{ source.url }}" type="{{ source.mime_type }}">{%- endif -%}
         {%- endfor -%}
       {%- else -%}
-        <source src="{{ 'hero-demo-running.mp4' | asset_url }}" type="video/mp4">
+        <source src="{{ 'hero-demo-1.mp4' | asset_url }}" type="video/mp4">
       {%- endif -%}
     </video>
     <button type="button" class="hero__toggle" data-hero-video-toggle aria-label="Pause background video" aria-pressed="false">
@@ -29,18 +30,29 @@
     <img class="hero__bg" src="{{ section.settings.hero_image | image_url: width: 2400 }}" alt="" loading="eager" width="2400" height="1600">
   {%- endif -%}
   <div class="hero__content page-width">
-    {%- if section.settings.hero_eyebrow != blank -%}
-      <p class="eyebrow">{{ section.settings.hero_eyebrow }}</p>
+    {%- if section.settings.heading_image != blank -%}
+      <h1 class="hero__logo-heading">
+        <img class="hero__logo" src="{{ section.settings.heading_image | image_url: width: 1600 }}" alt="{{ section.settings.heading_alt | default: shop.name | escape }}" width="{{ section.settings.heading_image.width }}" height="{{ section.settings.heading_image.height }}" style="--hero-logo-w: {{ section.settings.logo_width }}rem;">
+      </h1>
+    {%- elsif section.settings.use_default_logo -%}
+      <h1 class="hero__logo-heading">
+        <img class="hero__logo" src="{{ 'motto-feel-the-run-white.svg' | asset_url }}" alt="{{ section.settings.heading_alt | default: 'Feel The Run' | escape }}" width="966" height="960" style="--hero-logo-w: {{ section.settings.logo_width }}rem;">
+      </h1>
+    {%- else -%}
+      {%- if section.settings.hero_eyebrow != blank -%}
+        <p class="eyebrow">{{ section.settings.hero_eyebrow }}</p>
+      {%- endif -%}
+      <h1 class="h1">{{ section.settings.hero_heading }}</h1>
     {%- endif -%}
-    <h1 class="h1">{{ section.settings.hero_heading }}</h1>
-    <div class="hero__actions">
-      {%- if section.settings.btn_1_label != blank -%}
-        <a href="{{ section.settings.btn_1_link | default: routes.all_products_collection_url }}" class="btn btn--lg btn--light">{{ section.settings.btn_1_label }}</a>
-      {%- endif -%}
-      {%- if section.settings.btn_2_label != blank -%}
-        <a href="{{ section.settings.btn_2_link | default: routes.all_products_collection_url }}" class="btn btn--lg btn--light">{{ section.settings.btn_2_label }}</a>
-      {%- endif -%}
-    </div>
+    {%- if section.blocks.size > 0 -%}
+      <div class="hero__actions">
+        {%- for block in section.blocks -%}
+          {%- if block.settings.label != blank -%}
+            <a href="{{ block.settings.link | default: routes.all_products_collection_url }}" class="btn btn--lg {% if block.settings.style == 'outline' %}btn--outline-light{% else %}btn--light{% endif %}" {{ block.shopify_attributes }}>{{ block.settings.label }}</a>
+          {%- endif -%}
+        {%- endfor -%}
+      </div>
+    {%- endif -%}
   </div>
 </section>
 
@@ -48,17 +60,33 @@
 {
   "name": "Hero",
   "settings": [
+    { "type": "header", "content": "Background" },
     { "type": "image_picker", "id": "hero_image",   "label": "Background image", "info": "Also shown while a video loads, and for visitors who prefer reduced motion." },
     { "type": "video",        "id": "hero_video",   "label": "Background video", "info": "Optional. Upload an MP4 under Content > Files, then pick it here. Plays muted on a loop, behind the heading." },
-    { "type": "checkbox",     "id": "show_demo_video", "label": "Show demo running video", "info": "A placeholder trail-running clip used only until you pick your own video above. Untick to use the image alone.", "default": true },
-    { "type": "text",         "id": "hero_eyebrow", "label": "Eyebrow",  "default": "New Season" },
-    { "type": "text",         "id": "hero_heading", "label": "Heading",  "default": "Engineered for the long run" },
-    { "type": "header", "content": "Buttons" },
-    { "type": "text", "id": "btn_1_label", "label": "First button label", "default": "Shop mens" },
-    { "type": "url",  "id": "btn_1_link",  "label": "First button link" },
-    { "type": "text", "id": "btn_2_label", "label": "Second button label", "default": "Shop womens" },
-    { "type": "url",  "id": "btn_2_link",  "label": "Second button link" }
+    { "type": "checkbox",     "id": "show_demo_video", "label": "Show demo running video", "info": "Three short placeholder trail-running clips that play in turn, used only until you pick your own video above. Untick to use the image alone.", "default": true },
+    { "type": "header", "content": "Heading" },
+    { "type": "image_picker", "id": "heading_image", "label": "Heading image", "info": "Upload a logo or wordmark to show instead of the text heading. A PNG or SVG with a transparent background works best." },
+    { "type": "checkbox",     "id": "use_default_logo", "label": "Use the white Feel The Run logo", "info": "Shown when no heading image is uploaded. Untick to use the text heading below instead.", "default": true },
+    { "type": "range",        "id": "logo_width", "label": "Heading image width", "min": 12, "max": 40, "step": 2, "unit": "rem", "default": 28 },
+    { "type": "text",         "id": "heading_alt", "label": "Heading image description", "info": "Read by screen readers and search engines.", "default": "Feel The Run" },
+    { "type": "text",         "id": "hero_eyebrow", "label": "Eyebrow (text heading only)", "default": "New Season" },
+    { "type": "text",         "id": "hero_heading", "label": "Text heading (when no image or logo)",  "default": "Engineered for the long run" }
   ],
-  "presets": [{ "name": "Hero" }]
+  "blocks": [
+    {
+      "type": "cta",
+      "name": "Button",
+      "limit": 4,
+      "settings": [
+        { "type": "text", "id": "label", "label": "Label", "default": "Shop the collection" },
+        { "type": "url",  "id": "link",  "label": "Link" },
+        { "type": "select", "id": "style", "label": "Style", "default": "solid", "options": [
+          { "value": "solid",   "label": "Solid white" },
+          { "value": "outline", "label": "Outline" }
+        ] }
+      ]
+    }
+  ],
+  "presets": [{ "name": "Hero", "blocks": [{ "type": "cta" }] }]
 }
 {% endschema %}

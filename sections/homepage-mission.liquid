@@ -31,8 +31,8 @@
               assign tile_src = 'demo-mission-' | append: demo_idx | append: '.jpg' | asset_url
             endif
           -%}
-          <li class="mission-tile{% if tile_src != blank %} mission-tile--image{% endif %}" style="--tile-bg: {{ block.settings.tile_bg }};" {{ block.shopify_attributes }}>
-            {%- if tile_src != blank -%}
+          <li class="mission-tile{% if tile_src %} mission-tile--image{% endif %}" style="--tile-bg: {{ block.settings.tile_bg }};" {{ block.shopify_attributes }}>
+            {%- if tile_src -%}
               <img class="mission-tile__img" src="{{ tile_src }}" alt="" loading="lazy" width="720" height="960">
             {%- endif -%}
             <span class="mission-tile__num">{% if forloop.index < 10 %}0{% endif %}{{ forloop.index }}</span>
