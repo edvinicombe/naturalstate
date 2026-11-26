@@ -46,10 +46,10 @@
     "drop": {
       "type": "homepage-drop",
       "settings": {
-        "eyebrow": "Drop 01",
+        "eyebrow": "Collection",
         "heading": "Feel the run",
         "collection": "feel-the-run",
-        "link_label": "Shop the drop"
+        "link_label": "Shop the collection"
       }
     },
     "story": {
