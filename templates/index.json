@@ -11,14 +11,6 @@
   "sections": {
     "hero": {
       "type": "homepage-hero",
-      "settings": {
-        "hero_image": "shopify://shop_images/feeltherun.png",
-        "hero_heading": "Alternative running apparel for those chasing nothing but the feeling",
-        "show_demo_video": true,
-        "use_default_logo": true,
-        "logo_width": 28,
-        "heading_alt": "Feel The Run"
-      },
       "blocks": {
         "cta_main": {
           "type": "cta",
@@ -31,7 +23,15 @@
       },
       "block_order": [
         "cta_main"
-      ]
+      ],
+      "settings": {
+        "hero_image": "shopify://shop_images/feeltherun.png",
+        "show_demo_video": true,
+        "use_default_logo": true,
+        "logo_width": 28,
+        "heading_alt": "Feel The Run",
+        "hero_heading": "Alternative running apparel for those chasing nothing but the feeling"
+      }
     },
     "split": {
       "type": "homepage-split",
@@ -47,7 +47,7 @@
       "settings": {
         "eyebrow": "Drop 01",
         "heading": "Feel the run",
-        "collection": "drop-1",
+        "collection": "feel-the-run",
         "link_label": "Shop the drop"
       }
     },
@@ -59,10 +59,10 @@
           "settings": {
             "label": "Why we don’t run",
             "text": "We don’t run because we have to.",
+            "body": "",
             "solid": true,
             "bg_color": "#0d0d0d",
-            "text_color": "#ffffff",
-            "body": ""
+            "text_color": "#ffffff"
           }
         },
         "state_2": {
@@ -70,11 +70,11 @@
           "settings": {
             "label": "Why we don’t run",
             "text": "Not for the pace.\nNot for the podium.\nNot for the screen.",
+            "body": "",
             "overlay": 50,
             "grayscale": true,
             "bg_color": "#1a1a1a",
-            "text_color": "#ffffff",
-            "body": ""
+            "text_color": "#ffffff"
           }
         },
         "state_3": {
@@ -82,13 +82,13 @@
           "settings": {
             "label": "Why we do",
             "text": "We run because it returns us\nto our natural state.",
-            "overlay": 50,
-            "bg_color": "#1a1a1a",
-            "text_color": "#ffffff",
             "body": "Running isn’t an escape from our lives. It’s the way back to them.",
             "button_label": "Read our story",
             "button_link": "/pages/our-story",
-            "solid": false
+            "solid": false,
+            "overlay": 50,
+            "bg_color": "#1a1a1a",
+            "text_color": "#ffffff"
           }
         }
       },
@@ -99,10 +99,10 @@
       ],
       "settings": {
         "heading": "Our mission",
+        "font_style": "display",
         "scroll_length": 140,
-        "show_progress": true,
         "hold": 100,
-        "font_style": "display"
+        "show_progress": true
       }
     },
     "quality": {
@@ -197,13 +197,13 @@
         "proof_returns",
         "proof_delivery"
       ],
+      "disabled": true,
       "settings": {
         "eyebrow": "Built to last",
         "heading": "Quality you can feel",
         "intro": "Every detail is chosen, tested and tested again, so the gear gets out of your way and lets you run.",
         "stage_alt": "Runner on a trail wearing Natural State"
-      },
-      "disabled": true
+      }
     },
     "mission": {
       "type": "homepage-mission",
@@ -235,10 +235,10 @@
         "tile_natural": {
           "type": "tile",
           "settings": {
+            "solid_tile": true,
             "title": "Your natural state.",
             "text": "Freedom, clarity and being completely yourself.",
-            "tile_bg": "#000000",
-            "solid_tile": true
+            "tile_bg": "#000000"
           }
         }
       },
@@ -248,6 +248,7 @@
         "tile_miles",
         "tile_natural"
       ],
+      "disabled": true,
       "settings": {
         "eyebrow": "Natural State",
         "heading": "Our mission",
@@ -255,8 +256,7 @@
         "text": "I’m Ed, a designer and runner. I created Natural State around the feeling I keep coming back to when I run: freedom, clarity and being completely yourself. Your natural state.",
         "button_label": "Read our story",
         "button_link": "/pages/our-story"
-      },
-      "disabled": true
+      }
     }
   },
   "order": [
