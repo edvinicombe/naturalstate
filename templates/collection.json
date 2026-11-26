@@ -12,9 +12,13 @@
     "main": {
       "type": "main-collection",
       "settings": {
+        "eyebrow": "",
+        "heading": "",
         "columns": "4",
         "per_page": 24,
         "show_gender_filter": true,
+        "mens_tag": "mens",
+        "womens_tag": "womens",
         "show_sort": true
       }
     }
