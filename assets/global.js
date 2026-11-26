@@ -476,21 +476,6 @@ document.addEventListener('DOMContentLoaded', function () {
       video.removeAttribute('autoplay');
       video.pause();
     }
-    // Demo clips play one after another with a short fade between them
-    var playlist = (video.getAttribute('data-playlist') || '').split(',').filter(Boolean);
-    if (playlist.length > 1) {
-      var clip = 0;
-      video.style.transition = 'opacity 0.5s ease';
-      video.addEventListener('ended', function () {
-        clip = (clip + 1) % playlist.length;
-        video.style.opacity = '0';
-        setTimeout(function () {
-          video.src = playlist[clip];
-          var p = video.play(); if (p && p.catch) p.catch(function () {});
-        }, 500);
-      });
-      video.addEventListener('playing', function () { video.style.opacity = '1'; });
-    }
     video.addEventListener('play', sync);
     video.addEventListener('pause', sync);
     if (btn) btn.addEventListener('click', function () {

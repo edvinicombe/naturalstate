@@ -4,22 +4,23 @@
   if hero_video == blank and section.settings.show_demo_video
     assign use_demo = true
   endif
-  if section.settings.hero_image != blank
+  if use_demo
+    assign hero_poster = 'hero-video-poster.jpg' | asset_url
+  elsif section.settings.hero_image != blank
     assign hero_poster = section.settings.hero_image | image_url: width: 1600
   elsif hero_video != blank
     assign hero_poster = hero_video.preview_image | image_url: width: 1600
   endif
 -%}
-<section class="hero{% if hero_video != blank or use_demo %} hero--video{% endif %}">
+<section class="hero{% if hero_video != blank or use_demo %} hero--video{% endif %}{% if section.settings.header_style == 'light' %} hero--header-light{% endif %}">
   {%- if hero_video != blank or use_demo -%}
-    {%- capture demo_playlist -%}{{ 'hero-demo-1.mp4' | asset_url }},{{ 'hero-demo-2.mp4' | asset_url }},{{ 'hero-demo-3.mp4' | asset_url }}{%- endcapture -%}
-    <video class="hero__bg hero__video" autoplay muted{% unless use_demo %} loop{% endunless %} playsinline preload="auto"{% if hero_poster != blank %} poster="{{ hero_poster }}"{% endif %} aria-hidden="true" data-hero-video{% if use_demo %} data-playlist="{{ demo_playlist | strip }}"{% endif %}>
+    <video class="hero__bg hero__video" autoplay muted loop playsinline preload="auto"{% if hero_poster != blank %} poster="{{ hero_poster }}"{% endif %} aria-hidden="true" data-hero-video>
       {%- if hero_video != blank -%}
         {%- for source in hero_video.sources -%}
           {%- if source.format == 'mp4' -%}<source src="{{ source.url }}" type="{{ source.mime_type }}">{%- endif -%}
         {%- endfor -%}
       {%- else -%}
-        <source src="{{ 'hero-demo-1.mp4' | asset_url }}" type="video/mp4">
+        <source src="{{ 'hero-video.mp4' | asset_url }}" type="video/mp4">
       {%- endif -%}
     </video>
     <button type="button" class="hero__toggle" data-hero-video-toggle aria-label="Pause background video" aria-pressed="false">
@@ -63,7 +64,11 @@
     { "type": "header", "content": "Background" },
     { "type": "image_picker", "id": "hero_image",   "label": "Background image", "info": "Also shown while a video loads, and for visitors who prefer reduced motion." },
     { "type": "video",        "id": "hero_video",   "label": "Background video", "info": "Optional. Upload an MP4 under Content > Files, then pick it here. Plays muted on a loop, behind the heading." },
-    { "type": "checkbox",     "id": "show_demo_video", "label": "Show demo running video", "info": "Three short placeholder trail-running clips that play in turn, used only until you pick your own video above. Untick to use the image alone.", "default": true },
+    { "type": "checkbox",     "id": "show_demo_video", "label": "Show the built-in Feel The Run film", "info": "A 21-second loop cut from the brand photography. Used only until you pick your own video above. Untick to use the background image alone.", "default": true },
+    { "type": "select", "id": "header_style", "label": "Header text over the hero", "info": "Use light for dark footage or photos, dark for bright ones.", "default": "light", "options": [
+      { "value": "light", "label": "Light (white)" },
+      { "value": "dark",  "label": "Dark (black)" }
+    ] },
     { "type": "header", "content": "Heading" },
     { "type": "image_picker", "id": "heading_image", "label": "Heading image", "info": "Upload a logo or wordmark to show instead of the text heading. A PNG or SVG with a transparent background works best." },
     { "type": "checkbox",     "id": "use_default_logo", "label": "Use the white Feel The Run logo", "info": "Shown when no heading image is uploaded. Untick to use the text heading below instead.", "default": true },
