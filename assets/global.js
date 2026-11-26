@@ -561,21 +561,30 @@ document.addEventListener('DOMContentLoaded', function () {
       return words;
     }
 
+    var STAGGER = 35;      // ms between words
+    var BASE = 150;        // ms before the first word, so the background leads
     var states = Array.prototype.map.call(stateEls, function (el) {
       var text = el.querySelector('.mstory__text');
       var words = text ? splitWords(text) : [];
-      var last = 0;                        // a short pause between lines of one headline
+      var last = 0;                        // a short beat between lines of one headline
       words.forEach(function (w, k) { w.pos = k + w.line * 2; last = Math.max(last, w.pos); });
-      // supporting text and the button reveal after the headline, in the same scrubbed sequence
+      // supporting text and the button follow the headline in the same sequence
       ['.mstory__body', '.mstory__cta'].forEach(function (sel) {
         var extra = el.querySelector(sel);
-        if (extra) { last += 3; words.push({ el: extra, pos: last, line: 0 }); }
+        if (extra) { last += 3; words.push({ el: extra, pos: last }); }
       });
-      return { el: el, img: el.querySelector('.mstory__img'), inner: el.querySelector('.mstory__inner'), words: words, span: last + 3 };
+      var label = el.querySelector('.mstory__label');
+      if (label) { label.classList.add('mstory__r'); label.style.setProperty('--d', BASE + 'ms'); }
+      // every item gets a fixed delay; the whole slide always plays out in full, whatever the scroll speed
+      words.forEach(function (w) {
+        w.el.classList.add('mstory__r');
+        w.el.style.setProperty('--d', (BASE + w.pos * STAGGER) + 'ms');
+      });
+      return { el: el, img: el.querySelector('.mstory__img') };
     });
 
     sec.setAttribute('data-ready', '');
-    var current = -1, ticking = false;
+    var current = -2, ticking = false;
 
     function update() {
       ticking = false;
@@ -585,32 +594,26 @@ document.addEventListener('DOMContentLoaded', function () {
       var travel = dist - hold;
       var p = travel > 0 ? clamp(-r.top / travel) : 0;
       var x = p * states.length;           // 0 .. n, one unit per slide
-      var active = Math.min(states.length - 1, Math.floor(x + 0.25));
+      var raw = x + 0.12;                  // a slide takes over slightly before its boundary
+      var idx = Math.min(states.length - 1, Math.floor(raw));
+
+      // the first slide's words start once the section scrolls into view
+      if (r.top > window.innerHeight * 0.35) idx = -1;
+
+      // hysteresis so hovering on a boundary doesn't flicker
+      if (current >= 0 && idx !== current && idx >= 0 && Math.abs(raw - (current + 0.5)) < 0.5 + 0.04) idx = current;
 
       states.forEach(function (s, i) {
-        var t = x - i;                                         // position within this slide
-        var fadeIn = i === 0 ? 1 : clamp((t + 0.25) / 0.25);   // crossfade over the end of the previous slide
-        var reveal = i === 0 ? 1 : clamp(t / 0.45);            // words appear once the slide is in
-        var fadeOut = i === states.length - 1 ? 0 : clamp((t - 0.72) / 0.15);
-
-        s.el.style.opacity = fadeIn;
-        if (s.img) s.img.style.transform = 'scale(' + (1.12 - 0.12 * clamp((t + 0.25) / 1.25)).toFixed(4) + ')';
-        if (s.inner) {
-          s.inner.style.opacity = (1 - fadeOut).toFixed(3);
-          s.inner.style.transform = 'translateY(' + (-fadeOut * 24).toFixed(1) + 'px)';
-        }
-        s.words.forEach(function (w) {
-          var o = clamp((reveal * s.span - w.pos) / 3);
-          w.el.style.opacity = o.toFixed(3);
-          w.el.style.transform = 'translateY(' + ((1 - o) * 28).toFixed(1) + 'px)';
-        });
+        if (s.img) s.img.style.transform = 'scale(' + (1.12 - 0.12 * clamp((x - i + 0.25) / 1.25)).toFixed(4) + ')';
       });
 
-      if (active !== current) {
-        current = active;
-        stateEls.forEach(function (el, i) { el.classList.toggle('is-active', i === active); });
-        dots.forEach(function (d, i) { d.classList.toggle('is-active', i === active); });
-      }
+      if (idx === current) return;
+      current = idx;
+      stateEls.forEach(function (el, i) {
+        el.classList.toggle('is-in', i <= Math.max(idx, 0));    // earlier slides stay underneath
+        el.classList.toggle('is-active', i === idx);            // the slide whose words are showing
+      });
+      dots.forEach(function (d, i) { d.classList.toggle('is-active', i === Math.max(idx, 0)); });
     }
     function onScroll() { if (!ticking) { ticking = true; requestAnimationFrame(update); } }
     window.addEventListener('scroll', onScroll, { passive: true });

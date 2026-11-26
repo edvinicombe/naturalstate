@@ -696,9 +696,10 @@ h1,h2,h3,h4,h5 {
   position: absolute; inset: 0; z-index: var(--i, 1);
   display: flex; align-items: center;
   background: var(--state-bg, #0d0d0d); color: var(--state-fg, #fff);
-  opacity: 0; pointer-events: none;       /* opacity is driven by scroll position (see global.js) */
-  will-change: opacity;
+  opacity: 0; pointer-events: none;
+  transition: opacity 0.7s cubic-bezier(0.4, 0, 0.2, 1);
 }
+.mstory__state.is-in { opacity: 1; }
 .mstory__state.is-active { pointer-events: auto; }
 .mstory__img {
   position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover;
@@ -706,8 +707,17 @@ h1,h2,h3,h4,h5 {
   transform: scale(1.12); will-change: transform;
 }
 .mstory__state:has(.mstory__img)::after { content: ""; position: absolute; inset: 0; background: rgba(0,0,0,var(--state-overlay, 0.4)); }
-.mstory__inner { position: relative; z-index: 1; width: 100%; will-change: opacity, transform; }
-.mstory__w { display: inline-block; will-change: opacity, transform; }
+.mstory__inner { position: relative; z-index: 1; width: 100%; }
+.mstory__w { display: inline-block; }
+/* Words, supporting text and button: they leave quickly, and arrive one after another (delay set per item in JS) */
+.mstory[data-ready] .mstory__r {
+  opacity: 0; transform: translateY(1.25rem);
+  transition: opacity 0.25s ease, transform 0.25s ease;
+}
+.mstory[data-ready] .mstory__state.is-active .mstory__r {
+  opacity: 1; transform: none;
+  transition: opacity 0.5s cubic-bezier(0.2, 0.7, 0.2, 1) var(--d, 0ms), transform 0.6s cubic-bezier(0.2, 0.7, 0.2, 1) var(--d, 0ms);
+}
 .mstory__label { color: inherit; opacity: 0.7; margin-bottom: var(--sp-3); }
 .mstory__text { margin: 0; font-family: var(--font-heading); font-weight: 700; text-transform: uppercase; letter-spacing: -0.035em; line-height: 0.92; font-size: clamp(2.5rem, 8vw, 7.5rem); max-width: min(22ch, calc(100% - var(--sp-8))); }
 .mstory__body { margin: var(--sp-3) 0 0; max-width: 44ch; font-size: 1.1rem; line-height: var(--sp-4); opacity: 0.85; }
