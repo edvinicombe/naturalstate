@@ -37,7 +37,7 @@
     </div>
 
     {%- if collection.products.size > 0 -%}
-      <div class="product-grid{% if section.settings.columns == 3 %} product-grid--3{% endif %}">
+      <div class="product-grid{% if section.settings.columns == '3' %} product-grid--3{% endif %}">
         {%- for product in collection.products -%}
           {%- render 'product-card', product: product -%}
         {%- endfor -%}
@@ -58,7 +58,7 @@
 {
   "name": "Collection",
   "settings": [
-    { "type": "range", "id": "columns", "label": "Products per row (desktop)", "min": 3, "max": 4, "step": 1, "default": 3 },
+    { "type": "select", "id": "columns", "label": "Products per row (desktop)", "default": "3", "options": [ { "value": "3", "label": "3 (larger cards)" }, { "value": "4", "label": "4" } ] },
     { "type": "range", "id": "per_page", "label": "Products per page", "min": 12, "max": 48, "step": 12, "default": 24 },
     { "type": "checkbox", "id": "show_gender_filter", "label": "Show All / Men’s / Women’s filter", "info": "Uses the product tags “mens” and “womens”.", "default": true },
     { "type": "checkbox", "id": "show_sort", "label": "Show sort menu", "default": true }
