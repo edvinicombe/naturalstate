@@ -17,7 +17,7 @@
         "nav_catalog": {
           "type": "nav_link",
           "settings": {
-            "label": "Feel the run collection",
+            "label": "Shop the collection",
             "url": "shopify://collections/feel-the-run"
           }
         },

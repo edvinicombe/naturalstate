@@ -15,7 +15,7 @@
         "cta_main": {
           "type": "cta",
           "settings": {
-            "label": "Feel the run collection",
+            "label": "Shop the collection",
             "link": "shopify://collections/feel-the-run",
             "style": "solid"
           }
