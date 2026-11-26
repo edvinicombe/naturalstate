@@ -2,7 +2,12 @@
   "sections": {
     "main": {
       "type": "main-collection",
-      "settings": {}
+      "settings": {
+        "columns": "3",
+        "per_page": 24,
+        "show_gender_filter": true,
+        "show_sort": true
+      }
     }
   },
   "order": [
