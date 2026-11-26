@@ -27,19 +27,21 @@
       "settings": {
         "hero_image": "shopify://shop_images/feeltherun.png",
         "show_demo_video": true,
+        "header_style": "light",
         "use_default_logo": true,
         "logo_width": 28,
         "heading_alt": "Feel The Run",
         "hero_eyebrow": "New Season",
-        "hero_heading": "Alternative running apparel for those chasing nothing but the feeling",
-        "header_style": "light"
+        "hero_heading": "Alternative running apparel for those chasing nothing but the feeling"
       }
     },
     "split": {
       "type": "homepage-split",
       "settings": {
+        "panel_1_image": "shopify://shop_images/ed-running-1_137d5ec0-d616-4424-99ad-2e90a05d4f4c.jpg",
         "panel_1_title": "Running",
         "panel_1_link": "shopify://collections/running",
+        "panel_2_image": "shopify://shop_images/ed-running-3.jpg",
         "panel_2_title": "Lifestyle",
         "panel_2_link": "shopify://collections/lifestyle"
       }
