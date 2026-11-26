@@ -18,7 +18,7 @@
           "type": "nav_link",
           "settings": {
             "label": "Feel the run collection",
-            "url": "/collections/all"
+            "url": "shopify://collections/feel-the-run"
           }
         },
         "nav_mission": {

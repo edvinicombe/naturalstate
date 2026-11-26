@@ -16,7 +16,7 @@
           "type": "cta",
           "settings": {
             "label": "Shop the collection",
-            "link": "/collections/drop-1",
+            "link": "shopify://collections/feel-the-run",
             "style": "solid"
           }
         }
@@ -30,6 +30,7 @@
         "use_default_logo": true,
         "logo_width": 28,
         "heading_alt": "Feel The Run",
+        "hero_eyebrow": "New Season",
         "hero_heading": "Alternative running apparel for those chasing nothing but the feeling"
       }
     },
@@ -60,7 +61,11 @@
             "label": "Why we don’t run",
             "text": "We don’t run because we have to.",
             "body": "",
+            "button_label": "",
+            "button_link": "",
             "solid": true,
+            "overlay": 40,
+            "grayscale": false,
             "bg_color": "#0d0d0d",
             "text_color": "#ffffff"
           }
@@ -71,6 +76,9 @@
             "label": "Why we don’t run",
             "text": "Not for the pace.\nNot for the podium.\nNot for the screen.",
             "body": "",
+            "button_label": "",
+            "button_link": "",
+            "solid": false,
             "overlay": 50,
             "grayscale": true,
             "bg_color": "#1a1a1a",
@@ -87,6 +95,7 @@
             "button_link": "/pages/our-story",
             "solid": false,
             "overlay": 50,
+            "grayscale": false,
             "bg_color": "#1a1a1a",
             "text_color": "#ffffff"
           }
@@ -212,24 +221,30 @@
           "type": "tile",
           "settings": {
             "image": "shopify://shop_images/ed-running-1_137d5ec0-d616-4424-99ad-2e90a05d4f4c.jpg",
+            "solid_tile": false,
             "title": "Run free.",
-            "text": "No pace, no podium. Just the feeling."
+            "text": "No pace, no podium. Just the feeling.",
+            "tile_bg": "#141414"
           }
         },
         "tile_disappear": {
           "type": "tile",
           "settings": {
             "image": "shopify://shop_images/ed-running-3.jpg",
+            "solid_tile": false,
             "title": "Made to disappear.",
-            "text": "Light and honest enough that you forget you’re wearing it."
+            "text": "Light and honest enough that you forget you’re wearing it.",
+            "tile_bg": "#141414"
           }
         },
         "tile_miles": {
           "type": "tile",
           "settings": {
             "image": "shopify://shop_images/ed-running-2_1a503148-dc08-4f97-aa5d-4b96448c7832.jpg",
+            "solid_tile": false,
             "title": "Built on real miles.",
-            "text": "Tested on the roads and trails it was made for."
+            "text": "Tested on the roads and trails it was made for.",
+            "tile_bg": "#141414"
           }
         },
         "tile_natural": {
