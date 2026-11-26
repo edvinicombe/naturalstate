@@ -2,8 +2,12 @@
   <div class="page-width collection">
     <header class="collection__head">
       <div>
-        <p class="eyebrow">{% if current_tags.size > 0 %}{{ current_tags | first | capitalize }}{% else %}Shop{% endif %}</p>
-        <h1 class="h2 collection__title">{{ collection.title }}</h1>
+        {%- assign eyebrow_text = section.settings.eyebrow -%}
+        {%- if eyebrow_text == blank -%}
+          {%- if current_tags.size > 0 -%}{%- assign eyebrow_text = current_tags | first | capitalize -%}{%- else -%}{%- assign eyebrow_text = 'Shop' -%}{%- endif -%}
+        {%- endif -%}
+        <p class="eyebrow">{{ eyebrow_text }}</p>
+        <h1 class="h2 collection__title">{{ section.settings.heading | default: collection.title }}</h1>
         {%- if collection.description != blank -%}
           <div class="collection__desc">{{ collection.description }}</div>
         {%- endif -%}
@@ -13,18 +17,26 @@
 
     <div class="collection__bar">
       {%- if section.settings.show_gender_filter -%}
+        {%- assign mens_tag = section.settings.mens_tag | default: 'mens' | handleize -%}
+        {%- assign womens_tag = section.settings.womens_tag | default: 'womens' | handleize -%}
         {%- assign is_mens = false -%}
         {%- assign is_womens = false -%}
-        {%- if current_tags contains 'mens' -%}{%- assign is_mens = true -%}{%- endif -%}
-        {%- if current_tags contains 'womens' -%}{%- assign is_womens = true -%}{%- endif -%}
+        {%- comment -%} current_tags keep the tag's original casing, so compare handles. {%- endcomment -%}
+        {%- for t in current_tags -%}
+          {%- assign t_handle = t | handleize -%}
+          {%- if t_handle == mens_tag -%}{%- assign is_mens = true -%}{%- endif -%}
+          {%- if t_handle == womens_tag -%}{%- assign is_womens = true -%}{%- endif -%}
+        {%- endfor -%}
         <nav class="collection__chips" aria-label="Filter by">
           <a href="{{ collection.url }}"{% unless is_mens or is_womens %} aria-current="true" class="is-active"{% endunless %}>All</a>
-          <a href="{{ collection.url }}/mens"{% if is_mens %} aria-current="true" class="is-active"{% endif %}>Men’s</a>
-          <a href="{{ collection.url }}/womens"{% if is_womens %} aria-current="true" class="is-active"{% endif %}>Women’s</a>
+          <a href="{{ collection.url }}/{{ mens_tag }}"{% if is_mens %} aria-current="true" class="is-active"{% endif %}>Men’s</a>
+          <a href="{{ collection.url }}/{{ womens_tag }}"{% if is_womens %} aria-current="true" class="is-active"{% endif %}>Women’s</a>
         </nav>
       {%- endif -%}
       {%- if section.settings.show_sort and collection.sort_options.size > 1 -%}
-        <form class="collection__sort" method="get" action="{{ collection.url }}{% if current_tags.size > 0 %}/{{ current_tags | join: '+' }}{% endif %}">
+        {%- assign tag_path = '' -%}
+        {%- for t in current_tags -%}{%- assign t_h = t | handleize -%}{%- assign tag_path = tag_path | append: t_h -%}{%- unless forloop.last -%}{%- assign tag_path = tag_path | append: '+' -%}{%- endunless -%}{%- endfor -%}
+        <form class="collection__sort" method="get" action="{{ collection.url }}{% if tag_path != blank %}/{{ tag_path }}{% endif %}">
           <label for="CollectionSort" class="visually-hidden">Sort by</label>
           <select id="CollectionSort" name="sort_by" onchange="this.form.submit()">
             {%- for option in collection.sort_options -%}
@@ -58,9 +70,13 @@
 {
   "name": "Collection",
   "settings": [
+    { "type": "text", "id": "eyebrow", "label": "Eyebrow", "info": "Small text above the heading. Leave blank for “Shop”." },
+    { "type": "text", "id": "heading", "label": "Heading (H1)", "info": "Leave blank to use the collection’s own title." },
     { "type": "select", "id": "columns", "label": "Products per row (desktop)", "default": "3", "options": [ { "value": "3", "label": "3 (larger cards)" }, { "value": "4", "label": "4" } ] },
     { "type": "range", "id": "per_page", "label": "Products per page", "min": 12, "max": 48, "step": 12, "default": 24 },
-    { "type": "checkbox", "id": "show_gender_filter", "label": "Show All / Men’s / Women’s filter", "info": "Uses the product tags “mens” and “womens”.", "default": true },
+    { "type": "checkbox", "id": "show_gender_filter", "label": "Show All / Men’s / Women’s filter", "default": true },
+    { "type": "text", "id": "mens_tag", "label": "Men’s product tag", "default": "mens", "info": "Must match the tag on your men’s products." },
+    { "type": "text", "id": "womens_tag", "label": "Women’s product tag", "default": "womens", "info": "Must match the tag on your women’s products." },
     { "type": "checkbox", "id": "show_sort", "label": "Show sort menu", "default": true }
   ]
 }
