@@ -498,7 +498,7 @@ document.addEventListener('DOMContentLoaded', function () {
       bg.style.setProperty('--hero-scale', (1 + current * MAX_SCALE).toFixed(4));
     }
     function tick() {
-      current += (target - current) * 0.05;   // low easing factor = slow, smooth catch-up
+      current += (target - current) * 0.1;    // easing factor: higher = quicker catch-up
       if (Math.abs(target - current) < 0.001) current = target;
       paint();
       raf = current === target ? 0 : requestAnimationFrame(tick);
@@ -511,5 +511,34 @@ document.addEventListener('DOMContentLoaded', function () {
     window.addEventListener('scroll', onScroll, { passive: true });
     window.addEventListener('resize', onScroll);
     onScroll();
+  });
+
+  /* ── Mission story: pinned stage, state changes with scroll position ── */
+  document.querySelectorAll('[data-story]').forEach(function (sec) {
+    var reduce = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+    var states = sec.querySelectorAll('[data-story-state]');
+    var dots = sec.querySelectorAll('[data-story-dot]');
+    if (reduce || states.length < 2) return;
+    sec.setAttribute('data-ready', '');
+    var current = -1, ticking = false;
+
+    function update() {
+      ticking = false;
+      var r = sec.getBoundingClientRect();
+      var dist = r.height - window.innerHeight;
+      var p = dist > 0 ? Math.min(Math.max(-r.top / dist, 0), 0.9999) : 0;
+      var idx = Math.floor(p * states.length);
+      if (idx === current) return;
+      current = idx;
+      states.forEach(function (s, i) {
+        s.classList.toggle('is-active', i === idx);
+        s.classList.toggle('is-past', i < idx);
+      });
+      dots.forEach(function (d, i) { d.classList.toggle('is-active', i === idx); });
+    }
+    function onScroll() { if (!ticking) { ticking = true; requestAnimationFrame(update); } }
+    window.addEventListener('scroll', onScroll, { passive: true });
+    window.addEventListener('resize', onScroll);
+    update();
   });
 });

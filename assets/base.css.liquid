@@ -114,6 +114,7 @@ h1,h2,h3,h4,h5 {
 }
 .btn--ghost:hover { border-color: var(--text); opacity: 1; }
 .btn--light { background: #fff; border-color: #fff; color: #141414; }
+.btn--outline-light { background: transparent; border-color: #fff; color: #fff; }
 .btn--full  { width: 100%; }
 .btn--lg    { min-height: var(--sp-7); padding: var(--sp-1) var(--sp-5); font-size: 0.88rem; }
 .btn:disabled { opacity: 0.38; cursor: not-allowed; }
@@ -406,9 +407,12 @@ h1,h2,h3,h4,h5 {
 .hero__content .eyebrow { color: rgba(245,243,239,0.7); margin-bottom: 16px; }
 .hero__content h1 { color: #f5f3ef; margin-bottom: var(--sp-4); max-width: 34ch; margin-inline: auto; }
 .hero__actions { display: flex; gap: var(--sp-2); flex-wrap: wrap; justify-content: center; }
+.hero__content .hero__logo-heading { margin: 0 0 var(--sp-4); max-width: none; line-height: 0; }
+.hero__logo { width: min(var(--hero-logo-w, 28rem), 80vw); height: auto; margin-inline: auto; }
 @media (max-width: 749px) {
   .hero__actions { flex-direction: column; align-items: center; }
-  .hero__actions .btn { width: min(100%, 17.5rem); }
+  .hero__actions .btn { width: min(100%, 22rem); }
+  .hero__content .hero__logo-heading { margin-bottom: var(--sp-3); }
 }
 
 /* ── Section header ── */
@@ -675,6 +679,45 @@ h1,h2,h3,h4,h5 {
   .collection { padding-top: var(--sp-5); }
   .collection__head { flex-direction: column; align-items: flex-start; gap: var(--sp-1); }
 }
+
+/* ── Mission scroll story (homepage): pinned stage whose state changes as you scroll ── */
+.mstory { position: relative; height: calc(var(--n, 3) * var(--step, 100) * 1svh); scroll-margin-top: 0; }
+.mstory__stage { position: sticky; top: 0; height: 100vh; height: 100svh; overflow: hidden; }
+.mstory__state {
+  position: absolute; inset: 0; z-index: var(--i, 1);
+  display: flex; align-items: center;
+  background: var(--state-bg, #0d0d0d); color: var(--state-fg, #fff);
+  opacity: 0; pointer-events: none;
+  transition: opacity 1s ease;
+}
+.mstory__state.is-past, .mstory__state.is-active { opacity: 1; }
+.mstory__state.is-active { pointer-events: auto; }
+.mstory__img {
+  position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover;
+  filter: grayscale(var(--state-gray, 0));
+  transform: scale(1.14); transition: transform 9s ease-out;
+}
+.mstory__state.is-active .mstory__img { transform: scale(1); }
+.mstory__state:has(.mstory__img)::after { content: ""; position: absolute; inset: 0; background: rgba(0,0,0,var(--state-overlay, 0.4)); }
+.mstory__inner { position: relative; z-index: 1; opacity: 0; transform: translateY(var(--sp-4)); transition: opacity 0.4s ease, transform 0.8s ease; }
+.mstory__state.is-active .mstory__inner { opacity: 1; transform: none; transition: opacity 0.9s ease 0.35s, transform 0.9s ease 0.35s; }
+.mstory__label { color: inherit; opacity: 0.7; margin-bottom: var(--sp-3); }
+.mstory__text { margin: 0; font-family: var(--font-heading); font-weight: 700; text-transform: uppercase; letter-spacing: -0.035em; line-height: 0.92; font-size: clamp(2.5rem, 8vw, 7.5rem); max-width: 16ch; }
+.mstory__cta { margin-top: var(--sp-5); background: #141414; border-color: #141414; color: #fff; }
+.mstory__dots { position: absolute; z-index: 60; right: var(--sp-5); top: 50%; transform: translateY(-50%); display: flex; flex-direction: column; gap: var(--sp-2); margin: 0; padding: 0; list-style: none; color: #fff; mix-blend-mode: difference; }
+.mstory__dots li { width: var(--sp-1); height: var(--sp-1); border-radius: 999px; background: currentColor; opacity: 0.4; transition: opacity 0.4s ease, transform 0.4s ease; }
+.mstory__dots li.is-active { opacity: 1; transform: scale(1.5); }
+@media (max-width: 749px) {
+  .mstory__dots { right: var(--sp-2); }
+  .mstory__text { font-size: clamp(2.5rem, 13vw, 4.5rem); }
+}
+/* Without JS, or if the visitor prefers reduced motion, the states simply stack and read top to bottom. */
+.mstory:not([data-ready]) { height: auto; }
+.mstory:not([data-ready]) .mstory__stage { position: static; height: auto; overflow: visible; }
+.mstory:not([data-ready]) .mstory__state { position: relative; inset: auto; min-height: 70vh; min-height: 70svh; opacity: 1; padding-block: var(--sp-10); }
+.mstory:not([data-ready]) .mstory__inner { opacity: 1; transform: none; }
+.mstory:not([data-ready]) .mstory__img { transform: none; }
+.mstory:not([data-ready]) .mstory__dots { display: none; }
 
 /* ── Drop carousel (homepage) ── */
 .drop { --rail-pad: max(var(--sp-5), calc((100vw - var(--max-w)) / 2 + var(--sp-5))); overflow: hidden; scroll-margin-top: var(--sp-3); }

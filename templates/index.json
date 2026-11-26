@@ -13,14 +13,25 @@
       "type": "homepage-hero",
       "settings": {
         "hero_image": "shopify://shop_images/feeltherun.png",
-        "hero_eyebrow": "New Season",
         "hero_heading": "Alternative running apparel for those chasing nothing but the feeling",
-        "btn_1_label": "Shop mens",
-        "btn_1_link": "/collections/all/mens",
-        "btn_2_label": "Shop womens",
-        "btn_2_link": "/collections/all/womens",
-        "show_demo_video": true
-      }
+        "show_demo_video": true,
+        "use_default_logo": true,
+        "logo_width": 28,
+        "heading_alt": "Feel The Run"
+      },
+      "blocks": {
+        "cta_main": {
+          "type": "cta",
+          "settings": {
+            "label": "Shop Feel The Run Collection",
+            "link": "/collections/drop-1",
+            "style": "solid"
+          }
+        }
+      },
+      "block_order": [
+        "cta_main"
+      ]
     },
     "split": {
       "type": "homepage-split",
@@ -38,6 +49,65 @@
         "heading": "Feel the run",
         "collection": "drop-1",
         "link_label": "Shop the drop"
+      }
+    },
+    "story": {
+      "type": "homepage-story",
+      "blocks": {
+        "state_1": {
+          "type": "state",
+          "settings": {
+            "label": "Why we don’t run",
+            "text": "We don’t run because we have to.",
+            "solid": true,
+            "bg_color": "#0d0d0d",
+            "text_color": "#ffffff"
+          }
+        },
+        "state_2": {
+          "type": "state",
+          "settings": {
+            "label": "Why we don’t run",
+            "text": "Not for the pace.\nNot for the podium.\nNot for the screen.",
+            "overlay": 50,
+            "grayscale": true,
+            "bg_color": "#1a1a1a",
+            "text_color": "#ffffff"
+          }
+        },
+        "state_3": {
+          "type": "state",
+          "settings": {
+            "label": "Why we do",
+            "text": "We run because it returns us",
+            "overlay": 40,
+            "bg_color": "#1a1a1a",
+            "text_color": "#ffffff"
+          }
+        },
+        "state_4": {
+          "type": "state",
+          "settings": {
+            "label": "Why we do",
+            "text": "to our natural state.",
+            "solid": true,
+            "bg_color": "#efe9de",
+            "text_color": "#141414"
+          }
+        }
+      },
+      "block_order": [
+        "state_1",
+        "state_2",
+        "state_3",
+        "state_4"
+      ],
+      "settings": {
+        "heading": "Our mission",
+        "scroll_length": 100,
+        "show_progress": true,
+        "button_label": "Read our story",
+        "button_link": "/pages/our-story"
       }
     },
     "quality": {
@@ -198,6 +268,7 @@
     "hero",
     "split",
     "drop",
+    "story",
     "quality",
     "mission"
   ]
