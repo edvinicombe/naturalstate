@@ -2,19 +2,30 @@
   <div class="page-width collection">
     <header class="collection__head">
       <div>
-        {%- comment -%} H1: the editable default ("Shop all") unless a tag is in the URL, then the tag. {%- endcomment -%}
-        {%- assign page_heading = section.settings.heading | default: 'Shop all' -%}
+        {%- comment -%} H1: the collection's own title (Running, Lifestyle…); the editable "Shop all" when showing everything. A tag in the URL is added in front (Men’s Running) or, on the full catalog, replaces it (Men’s). {%- endcomment -%}
+        {%- if collection.handle == 'all' or collection.handle == blank -%}
+          {%- assign page_heading = section.settings.heading | default: 'Shop all' -%}
+          {%- assign is_all = true -%}
+        {%- else -%}
+          {%- assign page_heading = collection.title -%}
+          {%- assign is_all = false -%}
+        {%- endif -%}
         {%- if current_tags.size > 0 -%}
           {%- assign first_tag = current_tags | first -%}
           {%- assign first_handle = first_tag | handleize -%}
           {%- assign mens_handle = section.settings.mens_tag | default: 'mens' | handleize -%}
           {%- assign womens_handle = section.settings.womens_tag | default: 'womens' | handleize -%}
           {%- if first_handle == mens_handle -%}
-            {%- assign page_heading = 'Men’s' -%}
+            {%- assign tag_label = 'Men’s' -%}
           {%- elsif first_handle == womens_handle -%}
-            {%- assign page_heading = 'Women’s' -%}
+            {%- assign tag_label = 'Women’s' -%}
           {%- else -%}
-            {%- assign page_heading = first_tag -%}
+            {%- assign tag_label = first_tag -%}
+          {%- endif -%}
+          {%- if is_all -%}
+            {%- assign page_heading = tag_label -%}
+          {%- else -%}
+            {%- assign page_heading = tag_label | append: ' ' | append: collection.title -%}
           {%- endif -%}
         {%- endif -%}
         <h1 class="h2 collection__title">{{ page_heading }}</h1>
@@ -80,7 +91,7 @@
 {
   "name": "Collection",
   "settings": [
-    { "type": "text", "id": "heading", "label": "Heading (H1)", "default": "Shop all", "info": "Shown when no tag is in the URL. With a tag (e.g. Men’s or Women’s) the heading shows that tag instead." },
+    { "type": "text", "id": "heading", "label": "Heading (H1) for all products", "default": "Shop all", "info": "Used when the page shows every product. Other collections show their own title." },
     { "type": "select", "id": "columns", "label": "Products per row (desktop)", "default": "3", "options": [ { "value": "3", "label": "3 (larger cards)" }, { "value": "4", "label": "4" } ] },
     { "type": "range", "id": "per_page", "label": "Products per page", "min": 12, "max": 48, "step": 12, "default": 24 },
     { "type": "checkbox", "id": "show_gender_filter", "label": "Show All / Men’s / Women’s filter", "default": true },
