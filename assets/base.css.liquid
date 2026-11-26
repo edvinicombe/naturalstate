@@ -63,6 +63,15 @@ main .shopify-section + .shopify-section > .section-pad:first-child { padding-to
   .section-pad--sm { padding-block: var(--sp-5); }
 }
 
+/* Free, open-licence wide serif (Playfair, extended width) used for the mission story display type */
+@font-face {
+  font-family: "Playfair Wide";
+  src: url({{ 'playfair-wide-latin.woff2' | asset_url }}) format('woff2');
+  font-weight: 600 900;
+  font-style: normal;
+  font-display: swap;
+}
+
 /* ── Type ── */
 h1,h2,h3,h4,h5 {
   font-family: var(--font-heading);
@@ -355,8 +364,8 @@ h1,h2,h3,h4,h5 {
 .hero {
   position: relative;
   /* Fill exactly what's left of the first screen below the announcement bar; the rest of the page starts below the fold. */
-  min-height: calc(100vh - var(--announce-h));
-  min-height: calc(100svh - var(--announce-h));
+  height: calc(100vh - var(--announce-h));
+  height: calc(100svh - var(--announce-h));
   margin-top: calc(-1 * var(--header-h));
   display: flex;
   align-items: center;
@@ -401,14 +410,14 @@ h1,h2,h3,h4,h5 {
   z-index: 2;
   width: 100%;
   /* Equal space above and below keeps the content dead centre and clear of the header. */
-  padding-block: calc(var(--header-h) + var(--sp-3));
+  padding-block: var(--header-h);
 }
 .hero__content { text-align: center; }
 .hero__content .eyebrow { color: rgba(245,243,239,0.7); margin-bottom: 16px; }
 .hero__content h1 { color: #f5f3ef; margin-bottom: var(--sp-4); max-width: 34ch; margin-inline: auto; }
 .hero__actions { display: flex; gap: var(--sp-2); flex-wrap: wrap; justify-content: center; }
 .hero__content .hero__logo-heading { margin: 0 0 var(--sp-4); max-width: none; line-height: 0; }
-.hero__logo { width: min(var(--hero-logo-w, 28rem), 80vw); height: auto; margin-inline: auto; }
+.hero__logo { width: min(var(--hero-logo-w, 28rem), 80vw, 38vh, 38svh); height: auto; margin-inline: auto; }
 @media (max-width: 749px) {
   .hero__actions { flex-direction: column; align-items: center; }
   .hero__actions .btn { width: min(100%, 22rem); }
@@ -681,7 +690,7 @@ h1,h2,h3,h4,h5 {
 }
 
 /* ── Mission scroll story (homepage): pinned stage whose state changes as you scroll ── */
-.mstory { position: relative; height: calc(var(--n, 3) * var(--step, 100) * 1svh); scroll-margin-top: 0; }
+.mstory { position: relative; height: calc((var(--n, 3) * var(--step, 100) + var(--hold, 0)) * 1vh); height: calc((var(--n, 3) * var(--step, 100) + var(--hold, 0)) * 1svh); scroll-margin-top: 0; }
 .mstory__stage { position: sticky; top: 0; height: 100vh; height: 100svh; overflow: hidden; }
 .mstory__state {
   position: absolute; inset: 0; z-index: var(--i, 1);
@@ -703,6 +712,9 @@ h1,h2,h3,h4,h5 {
 .mstory__state.is-active .mstory__inner { opacity: 1; transform: none; transition: opacity 0.9s ease 0.35s, transform 0.9s ease 0.35s; }
 .mstory__label { color: inherit; opacity: 0.7; margin-bottom: var(--sp-3); }
 .mstory__text { margin: 0; font-family: var(--font-heading); font-weight: 700; text-transform: uppercase; letter-spacing: -0.035em; line-height: 0.92; font-size: clamp(2.5rem, 8vw, 7.5rem); max-width: min(22ch, calc(100% - var(--sp-8))); }
+.mstory__body { margin: var(--sp-3) 0 0; max-width: 44ch; font-size: 1.1rem; line-height: var(--sp-4); opacity: 0.85; }
+.mstory--display .mstory__text { font-family: "Playfair Wide", Georgia, "Times New Roman", serif; font-weight: 700; text-transform: none; letter-spacing: -0.025em; line-height: 1.02; font-size: clamp(2.5rem, 7vw, 6.75rem); }
+.mstory--display .mstory__label { font-family: var(--font-body); }
 .mstory__cta { margin-top: var(--sp-5); background: #141414; border-color: #141414; color: #fff; }
 .mstory__dots { position: absolute; z-index: 60; right: var(--sp-5); top: 50%; transform: translateY(-50%); display: flex; flex-direction: column; gap: var(--sp-2); margin: 0; padding: 0; list-style: none; color: #fff; mix-blend-mode: difference; }
 .mstory__dots li { width: var(--sp-1); height: var(--sp-1); border-radius: 999px; background: currentColor; opacity: 0.4; transition: opacity 0.4s ease, transform 0.4s ease; }

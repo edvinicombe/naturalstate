@@ -1,6 +1,6 @@
 {%- assign demo_images = 'demo-mission-1.jpg,demo-mission-2.jpg,demo-panel-running.jpg,demo-mission-3.jpg' | split: ',' -%}
 {%- assign state_count = section.blocks.size -%}
-<section class="mstory" id="our-mission" data-story style="--n: {{ state_count }}; --step: {{ section.settings.scroll_length }};">
+<section class="mstory{% if section.settings.font_style == 'display' %} mstory--display{% endif %}" id="our-mission" data-story data-hold="{{ section.settings.hold }}" style="--n: {{ state_count }}; --step: {{ section.settings.scroll_length }}; --hold: {{ section.settings.hold }};">
   <h2 class="visually-hidden">{{ section.settings.heading }}</h2>
   <div class="mstory__stage">
     {%- for block in section.blocks -%}
@@ -22,8 +22,11 @@
         <div class="mstory__inner page-width">
           <p class="eyebrow mstory__label"><span>{% if forloop.index < 10 %}0{% endif %}{{ forloop.index }}</span>{% if block.settings.label != blank %} &mdash; {{ block.settings.label }}{% endif %}</p>
           <p class="mstory__text">{{ block.settings.text | newline_to_br }}</p>
-          {%- if forloop.last and section.settings.button_label != blank -%}
-            <a href="{{ section.settings.button_link | default: routes.root_url }}" class="btn btn--lg mstory__cta">{{ section.settings.button_label }}</a>
+          {%- if block.settings.body != blank -%}
+            <p class="mstory__body">{{ block.settings.body | newline_to_br }}</p>
+          {%- endif -%}
+          {%- if block.settings.button_label != blank -%}
+            <a href="{{ block.settings.button_link | default: routes.root_url }}" class="btn btn--lg mstory__cta">{{ block.settings.button_label }}</a>
           {%- endif -%}
         </div>
       </div>
@@ -41,20 +44,27 @@
   "name": "Mission scroll story",
   "settings": [
     { "type": "text", "id": "heading", "label": "Heading (for screen readers)", "default": "Our mission" },
-    { "type": "range", "id": "scroll_length", "label": "Scroll distance per state", "info": "How far the visitor scrolls before the next state appears. Higher is slower.", "min": 60, "max": 140, "step": 20, "unit": "vh", "default": 100 },
-    { "type": "checkbox", "id": "show_progress", "label": "Show progress dots", "default": true },
-    { "type": "header", "content": "Button on the last state" },
-    { "type": "text", "id": "button_label", "label": "Label", "default": "Read our story" },
-    { "type": "url",  "id": "button_link",  "label": "Link" }
+    { "type": "select", "id": "font_style", "label": "Type style", "default": "display", "options": [
+      { "value": "display", "label": "Wide serif display" },
+      { "value": "theme",   "label": "Theme heading font" }
+    ] },
+    { "type": "range", "id": "scroll_length", "label": "Scroll distance per slide", "info": "How far the visitor scrolls before the next slide appears. Higher is slower.", "min": 60, "max": 140, "step": 20, "unit": "vh", "default": 100 },
+    { "type": "range", "id": "hold", "label": "Hold on the last slide", "info": "Extra scrolling spent on the final slide before the page carries on to the footer.", "min": 0, "max": 200, "step": 20, "unit": "vh", "default": 100 },
+    { "type": "checkbox", "id": "show_progress", "label": "Show progress dots", "default": true }
   ],
   "blocks": [
     {
       "type": "state",
-      "name": "Story state",
+      "name": "Slide",
       "limit": 8,
       "settings": [
-        { "type": "text",     "id": "label", "label": "Small label", "info": "Shown beside the state number." },
-        { "type": "textarea", "id": "text",  "label": "Statement", "default": "We don’t run because we have to." },
+        { "type": "header", "content": "Content" },
+        { "type": "text",     "id": "label", "label": "Small label", "info": "Shown beside the slide number." },
+        { "type": "textarea", "id": "text",  "label": "Headline", "default": "We don’t run because we have to." },
+        { "type": "textarea", "id": "body",  "label": "Supporting text", "info": "Optional paragraph under the headline." },
+        { "type": "text", "id": "button_label", "label": "Button label", "info": "Leave empty for no button." },
+        { "type": "url",  "id": "button_link",  "label": "Button link" },
+        { "type": "header", "content": "Look" },
         { "type": "checkbox", "id": "solid", "label": "Solid colour (no photo)", "default": false },
         { "type": "image_picker", "id": "image", "label": "Photo", "info": "Portrait or landscape; it fills the screen." },
         { "type": "range", "id": "overlay", "label": "Photo darkening", "min": 0, "max": 80, "step": 10, "unit": "%", "default": 40 },

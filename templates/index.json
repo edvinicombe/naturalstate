@@ -23,7 +23,7 @@
         "cta_main": {
           "type": "cta",
           "settings": {
-            "label": "Shop Feel The Run Collection",
+            "label": "Shop the collection",
             "link": "/collections/drop-1",
             "style": "solid"
           }
@@ -61,7 +61,8 @@
             "text": "We don’t run because we have to.",
             "solid": true,
             "bg_color": "#0d0d0d",
-            "text_color": "#ffffff"
+            "text_color": "#ffffff",
+            "body": ""
           }
         },
         "state_2": {
@@ -72,7 +73,8 @@
             "overlay": 50,
             "grayscale": true,
             "bg_color": "#1a1a1a",
-            "text_color": "#ffffff"
+            "text_color": "#ffffff",
+            "body": ""
           }
         },
         "state_3": {
@@ -82,7 +84,8 @@
             "text": "We run because it returns us",
             "overlay": 40,
             "bg_color": "#1a1a1a",
-            "text_color": "#ffffff"
+            "text_color": "#ffffff",
+            "body": ""
           }
         },
         "state_4": {
@@ -92,7 +95,10 @@
             "text": "to our natural state.",
             "solid": true,
             "bg_color": "#efe9de",
-            "text_color": "#141414"
+            "text_color": "#141414",
+            "body": "Running isn’t an escape from our lives. It’s the way back to them.",
+            "button_label": "Read our story",
+            "button_link": "/pages/our-story"
           }
         }
       },
@@ -106,8 +112,8 @@
         "heading": "Our mission",
         "scroll_length": 100,
         "show_progress": true,
-        "button_label": "Read our story",
-        "button_link": "/pages/our-story"
+        "hold": 100,
+        "font_style": "display"
       }
     },
     "quality": {

@@ -476,6 +476,21 @@ document.addEventListener('DOMContentLoaded', function () {
       video.removeAttribute('autoplay');
       video.pause();
     }
+    // Demo clips play one after another with a short fade between them
+    var playlist = (video.getAttribute('data-playlist') || '').split(',').filter(Boolean);
+    if (playlist.length > 1) {
+      var clip = 0;
+      video.style.transition = 'opacity 0.5s ease';
+      video.addEventListener('ended', function () {
+        clip = (clip + 1) % playlist.length;
+        video.style.opacity = '0';
+        setTimeout(function () {
+          video.src = playlist[clip];
+          var p = video.play(); if (p && p.catch) p.catch(function () {});
+        }, 500);
+      });
+      video.addEventListener('playing', function () { video.style.opacity = '1'; });
+    }
     video.addEventListener('play', sync);
     video.addEventListener('pause', sync);
     if (btn) btn.addEventListener('click', function () {
@@ -526,7 +541,9 @@ document.addEventListener('DOMContentLoaded', function () {
       ticking = false;
       var r = sec.getBoundingClientRect();
       var dist = r.height - window.innerHeight;
-      var p = dist > 0 ? Math.min(Math.max(-r.top / dist, 0), 0.9999) : 0;
+      var hold = (parseFloat(sec.getAttribute('data-hold')) || 0) / 100 * window.innerHeight;   // extra scroll spent on the last slide
+      var travel = dist - hold;
+      var p = travel > 0 ? Math.min(Math.max(-r.top / travel, 0), 0.9999) : 0;
       var idx = Math.floor(p * states.length);
       if (idx === current) return;
       current = idx;
