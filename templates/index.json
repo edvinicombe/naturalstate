@@ -51,8 +51,8 @@
       "settings": {
         "eyebrow": "Collection",
         "heading": "Feel the run",
-        "source": "collection",
-        "collection": "lifestyle",
+        "source": "all",
+        "collection": "",
         "max_products": 24,
         "link_label": "Shop the collection"
       }
