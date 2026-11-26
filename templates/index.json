@@ -31,7 +31,8 @@
         "logo_width": 28,
         "heading_alt": "Feel The Run",
         "hero_eyebrow": "New Season",
-        "hero_heading": "Alternative running apparel for those chasing nothing but the feeling"
+        "hero_heading": "Alternative running apparel for those chasing nothing but the feeling",
+        "header_style": "light"
       }
     },
     "split": {

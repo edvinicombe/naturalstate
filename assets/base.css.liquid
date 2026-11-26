@@ -405,6 +405,10 @@ h1,h2,h3,h4,h5 {
   z-index: 1;
 }
 .hero--video::after { background: linear-gradient(to bottom, rgba(255,255,255,0.5) 0%, rgba(0,0,0,0.38) 22%, rgba(0,0,0,0.38) 78%, rgba(0,0,0,0.6) 100%); }
+/* Light header over dark footage: white logo, nav and icons, and a soft dark (not white) wash at the top */
+body:has(.hero--header-light) .site-header--transparent { --text: #fff; --bg: #141414; --muted: rgba(255,255,255,0.7); color: #fff; }
+body:has(.hero--header-light) .site-header--transparent .site-header__logo img { filter: brightness(0) invert(1); }
+.hero--header-light::after { background: linear-gradient(to bottom, rgba(0,0,0,0.5) 0%, rgba(0,0,0,0.22) 24%, rgba(0,0,0,0.22) 76%, rgba(0,0,0,0.55) 100%); }
 .hero__content {
   position: relative;
   z-index: 2;
