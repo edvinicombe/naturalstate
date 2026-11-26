@@ -38,9 +38,9 @@
       "type": "homepage-split",
       "settings": {
         "panel_1_title": "Running",
-        "panel_1_link": "/collections/all",
+        "panel_1_link": "shopify://collections/running",
         "panel_2_title": "Lifestyle",
-        "panel_2_link": "/collections/all"
+        "panel_2_link": "shopify://collections/lifestyle"
       }
     },
     "drop": {
