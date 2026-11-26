@@ -118,5 +118,17 @@
         "info": "Moves in 8px steps."
       }
     ]
+  },
+  {
+    "name": "Demo content",
+    "settings": [
+      {
+        "type": "checkbox",
+        "id": "show_demo_images",
+        "label": "Show demo images",
+        "info": "Fills empty image slots (category panels, mission tiles, quality section, Our Story page) with free placeholder photos. Untick once you have added your own.",
+        "default": true
+      }
+    ]
   }
 ]

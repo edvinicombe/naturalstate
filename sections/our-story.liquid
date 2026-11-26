@@ -6,7 +6,7 @@
 <div class="page-width">
   <div class="story-block">
     <div class="story-block__img">
-      {%- if section.settings.image_1 -%}<img src="{{ section.settings.image_1 | image_url: width: 1200 }}" alt="" loading="lazy">{%- endif -%}
+      {%- if section.settings.image_1 -%}<img src="{{ section.settings.image_1 | image_url: width: 1200 }}" alt="" loading="lazy">{%- elsif settings.show_demo_images -%}<img src="{{ 'demo-mission-1.jpg' | asset_url }}" alt="" loading="lazy" width="675" height="1200">{%- endif -%}
     </div>
     <div class="story-block__text">
       <p class="eyebrow">{{ section.settings.eyebrow_1 }}</p>
@@ -17,7 +17,7 @@
 
   <div class="story-block reversed">
     <div class="story-block__img">
-      {%- if section.settings.image_2 -%}<img src="{{ section.settings.image_2 | image_url: width: 1200 }}" alt="" loading="lazy">{%- endif -%}
+      {%- if section.settings.image_2 -%}<img src="{{ section.settings.image_2 | image_url: width: 1200 }}" alt="" loading="lazy">{%- elsif settings.show_demo_images -%}<img src="{{ 'demo-mission-3.jpg' | asset_url }}" alt="" loading="lazy" width="927" height="1200">{%- endif -%}
     </div>
     <div class="story-block__text">
       <p class="eyebrow">{{ section.settings.eyebrow_2 }}</p>

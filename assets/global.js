@@ -447,4 +447,69 @@ document.addEventListener('DOMContentLoaded', function () {
     document.addEventListener('click', function (e) { if (!stage.contains(e.target)) closeAll(); });
     document.addEventListener('keydown', function (e) { if (e.key === 'Escape') closeAll(); });
   });
+
+  /* ── Announcement marquee: constant speed in px/s whatever the screen or message length ── */
+  document.querySelectorAll('[data-marquee-speed]').forEach(function (bar) {
+    var speed = parseFloat(bar.getAttribute('data-marquee-speed')) || 22;
+    var track = bar.querySelector('.announcement-bar__track');
+    var group = bar.querySelector('.announcement-bar__group');
+    if (!track || !group) return;
+    function setSpeed() {
+      var w = group.getBoundingClientRect().width;
+      if (w) track.style.animationDuration = (w / speed) + 's';
+    }
+    setSpeed();
+    window.addEventListener('resize', setSpeed);
+    if (document.fonts && document.fonts.ready) document.fonts.ready.then(setSpeed);
+  });
+
+  /* ── Hero background video: play/pause, and no autoplay for reduced motion ── */
+  document.querySelectorAll('[data-hero-video]').forEach(function (video) {
+    var btn = video.parentElement.querySelector('[data-hero-video-toggle]');
+    function sync() {
+      if (!btn) return;
+      var paused = video.paused;
+      btn.setAttribute('aria-pressed', paused ? 'true' : 'false');
+      btn.setAttribute('aria-label', paused ? 'Play background video' : 'Pause background video');
+    }
+    if (window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
+      video.removeAttribute('autoplay');
+      video.pause();
+    }
+    video.addEventListener('play', sync);
+    video.addEventListener('pause', sync);
+    if (btn) btn.addEventListener('click', function () {
+      if (video.paused) { var p = video.play(); if (p && p.catch) p.catch(function () {}); } else { video.pause(); }
+    });
+    sync();
+  });
+
+  /* ── Hero: background eases into a blur as the page scrolls ── */
+  var heroReduce = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  document.querySelectorAll('.hero').forEach(function (hero) {
+    var bg = hero.querySelector('.hero__bg');
+    if (!bg || heroReduce) return;
+    var MAX_BLUR = 20;      // px at full scroll
+    var MAX_SCALE = 0.1;    // grows a little so blurred edges never show
+    var current = 0, target = 0, raf = 0;
+
+    function paint() {
+      bg.style.setProperty('--hero-blur', (current * MAX_BLUR).toFixed(2) + 'px');
+      bg.style.setProperty('--hero-scale', (1 + current * MAX_SCALE).toFixed(4));
+    }
+    function tick() {
+      current += (target - current) * 0.05;   // low easing factor = slow, smooth catch-up
+      if (Math.abs(target - current) < 0.001) current = target;
+      paint();
+      raf = current === target ? 0 : requestAnimationFrame(tick);
+    }
+    function onScroll() {
+      var range = hero.offsetHeight * 0.7;
+      target = Math.min(Math.max(window.scrollY / range, 0), 1);
+      if (!raf) raf = requestAnimationFrame(tick);
+    }
+    window.addEventListener('scroll', onScroll, { passive: true });
+    window.addEventListener('resize', onScroll);
+    onScroll();
+  });
 });

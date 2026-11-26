@@ -18,7 +18,8 @@
         "btn_1_label": "Shop mens",
         "btn_1_link": "/collections/all/mens",
         "btn_2_label": "Shop womens",
-        "btn_2_link": "/collections/all/womens"
+        "btn_2_link": "/collections/all/womens",
+        "show_demo_video": true
       }
     },
     "split": {
@@ -27,9 +28,16 @@
         "panel_1_title": "Running",
         "panel_1_link": "/collections/all",
         "panel_2_title": "Lifestyle",
-        "panel_2_link": "/collections/all",
-        "panel_1_image": "shopify://shop_images/ed-running-1_137d5ec0-d616-4424-99ad-2e90a05d4f4c.jpg",
-        "panel_2_image": "shopify://shop_images/ed-running-3.jpg"
+        "panel_2_link": "/collections/all"
+      }
+    },
+    "drop": {
+      "type": "homepage-drop",
+      "settings": {
+        "eyebrow": "Drop 01",
+        "heading": "Feel the run",
+        "collection": "drop-1",
+        "link_label": "Shop the drop"
       }
     },
     "quality": {
@@ -65,7 +73,6 @@
         "tile_fabric": {
           "type": "tile",
           "settings": {
-            "image": "shopify://shop_images/ed-running-1_137d5ec0-d616-4424-99ad-2e90a05d4f4c.jpg",
             "title": "Fabric",
             "text": "Chosen for feel first."
           }
@@ -73,7 +80,6 @@
         "tile_fit": {
           "type": "tile",
           "settings": {
-            "image": "shopify://shop_images/ed-running-3.jpg",
             "title": "Fit",
             "text": "Cut to move."
           }
@@ -81,7 +87,6 @@
         "tile_finish": {
           "type": "tile",
           "settings": {
-            "image": "shopify://shop_images/feeltherun.png",
             "title": "Finish",
             "text": "Details that hold up."
           }
@@ -89,7 +94,6 @@
         "tile_testing": {
           "type": "tile",
           "settings": {
-            "image": "shopify://shop_images/ed-running-2_1a503148-dc08-4f97-aa5d-4b96448c7832.jpg",
             "title": "Tested on the run",
             "text": "Every piece earns its place out on the trail."
           }
@@ -132,7 +136,6 @@
         "eyebrow": "Built to last",
         "heading": "Quality you can feel",
         "intro": "Every detail is chosen, tested and tested again, so the gear gets out of your way and lets you run.",
-        "stage_image": "shopify://shop_images/ed-running-2_1a503148-dc08-4f97-aa5d-4b96448c7832.jpg",
         "stage_alt": "Runner on a trail wearing Natural State"
       },
       "disabled": true
@@ -169,7 +172,8 @@
           "settings": {
             "title": "Your natural state.",
             "text": "Freedom, clarity and being completely yourself.",
-            "tile_bg": "#000000"
+            "tile_bg": "#000000",
+            "solid_tile": true
           }
         }
       },
@@ -186,12 +190,14 @@
         "text": "I’m Ed, a designer and runner. I created Natural State around the feeling I keep coming back to when I run: freedom, clarity and being completely yourself. Your natural state.",
         "button_label": "Read our story",
         "button_link": "/pages/our-story"
-      }
+      },
+      "disabled": true
     }
   },
   "order": [
     "hero",
     "split",
+    "drop",
     "quality",
     "mission"
   ]

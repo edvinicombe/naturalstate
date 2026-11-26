@@ -5,16 +5,20 @@
         assign panel_image = section.settings.panel_1_image
         assign panel_title = section.settings.panel_1_title
         assign panel_link = section.settings.panel_1_link
+        assign demo_panel = 'demo-panel-running.jpg'
       else
         assign panel_image = section.settings.panel_2_image
         assign panel_title = section.settings.panel_2_title
         assign panel_link = section.settings.panel_2_link
+        assign demo_panel = 'demo-panel-lifestyle.jpg'
       endif
     -%}
-    {%- if panel_title != blank or panel_image != blank -%}
+    {%- if panel_title != blank or panel_image != blank or settings.show_demo_images -%}
       <a class="split__panel" href="{{ panel_link | default: routes.all_products_collection_url }}">
         {%- if panel_image != blank -%}
           <img class="split__img" src="{{ panel_image | image_url: width: 1600 }}" alt="" loading="lazy" width="1600" height="1600">
+        {%- elsif settings.show_demo_images -%}
+          <img class="split__img" src="{{ demo_panel | asset_url }}" alt="" loading="lazy" width="800" height="1200">
         {%- endif -%}
         <span class="split__label">
           <span class="split__title">{{ panel_title }}</span>

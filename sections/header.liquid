@@ -1,5 +1,16 @@
 {%- if section.settings.announcement != blank -%}
-  <div class="announcement-bar">{{ section.settings.announcement }}</div>
+  <div class="announcement-bar" data-marquee-speed="{{ section.settings.announcement_speed }}">
+    <div class="announcement-bar__track">
+      {%- for group in (1..2) -%}
+        <div class="announcement-bar__group"{% if group == 2 %} aria-hidden="true"{% endif %}>
+          {%- for i in (1..8) -%}
+            <span class="announcement-bar__item"{% if group == 2 or i > 1 %} aria-hidden="true"{% endif %}>{{ section.settings.announcement }}</span>
+            <span class="announcement-bar__bullet" aria-hidden="true">&bull;</span>
+          {%- endfor -%}
+        </div>
+      {%- endfor -%}
+    </div>
+  </div>
 {%- endif -%}
 
 <header class="site-header{% if template.name == 'index' %} site-header--transparent{% endif %}">
@@ -79,7 +90,8 @@
   "name": "Header",
   "max_blocks": 8,
   "settings": [
-    { "type": "text", "id": "announcement", "label": "Announcement bar text", "default": "Free UK shipping on orders over £75" }
+    { "type": "text", "id": "announcement", "label": "Announcement bar text", "info": "Scrolls across the top of the site, repeated with a bullet between each.", "default": "Free UK shipping on orders over £75" },
+    { "type": "range", "id": "announcement_speed", "label": "Scroll speed", "info": "Pixels per second. 22 matches the slow ticker on on.com.", "min": 10, "max": 60, "step": 2, "unit": "px", "default": 22 }
   ],
   "blocks": [
     {

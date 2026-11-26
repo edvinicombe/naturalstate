@@ -1,4 +1,4 @@
-<section class="mission section-pad">
+<section class="mission section-pad" id="our-mission">
   <div class="page-width mission__head">
     {%- if section.settings.eyebrow != blank -%}
       <p class="eyebrow mission__eyebrow">{{ section.settings.eyebrow }}</p>
@@ -22,9 +22,18 @@
     <div class="mission__rail-wrap" data-rail-wrap>
       <ul class="mission__rail" data-rail tabindex="0" aria-label="{{ section.settings.heading | escape }}">
         {%- for block in section.blocks -%}
-          <li class="mission-tile{% if block.settings.image != blank %} mission-tile--image{% endif %}" style="--tile-bg: {{ block.settings.tile_bg }};" {{ block.shopify_attributes }}>
-            {%- if block.settings.image != blank -%}
-              <img class="mission-tile__img" src="{{ block.settings.image | image_url: width: 900 }}" alt="" loading="lazy" width="720" height="960">
+          {%- liquid
+            assign tile_src = nil
+            if block.settings.image != blank
+              assign tile_src = block.settings.image | image_url: width: 900
+            elsif settings.show_demo_images and block.settings.solid_tile != true
+              assign demo_idx = forloop.index0 | modulo: 3 | plus: 1
+              assign tile_src = 'demo-mission-' | append: demo_idx | append: '.jpg' | asset_url
+            endif
+          -%}
+          <li class="mission-tile{% if tile_src != blank %} mission-tile--image{% endif %}" style="--tile-bg: {{ block.settings.tile_bg }};" {{ block.shopify_attributes }}>
+            {%- if tile_src != blank -%}
+              <img class="mission-tile__img" src="{{ tile_src }}" alt="" loading="lazy" width="720" height="960">
             {%- endif -%}
             <span class="mission-tile__num">{% if forloop.index < 10 %}0{% endif %}{{ forloop.index }}</span>
             <div class="mission-tile__body">
@@ -68,10 +77,11 @@
       "name": "Mission tile",
       "limit": 8,
       "settings": [
-        { "type": "image_picker", "id": "image",   "label": "Image", "info": "Portrait works best (3:4). Leave empty for a solid colour tile." },
+        { "type": "image_picker", "id": "image",   "label": "Image", "info": "Portrait works best (3:4)." },
+        { "type": "checkbox",     "id": "solid_tile", "label": "Solid colour tile (no image)", "info": "Use the colour below instead of a photo.", "default": false },
         { "type": "text",         "id": "title",   "label": "Statement", "default": "Run free." },
         { "type": "textarea",     "id": "text",    "label": "Supporting text" },
-        { "type": "color",        "id": "tile_bg", "label": "Colour (when no image)", "default": "#141414" }
+        { "type": "color",        "id": "tile_bg", "label": "Colour (solid tiles)", "default": "#141414" }
       ]
     }
   ],
