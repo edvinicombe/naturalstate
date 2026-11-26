@@ -528,12 +528,52 @@ document.addEventListener('DOMContentLoaded', function () {
     onScroll();
   });
 
-  /* ── Mission story: pinned stage, state changes with scroll position ── */
+  /* ── Mission story: pinned stage; backgrounds and words are scrubbed directly by scroll position ── */
   document.querySelectorAll('[data-story]').forEach(function (sec) {
     var reduce = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
-    var states = sec.querySelectorAll('[data-story-state]');
+    var stateEls = sec.querySelectorAll('[data-story-state]');
     var dots = sec.querySelectorAll('[data-story-dot]');
-    if (reduce || states.length < 2) return;
+    if (reduce || stateEls.length < 2) return;
+
+    function clamp(v) { return Math.min(Math.max(v, 0), 1); }
+
+    // Split each headline into word spans (kept in line order) so words can reveal one by one
+    function splitWords(el) {
+      var words = [], line = 0, frag = document.createDocumentFragment();
+      Array.prototype.slice.call(el.childNodes).forEach(function (node) {
+        if (node.nodeType === 3) {
+          node.textContent.split(/(\s+)/).forEach(function (part) {
+            if (!part) return;
+            if (/^\s+$/.test(part)) { frag.appendChild(document.createTextNode(' ')); return; }
+            var w = document.createElement('span');
+            w.className = 'mstory__w';
+            w.textContent = part;
+            frag.appendChild(w);
+            words.push({ el: w, line: line });
+          });
+        } else if (node.nodeName === 'BR') {
+          frag.appendChild(node.cloneNode());
+          line++;
+        }
+      });
+      el.textContent = '';
+      el.appendChild(frag);
+      return words;
+    }
+
+    var states = Array.prototype.map.call(stateEls, function (el) {
+      var text = el.querySelector('.mstory__text');
+      var words = text ? splitWords(text) : [];
+      var last = 0;                        // a short pause between lines of one headline
+      words.forEach(function (w, k) { w.pos = k + w.line * 2; last = Math.max(last, w.pos); });
+      // supporting text and the button reveal after the headline, in the same scrubbed sequence
+      ['.mstory__body', '.mstory__cta'].forEach(function (sel) {
+        var extra = el.querySelector(sel);
+        if (extra) { last += 3; words.push({ el: extra, pos: last, line: 0 }); }
+      });
+      return { el: el, img: el.querySelector('.mstory__img'), inner: el.querySelector('.mstory__inner'), words: words, span: last + 3 };
+    });
+
     sec.setAttribute('data-ready', '');
     var current = -1, ticking = false;
 
@@ -543,15 +583,34 @@ document.addEventListener('DOMContentLoaded', function () {
       var dist = r.height - window.innerHeight;
       var hold = (parseFloat(sec.getAttribute('data-hold')) || 0) / 100 * window.innerHeight;   // extra scroll spent on the last slide
       var travel = dist - hold;
-      var p = travel > 0 ? Math.min(Math.max(-r.top / travel, 0), 0.9999) : 0;
-      var idx = Math.floor(p * states.length);
-      if (idx === current) return;
-      current = idx;
+      var p = travel > 0 ? clamp(-r.top / travel) : 0;
+      var x = p * states.length;           // 0 .. n, one unit per slide
+      var active = Math.min(states.length - 1, Math.floor(x + 0.25));
+
       states.forEach(function (s, i) {
-        s.classList.toggle('is-active', i === idx);
-        s.classList.toggle('is-past', i < idx);
+        var t = x - i;                                         // position within this slide
+        var fadeIn = i === 0 ? 1 : clamp((t + 0.25) / 0.25);   // crossfade over the end of the previous slide
+        var reveal = i === 0 ? 1 : clamp(t / 0.45);            // words appear once the slide is in
+        var fadeOut = i === states.length - 1 ? 0 : clamp((t - 0.72) / 0.15);
+
+        s.el.style.opacity = fadeIn;
+        if (s.img) s.img.style.transform = 'scale(' + (1.12 - 0.12 * clamp((t + 0.25) / 1.25)).toFixed(4) + ')';
+        if (s.inner) {
+          s.inner.style.opacity = (1 - fadeOut).toFixed(3);
+          s.inner.style.transform = 'translateY(' + (-fadeOut * 24).toFixed(1) + 'px)';
+        }
+        s.words.forEach(function (w) {
+          var o = clamp((reveal * s.span - w.pos) / 3);
+          w.el.style.opacity = o.toFixed(3);
+          w.el.style.transform = 'translateY(' + ((1 - o) * 28).toFixed(1) + 'px)';
+        });
       });
-      dots.forEach(function (d, i) { d.classList.toggle('is-active', i === idx); });
+
+      if (active !== current) {
+        current = active;
+        stateEls.forEach(function (el, i) { el.classList.toggle('is-active', i === active); });
+        dots.forEach(function (d, i) { d.classList.toggle('is-active', i === active); });
+      }
     }
     function onScroll() { if (!ticking) { ticking = true; requestAnimationFrame(update); } }
     window.addEventListener('scroll', onScroll, { passive: true });

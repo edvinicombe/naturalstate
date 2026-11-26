@@ -81,36 +81,25 @@
           "type": "state",
           "settings": {
             "label": "Why we do",
-            "text": "We run because it returns us",
-            "overlay": 40,
+            "text": "We run because it returns us\nto our natural state.",
+            "overlay": 50,
             "bg_color": "#1a1a1a",
             "text_color": "#ffffff",
-            "body": ""
-          }
-        },
-        "state_4": {
-          "type": "state",
-          "settings": {
-            "label": "Why we do",
-            "text": "to our natural state.",
-            "solid": true,
-            "bg_color": "#efe9de",
-            "text_color": "#141414",
             "body": "Running isn’t an escape from our lives. It’s the way back to them.",
             "button_label": "Read our story",
-            "button_link": "/pages/our-story"
+            "button_link": "/pages/our-story",
+            "solid": false
           }
         }
       },
       "block_order": [
         "state_1",
         "state_2",
-        "state_3",
-        "state_4"
+        "state_3"
       ],
       "settings": {
         "heading": "Our mission",
-        "scroll_length": 100,
+        "scroll_length": 140,
         "show_progress": true,
         "hold": 100,
         "font_style": "display"
