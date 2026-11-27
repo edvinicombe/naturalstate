@@ -10,6 +10,7 @@
         {%- render 'icon', name: 'back' -%}{{ section.settings.back_label }}
       </a>
     {%- endif -%}
+    <div class="service__column">
     <h1 class="h1 help-center__title service__title">{{ section.settings.heading | default: page.title }}</h1>
     {%- if section.settings.intro != blank -%}
       <p class="service__intro">{{ section.settings.intro }}</p>
@@ -76,6 +77,7 @@
           {%- endif -%}
         {%- endif -%}
       {%- endform -%}
+    </div>
     </div>
   </div>
 </section>

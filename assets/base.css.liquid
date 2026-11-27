@@ -1564,7 +1564,7 @@ a.contact-card:hover { border-color: var(--text); }
 .help-faq .body a { text-decoration: underline; }
 .help-faq__empty { margin: var(--sp-3) 0 0; color: var(--muted); }
 
-.service__card { max-width: 40rem; }
+.service__column { max-width: 40rem; margin-inline: auto; }
 .service__intro { max-width: 48ch; margin: calc(-1 * var(--sp-2)) 0 var(--sp-4); color: var(--muted); line-height: var(--lh-16); }
 .service-form .btn { margin-top: var(--sp-3); }
 .service__note { margin-top: var(--sp-2); }
@@ -1582,15 +1582,11 @@ a.contact-card:hover { border-color: var(--text); }
 
 /* ── Store policies (Shopify renders these with its own default markup) ── */
 .shopify-policy__container {
-  display: grid;
-  grid-template-columns: minmax(0, 1fr) minmax(0, 2fr);
-  gap: var(--sp-8);
-  align-items: start;
   max-width: var(--max-w);
   margin: 0 auto;
   padding: var(--section-gap) var(--sp-5);
 }
-.shopify-policy__title { position: sticky; top: calc(var(--header-h) + var(--sp-4)); }
+.shopify-policy__title { margin-bottom: var(--sp-6); }
 .shopify-policy__title h1 { font-size: clamp(2rem, 4.5vw, 3.5rem); }
 .shopify-policy__body { max-width: 44rem; }
 .shopify-policy__body .rte > div > p:first-child { color: var(--muted); }
@@ -1603,7 +1599,7 @@ a.contact-card:hover { border-color: var(--text); }
 .shopify-policy__body li p { margin-bottom: var(--sp-1); }
 .shopify-policy__body a { text-decoration: underline; text-underline-offset: 0.2em; }
 @media (max-width: 899px) {
-  .shopify-policy__container { grid-template-columns: minmax(0, 1fr); gap: var(--sp-4); padding-inline: var(--sp-3); }
-  .shopify-policy__title { position: static; }
+  .shopify-policy__container { padding-inline: var(--sp-3); }
+  .shopify-policy__title { margin-bottom: var(--sp-4); }
 }
 
