@@ -1,0 +1,117 @@
+{
+  "sections": {
+    "help": {
+      "type": "contact-help",
+      "blocks": {
+        "q1": {
+          "type": "question",
+          "settings": {
+            "topic": "Orders",
+            "question": "Where is my order?",
+            "answer": "<p>Once your order ships you’ll get an email with a tracking link. If you haven’t had one yet, send us your order number below and we’ll look into it.</p>"
+          }
+        },
+        "q2": {
+          "type": "question",
+          "settings": {
+            "topic": "Orders",
+            "question": "Can I change or cancel my order?",
+            "answer": "<p>If your order hasn’t shipped yet we can usually change it. Get in touch as soon as you can with your order number.</p>"
+          }
+        },
+        "q3": {
+          "type": "question",
+          "settings": {
+            "topic": "Delivery",
+            "question": "How much is delivery?",
+            "answer": "<p>UK delivery is free on orders over £75. Delivery costs for other orders and countries are shown at checkout before you pay.</p>"
+          }
+        },
+        "q4": {
+          "type": "question",
+          "settings": {
+            "topic": "Delivery",
+            "question": "Do you ship internationally?",
+            "answer": "<p>Yes. Choose your country in the footer to see where we ship and what it costs.</p>"
+          }
+        },
+        "q5": {
+          "type": "question",
+          "settings": {
+            "topic": "Returns",
+            "question": "How do I return something?",
+            "answer": "<p>Unworn items in their original condition can be returned. Contact us with your order number and we’ll send you the details.</p>"
+          }
+        },
+        "q6": {
+          "type": "question",
+          "settings": {
+            "topic": "Returns",
+            "question": "When will I get my refund?",
+            "answer": "<p>Refunds go back to your original payment method once we’ve received and checked your return.</p>"
+          }
+        },
+        "q7": {
+          "type": "question",
+          "settings": {
+            "topic": "Sizing and fit",
+            "question": "How do your sizes fit?",
+            "answer": "<p>Each product page has a size guide. If you’re between sizes, we’d suggest sizing up for a looser fit on the run.</p>"
+          }
+        },
+        "q8": {
+          "type": "question",
+          "settings": {
+            "topic": "Product care",
+            "question": "How should I wash my gear?",
+            "answer": "<p>Wash cold with similar colours, avoid fabric softener and tumble dry on low or hang to dry. Full care details are on each product page.</p>"
+          }
+        }
+      },
+      "block_order": [
+        "q1",
+        "q2",
+        "q3",
+        "q4",
+        "q5",
+        "q6",
+        "q7",
+        "q8"
+      ],
+      "settings": {}
+    },
+    "form": {
+      "type": "contact-form",
+      "blocks": {
+        "channel_email": {
+          "type": "channel",
+          "settings": {
+            "icon": "email",
+            "title": "Email us",
+            "text": "We reply within one working day.",
+            "link_label": "Send an email"
+          }
+        },
+        "channel_returns": {
+          "type": "channel",
+          "settings": {
+            "icon": "returns",
+            "title": "Returns",
+            "text": "Need to send something back? Start here.",
+            "link_label": "Returns policy",
+            "link": "/policies/refund-policy"
+          }
+        }
+      },
+      "block_order": [
+        "channel_email",
+        "channel_returns"
+      ],
+      "settings": {}
+    }
+  },
+  "order": [
+    "help",
+    "form"
+  ]
+}

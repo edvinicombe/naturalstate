@@ -605,4 +605,42 @@ document.addEventListener('DOMContentLoaded', function () {
     window.addEventListener('resize', onScroll);
     update();
   });
+
+  /* ── Help hub: filter the FAQ by search text and topic ── */
+  document.querySelectorAll('[data-faq]').forEach(function (hub) {
+    var search = hub.querySelector('[data-faq-search]');
+    var tiles = hub.querySelectorAll('[data-faq-topic]');
+    var groups = hub.querySelectorAll('[data-faq-group]');
+    var none = hub.querySelector('[data-faq-none]');
+    var topic = '';
+    function apply() {
+      var q = (search ? search.value : '').trim().toLowerCase();
+      var shown = 0;
+      groups.forEach(function (g) {
+        var inTopic = !topic || g.getAttribute('data-faq-group') === topic;
+        var hits = 0;
+        g.querySelectorAll('[data-faq-item]').forEach(function (item) {
+          var match = inTopic && (!q || item.textContent.toLowerCase().indexOf(q) !== -1);
+          item.hidden = !match;
+          if (match) hits++;
+          if (q && match) item.open = true;
+        });
+        g.hidden = hits === 0;
+        shown += hits;
+      });
+      if (none) none.hidden = shown !== 0;
+    }
+    tiles.forEach(function (tile) {
+      tile.addEventListener('click', function () {
+        topic = tile.getAttribute('data-faq-topic');
+        tiles.forEach(function (t) {
+          var on = t === tile;
+          t.classList.toggle('is-active', on);
+          t.setAttribute('aria-pressed', on ? 'true' : 'false');
+        });
+        apply();
+      });
+    });
+    if (search) search.addEventListener('input', apply);
+  });
 });
