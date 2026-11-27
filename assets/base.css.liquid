@@ -24,6 +24,7 @@
   --fs-20: 1.25rem;  --lh-20: var(--sp-4);
   --fs-24: 1.5rem;   --lh-24: var(--sp-4);
   --fs-32: 2rem;     --lh-32: var(--sp-5);
+  --radius-card: var(--sp-2);     /* every card: 16px corners */
   --gap:         var(--sp-3);
   --announce-h:  0px;            /* height of the announcement bar, when shown */
   --section-gap: var(--sp-10);   /* space between sections: 80px, 64px on phones */
@@ -466,6 +467,7 @@ body:has(.hero--header-light) .site-header--transparent .site-header__logo img {
   aspect-ratio: 4/5;
   background: var(--surface);
   overflow: hidden;
+  border-radius: var(--radius-card);
   margin-bottom: var(--sp-2);
 }
 .product-card__media img {
@@ -823,6 +825,7 @@ body:has(.hero--header-light) .site-header--transparent .site-header__logo img {
   scroll-snap-align: start;
   background: var(--tile-bg, #141414);
   color: #fff;
+  border-radius: var(--radius-card);
 }
 .mission-tile__img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; transition: transform 0.6s ease; }
 .mission-tile:hover .mission-tile__img { transform: scale(1.05); }
@@ -861,7 +864,7 @@ body:has(.hero--header-light) .site-header--transparent .site-header__logo img {
 .quality__heading { margin-top: var(--sp-1); font-size: clamp(2.5rem, 6vw, 5rem); line-height: 0.92; }
 .quality__intro { grid-column: 9 / 13; margin: 0; color: var(--muted); line-height: var(--sp-3); }
 
-.quality__stage { position: relative; aspect-ratio: 16 / 9; background: var(--surface); overflow: hidden; }
+.quality__stage { position: relative; aspect-ratio: 16 / 9; background: var(--surface); overflow: hidden; border-radius: var(--radius-card); }
 .quality__stage > img { width: 100%; height: 100%; object-fit: cover; }
 .hotspot { position: absolute; left: var(--x); top: var(--y); transform: translate(-50%, -50%); z-index: 1; }
 .hotspot:hover, .hotspot:focus-within, .hotspot.is-open { z-index: 3; }
@@ -879,6 +882,7 @@ body:has(.hero--header-light) .site-header--transparent .site-header__logo img {
   position: absolute; top: 50%; left: calc(100% + var(--sp-1));
   width: 17.5rem; padding: var(--sp-3);
   background: var(--bg); color: var(--text);
+  border-radius: var(--radius-card);
   opacity: 0; visibility: hidden; transform: translateY(-40%);
   transition: opacity 0.2s ease, transform 0.2s ease, visibility 0.2s;
   pointer-events: none;
@@ -891,7 +895,7 @@ body:has(.hero--header-light) .site-header--transparent .site-header__logo img {
 .hotspot__card p { margin: 0; font-size: var(--fs-16); line-height: var(--sp-3); color: var(--muted); }
 
 .quality__tiles { display: grid; grid-template-columns: repeat(4, 1fr); grid-auto-rows: clamp(15rem, 22vw, 20rem); grid-auto-flow: dense; gap: var(--sp-2); margin-top: var(--sp-2); }
-.quality-tile { position: relative; margin: 0; overflow: hidden; background: var(--surface); }
+.quality-tile { position: relative; margin: 0; overflow: hidden; background: var(--surface); border-radius: var(--radius-card); }
 .quality-tile:nth-child(1) { grid-column: span 2; grid-row: span 2; }
 .quality-tile:nth-child(4) { grid-column: span 2; }
 .quality-tile img { width: 100%; height: 100%; object-fit: cover; transition: transform 0.7s ease; }
@@ -1182,7 +1186,7 @@ body:has(.hero--header-light) .site-header--transparent .site-header__logo img {
   padding: var(--sp-4);
   position: sticky;
   top: var(--sp-12);
-  border-radius: var(--sp-1);
+  border-radius: var(--radius-card);
 }
 .order-summary h3 { font-size: var(--fs-16); margin-bottom: var(--sp-3); }
 .summary-row { display: flex; justify-content: space-between; font-size: var(--fs-16); margin-bottom: var(--sp-2); }
@@ -1543,7 +1547,7 @@ html.no-scroll { overflow: hidden; }
 
 .contact-channels__title { margin-bottom: var(--sp-3); }
 .contact-channels__grid { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: var(--sp-3); }
-.contact-card { display: block; padding: var(--sp-4); border: 1px solid var(--border); transition: border-color 0.2s ease; }
+.contact-card { display: block; padding: var(--sp-4); border: 1px solid var(--border); border-radius: var(--radius-card); transition: border-color 0.2s ease; }
 a.contact-card:hover { border-color: var(--text); }
 .contact-card__head { display: flex; align-items: flex-start; justify-content: space-between; gap: var(--sp-2); margin-bottom: var(--sp-2); }
 .contact-card__title { font-size: var(--fs-20); line-height: var(--lh-20); }
