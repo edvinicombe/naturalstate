@@ -27,11 +27,19 @@
             "label": "Our mission",
             "url": "/#our-mission"
           }
+        },
+        "nav_help": {
+          "type": "nav_link",
+          "settings": {
+            "label": "Get help",
+            "url": "/pages/contact"
+          }
         }
       },
       "block_order": [
         "nav_catalog",
-        "nav_mission"
+        "nav_mission",
+        "nav_help"
       ],
       "settings": {
         "announcement": "Free UK shipping on orders over £75",
