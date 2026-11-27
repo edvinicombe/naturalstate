@@ -25,7 +25,7 @@
   --fs-24: 1.5rem;   --lh-24: var(--sp-4);
   --fs-32: 2rem;     --lh-32: var(--sp-5);
   /* Heading scale: one size per level, used by every page. Fluid headings keep min and max on the grid. */
-  --h1-size: clamp(2.5rem, 6vw, 5rem);     /* page titles */
+  --h1-size: clamp(2.5rem, 5vw, 4rem);     /* page titles and homepage panel titles */
   --h2-size: clamp(2rem, 3.5vw, 3rem);     /* section headings */
   --h3-size: clamp(1.25rem, 2vw, 1.5rem);  /* sub-headings */
   --h4-size: var(--fs-20);                 /* card and panel titles */
@@ -677,7 +677,7 @@ body:has(.hero--header-light) .site-header--transparent .site-header__logo img {
 .split__panel:hover .split__img { transform: scale(1.04); }
 .split__panel::after { content: ""; position: absolute; inset: 0; background: linear-gradient(to top, rgba(0,0,0,0.55) 0%, rgba(0,0,0,0) 45%); }
 .split__label { position: absolute; z-index: 1; left: var(--sp-5); right: var(--sp-5); bottom: var(--sp-5); display: flex; align-items: flex-end; justify-content: space-between; gap: var(--sp-2); }
-.split__title { font-family: var(--font-heading); font-weight: 700; text-transform: uppercase; letter-spacing: -0.03em; line-height: 1; font-size: var(--h2-size); }
+.split__title { font-family: var(--font-heading); font-weight: 700; text-transform: uppercase; letter-spacing: -0.03em; line-height: 1; font-size: var(--h1-size); }
 .split__arrow { display: flex; align-items: center; justify-content: center; flex-shrink: 0; width: var(--sp-7); height: var(--sp-7); border-radius: 999px; background: #fff; color: #141414; transition: transform 0.3s ease; }
 .split__panel:hover .split__arrow { transform: translateX(var(--sp-1)); }
 @media (max-width: 749px) {
