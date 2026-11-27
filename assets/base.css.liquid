@@ -1602,3 +1602,6 @@ a.contact-card:hover { border-color: var(--text); }
   .shopify-policy__title { margin-bottom: var(--sp-4); }
 }
 
+/* Email links are always underlined, wherever they appear. */
+a[href^="mailto:"]:not(.contact-card) { text-decoration: underline; text-underline-offset: 0.2em; }
+

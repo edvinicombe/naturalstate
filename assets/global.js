@@ -605,4 +605,36 @@ document.addEventListener('DOMContentLoaded', function () {
     window.addEventListener('resize', onScroll);
     update();
   });
+
+  /* ── Email addresses in page text become mailto links (policies are Shopify-generated plain text) ── */
+  function linkEmails(root) {
+    var re = /[A-Za-z0-9._%+-]+@[A-Za-z0-9-]+(?:\.[A-Za-z0-9-]+)*\.[A-Za-z]{2,}/g;
+    var skip = 'a, script, style, textarea, input, select, option, button, summary, code, pre, [contenteditable]';
+    var walker = document.createTreeWalker(root, NodeFilter.SHOW_TEXT, {
+      acceptNode: function (n) {
+        if (!n.nodeValue || n.nodeValue.indexOf('@') === -1) return NodeFilter.FILTER_REJECT;
+        return n.parentElement && n.parentElement.closest(skip) ? NodeFilter.FILTER_REJECT : NodeFilter.FILTER_ACCEPT;
+      }
+    });
+    var nodes = [];
+    while (walker.nextNode()) nodes.push(walker.currentNode);
+    nodes.forEach(function (node) {
+      var text = node.nodeValue, last = 0, m, frag = document.createDocumentFragment();
+      re.lastIndex = 0;
+      while ((m = re.exec(text))) {
+        if (m.index > last) frag.appendChild(document.createTextNode(text.slice(last, m.index)));
+        var a = document.createElement('a');
+        a.href = 'mailto:' + m[0];
+        a.textContent = m[0];
+        frag.appendChild(a);
+        last = m.index + m[0].length;
+      }
+      if (last === 0) return;
+      if (last < text.length) frag.appendChild(document.createTextNode(text.slice(last)));
+      node.parentNode.replaceChild(frag, node);
+    });
+  }
+  var mainEl = document.getElementById('MainContent');
+  if (mainEl) linkEmails(mainEl);
+  document.addEventListener('shopify:section:load', function (e) { linkEmails(e.target); });
 });
