@@ -63,8 +63,8 @@
         "state_1": {
           "type": "state",
           "settings": {
-            "label": "Why we don’t run",
-            "text": "We don’t run because we have to.",
+            "label": "Our mission",
+            "text": "We don’t run because we have to",
             "body": "",
             "button_label": "",
             "button_link": "",
@@ -78,8 +78,8 @@
         "state_2": {
           "type": "state",
           "settings": {
-            "label": "Why we don’t run",
-            "text": "Not for the pace.\nNot for the podium.\nNot for the screen.",
+            "label": "Our mission",
+            "text": "Not to win\nNot for the PB\nNot for the applause",
             "body": "",
             "button_label": "",
             "button_link": "",
@@ -93,10 +93,10 @@
         "state_3": {
           "type": "state",
           "settings": {
-            "label": "Why we do",
-            "text": "We run because it returns us\nto our natural state.",
-            "body": "Running isn’t an escape from our lives. It’s the way back to them.",
-            "button_label": "Read our story",
+            "label": "Our mission",
+            "text": "We run because it returns us\nto our natural state",
+            "body": "",
+            "button_label": "Read our mission",
             "button_link": "/pages/our-story",
             "solid": false,
             "image": "shopify://shop_images/ed-running-2.jpg",
