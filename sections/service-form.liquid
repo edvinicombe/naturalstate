@@ -1,0 +1,110 @@
+{%- comment -%}
+  One form for every "service" page: return a product, request a warranty,
+  track an order. Each page uses its own template with different settings. Submissions arrive
+  as emails to the store's customer email, with "Request type" so you can tell them apart.
+{%- endcomment -%}
+<section class="help-center service section-pad">
+  <div class="page-width service__inner">
+    {%- if section.settings.back_link != blank -%}
+      <a href="{{ section.settings.back_link }}" class="help-back">
+        {%- render 'icon', name: 'back' -%}{{ section.settings.back_label }}
+      </a>
+    {%- endif -%}
+    <div class="service__column">
+    <h1 class="h1 help-center__title service__title">{{ section.settings.heading | default: page.title }}</h1>
+    {%- if section.settings.intro != blank -%}
+      <p class="service__intro">{{ section.settings.intro }}</p>
+    {%- endif -%}
+
+    <div class="service__card">
+      {%- form 'contact', id: 'ServiceForm', class: 'service-form' -%}
+        {%- if form.posted_successfully? -%}
+          <p class="review-form__notice review-form__notice--success" role="status">{{ section.settings.success_text }}</p>
+        {%- else -%}
+          {%- if form.errors -%}
+            <div class="review-form__notice review-form__notice--error" role="alert">{{ form.errors | default_errors }}</div>
+          {%- endif -%}
+
+          <input type="hidden" name="contact[Request type]" value="{{ section.settings.request_type | default: page.title | escape }}">
+
+          <div class="review-form__fields">
+            {%- if section.settings.show_name -%}
+              <label class="review-form__field">
+                <span>Name</span>
+                <input type="text" name="contact[name]" autocomplete="name" value="{% if form.name %}{{ form.name | escape }}{% elsif customer %}{{ customer.name | escape }}{% endif %}" required>
+              </label>
+            {%- endif -%}
+
+            <label class="review-form__field">
+              <span>Email</span>
+              <input type="email" name="contact[email]" autocomplete="email" value="{% if form.email %}{{ form.email | escape }}{% elsif customer %}{{ customer.email | escape }}{% endif %}" required>
+            </label>
+
+            {%- if section.settings.show_order_number -%}
+              <label class="review-form__field">
+                <span>Order number{% unless section.settings.order_required %} <em>(optional)</em>{% endunless %}</span>
+                <input type="text" name="contact[Order number]" placeholder="e.g. #1001"{% if section.settings.order_required %} required{% endif %}>
+              </label>
+            {%- endif -%}
+
+            {%- if section.settings.options != blank -%}
+              {%- assign option_lines = section.settings.options | newline_to_br | split: '<br />' -%}
+              <label class="review-form__field">
+                <span>{{ section.settings.options_label }}</span>
+                <select name="contact[{{ section.settings.options_label | escape }}]" required>
+                  <option value="" disabled selected>Please choose</option>
+                  {%- for line in option_lines -%}
+                    {%- assign option_name = line | strip -%}
+                    {%- if option_name != blank -%}<option value="{{ option_name | escape }}">{{ option_name }}</option>{%- endif -%}
+                  {%- endfor -%}
+                </select>
+              </label>
+            {%- endif -%}
+
+            {%- if section.settings.show_message -%}
+              <label class="review-form__field">
+                <span>{{ section.settings.message_label }}{% unless section.settings.message_required %} <em>(optional)</em>{% endunless %}</span>
+                <textarea name="contact[body]" rows="6"{% if section.settings.message_required %} required{% endif %}>{% if form.body %}{{ form.body }}{% endif %}</textarea>
+              </label>
+            {%- else -%}
+              <input type="hidden" name="contact[body]" value="{{ section.settings.request_type | default: page.title | escape }}">
+            {%- endif -%}
+          </div>
+
+          <button type="submit" class="btn btn--full">{{ section.settings.button_label }}</button>
+          {%- if section.settings.note != blank -%}
+            <p class="review-form__hint service__note">{{ section.settings.note }}</p>
+          {%- endif -%}
+        {%- endif -%}
+      {%- endform -%}
+    </div>
+    </div>
+  </div>
+</section>
+
+{% schema %}
+{
+  "name": "Service form",
+  "settings": [
+    { "type": "text", "id": "heading", "label": "Heading (H1)", "default": "Return a product", "info": "Leave empty to use the page title." },
+    { "type": "textarea", "id": "intro", "label": "Intro", "default": "Our team will get back to you shortly." },
+    { "type": "text", "id": "request_type", "label": "Request type", "default": "Message", "info": "Added to the email so you can tell the forms apart." },
+    { "type": "text", "id": "back_label", "label": "Back link label", "default": "Help center" },
+    { "type": "url", "id": "back_link", "label": "Back link", "default": "/pages/contact" },
+    { "type": "header", "content": "Fields" },
+    { "type": "checkbox", "id": "show_name", "label": "Ask for a name", "default": true },
+    { "type": "checkbox", "id": "show_order_number", "label": "Ask for an order number", "default": true },
+    { "type": "checkbox", "id": "order_required", "label": "Order number is required", "default": false },
+    { "type": "text", "id": "options_label", "label": "Menu label", "default": "What can we help with?" },
+    { "type": "textarea", "id": "options", "label": "Menu options", "info": "One per line. Leave empty to hide the menu.", "default": "Order status\nDelivery\nReturns and refunds\nProduct support\nSomething else" },
+    { "type": "checkbox", "id": "show_message", "label": "Ask for a message", "default": true },
+    { "type": "text", "id": "message_label", "label": "Message label", "default": "Message" },
+    { "type": "checkbox", "id": "message_required", "label": "Message is required", "default": true },
+    { "type": "header", "content": "Text" },
+    { "type": "text", "id": "button_label", "label": "Button label", "default": "Send message" },
+    { "type": "text", "id": "note", "label": "Note under the button", "default": "We aim to reply within one working day." },
+    { "type": "text", "id": "success_text", "label": "Success message", "default": "Thanks, your message is on its way. We’ll be in touch soon." }
+  ],
+  "presets": [{ "name": "Service form" }]
+}
+{% endschema %}

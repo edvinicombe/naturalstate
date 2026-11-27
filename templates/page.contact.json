@@ -1,0 +1,116 @@
+{
+  "sections": {
+    "help": {
+      "type": "help-center",
+      "blocks": {
+        "topic_1": {
+          "type": "topic",
+          "settings": {
+            "icon": "delivery",
+            "title": "Dispatch and delivery"
+          }
+        },
+        "topic_2": {
+          "type": "topic",
+          "settings": {
+            "icon": "order",
+            "title": "My order"
+          }
+        },
+        "topic_3": {
+          "type": "topic",
+          "settings": {
+            "icon": "returns",
+            "title": "Returns and refunds"
+          }
+        },
+        "topic_4": {
+          "type": "topic",
+          "settings": {
+            "icon": "warranty",
+            "title": "Warranty and after sales service"
+          }
+        },
+        "topic_5": {
+          "type": "topic",
+          "settings": {
+            "icon": "help",
+            "title": "General questions"
+          }
+        },
+        "topic_6": {
+          "type": "topic",
+          "settings": {
+            "icon": "payment",
+            "title": "Payment methods"
+          }
+        },
+        "topic_7": {
+          "type": "topic",
+          "settings": {
+            "icon": "product",
+            "title": "Product support"
+          }
+        },
+        "service_1": {
+          "type": "service",
+          "settings": {
+            "title": "Track your order",
+            "link": "/pages/track-order"
+          }
+        },
+        "service_2": {
+          "type": "service",
+          "settings": {
+            "title": "Return a product",
+            "link": "/pages/return"
+          }
+        },
+        "service_3": {
+          "type": "service",
+          "settings": {
+            "title": "Request a warranty",
+            "link": "/pages/warranty"
+          }
+        }
+      },
+      "block_order": [
+        "topic_1",
+        "topic_2",
+        "topic_3",
+        "topic_4",
+        "topic_5",
+        "topic_6",
+        "topic_7",
+        "service_1",
+        "service_2",
+        "service_3"
+      ],
+      "settings": {}
+    },
+    "channels": {
+      "type": "contact-channels",
+      "blocks": {
+        "card_email": {
+          "type": "channel",
+          "settings": {
+            "icon": "email",
+            "title": "Contact us by email",
+            "text": "<p>Write to us any time and we’ll reply within one working day.</p>",
+            "link": ""
+          }
+        }
+      },
+      "block_order": [
+        "card_email"
+      ],
+      "settings": {
+        "heading": "Contact us"
+      }
+    }
+  },
+  "order": [
+    "help",
+    "channels"
+  ]
+}

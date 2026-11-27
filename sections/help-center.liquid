@@ -1,0 +1,91 @@
+{%- comment -%}
+  Help center: page heading, a "Topics" card and an "Access our services" card.
+  Each row is a block. Topic rows link to a help page (Online Store > Pages, template
+  "page.help"); when a link is empty it points to /pages/<topic-title-as-handle>.
+{%- endcomment -%}
+<section class="help-center section-pad">
+  <div class="page-width">
+    <h1 class="h1 help-center__title">{{ section.settings.heading | default: page.title }}</h1>
+
+    <div class="help-center__grid">
+      <div class="help-col">
+        <h2 class="h2 help-col__title">{{ section.settings.topics_heading }}</h2>
+        <ul class="help-list">
+          {%- for block in section.blocks -%}
+            {%- if block.type == 'topic' -%}
+              {%- assign url = block.settings.link -%}
+              {%- if url == blank -%}{%- assign topic_handle = block.settings.title | handleize -%}{%- assign url = '/pages/' | append: topic_handle -%}{%- endif -%}
+              <li {{ block.shopify_attributes }}>
+                <a href="{{ url }}" class="help-list__link">
+                  {%- render 'icon', name: block.settings.icon -%}
+                  <span>{{ block.settings.title }}</span>
+                  {%- render 'icon', name: 'chevron' -%}
+                </a>
+              </li>
+            {%- endif -%}
+          {%- endfor -%}
+        </ul>
+      </div>
+
+      <div class="help-col">
+        <h2 class="h2 help-col__title">{{ section.settings.services_heading }}</h2>
+        <ul class="help-list">
+          {%- for block in section.blocks -%}
+            {%- if block.type == 'service' -%}
+              {%- assign url = block.settings.link -%}
+              {%- if url == blank -%}{%- assign service_handle = block.settings.title | handleize -%}{%- assign url = '/pages/' | append: service_handle -%}{%- endif -%}
+              <li {{ block.shopify_attributes }}>
+                <a href="{{ url }}" class="help-list__link">
+                  <span>{{ block.settings.title }}</span>
+                  {%- render 'icon', name: 'chevron' -%}
+                </a>
+              </li>
+            {%- endif -%}
+          {%- endfor -%}
+        </ul>
+      </div>
+    </div>
+  </div>
+</section>
+
+{% schema %}
+{
+  "name": "Help center",
+  "settings": [
+    { "type": "text", "id": "heading", "label": "Heading (H1)", "default": "Help center", "info": "Leave empty to use the page title." },
+    { "type": "text", "id": "topics_heading", "label": "Topics card heading", "default": "Topics" },
+    { "type": "text", "id": "services_heading", "label": "Services card heading", "default": "Access our services" }
+  ],
+  "blocks": [
+    {
+      "type": "topic",
+      "name": "Topic",
+      "limit": 12,
+      "settings": [
+        { "type": "select", "id": "icon", "label": "Icon", "default": "help", "options": [
+          { "value": "delivery", "label": "Delivery" },
+          { "value": "order", "label": "Order" },
+          { "value": "returns", "label": "Returns" },
+          { "value": "warranty", "label": "Warranty" },
+          { "value": "help", "label": "Question" },
+          { "value": "payment", "label": "Payment" },
+          { "value": "product", "label": "Product" },
+          { "value": "account", "label": "Account" }
+        ] },
+        { "type": "text", "id": "title", "label": "Title", "default": "General questions", "info": "Also decides which FAQ questions show on the topic page: they must use the same topic title." },
+        { "type": "url", "id": "link", "label": "Link", "info": "Empty = /pages/ + the title as a handle, e.g. /pages/general-questions." }
+      ]
+    },
+    {
+      "type": "service",
+      "name": "Service",
+      "limit": 6,
+      "settings": [
+        { "type": "text", "id": "title", "label": "Title", "default": "Track your order" },
+        { "type": "url", "id": "link", "label": "Link" }
+      ]
+    }
+  ],
+  "presets": [{ "name": "Help center" }]
+}
+{% endschema %}
