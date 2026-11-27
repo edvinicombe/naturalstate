@@ -1,0 +1,25 @@
+{
+  "sections": {
+    "form": {
+      "type": "service-form",
+      "settings": {
+        "heading": "Return a product",
+        "intro": "Enter the email and order number you used at checkout and we’ll send you the return details.",
+        "request_type": "Return",
+        "show_name": false,
+        "show_order_number": true,
+        "order_required": true,
+        "options_label": "Reason for return",
+        "options": "Doesn’t fit\nNot what I expected\nFaulty or damaged\nArrived late\nOther",
+        "show_message": true,
+        "message_label": "Anything else we should know?",
+        "message_required": false,
+        "button_label": "Request a return",
+        "note": "Returns are accepted within 30 days. We’ll email you the next steps."
+      }
+    }
+  },
+  "order": [
+    "form"
+  ]
+}

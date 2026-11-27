@@ -1,0 +1,22 @@
+{
+  "sections": {
+    "form": {
+      "type": "service-form",
+      "settings": {
+        "heading": "Track your order",
+        "intro": "Enter the email and order number you used at checkout and we’ll send you the latest tracking details.",
+        "request_type": "Order tracking",
+        "show_name": false,
+        "show_order_number": true,
+        "order_required": true,
+        "options": "",
+        "show_message": false,
+        "button_label": "Track my order",
+        "note": "Your tracking link is also in your dispatch email."
+      }
+    }
+  },
+  "order": [
+    "form"
+  ]
+}

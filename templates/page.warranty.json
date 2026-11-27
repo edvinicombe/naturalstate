@@ -1,0 +1,24 @@
+{
+  "sections": {
+    "form": {
+      "type": "service-form",
+      "settings": {
+        "heading": "Request a warranty",
+        "intro": "Tell us what’s gone wrong and we’ll take a look.",
+        "request_type": "Warranty",
+        "show_name": true,
+        "show_order_number": true,
+        "order_required": true,
+        "options": "",
+        "show_message": true,
+        "message_label": "What’s the problem?",
+        "message_required": true,
+        "button_label": "Submit warranty request",
+        "note": "We may ask you for photos when we reply."
+      }
+    }
+  },
+  "order": [
+    "form"
+  ]
+}

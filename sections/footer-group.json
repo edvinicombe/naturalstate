@@ -21,7 +21,7 @@
             "heading": "Get help buying",
             "text": "If you have any questions about our gear, get in touch.",
             "link_label": "Contact us",
-            "link": ""
+            "link": "/pages/contact"
           }
         },
         "delivery": {
@@ -91,6 +91,14 @@
             "heading": "Help"
           }
         },
+        "item_contact": {
+          "type": "link",
+          "settings": {
+            "label": "Contact us",
+            "url": "/pages/contact",
+            "new_tab": false
+          }
+        },
         "item_delivery": {
           "type": "link",
           "settings": {
@@ -130,6 +138,7 @@
         "item_drop",
         "item_story",
         "column_help",
+        "item_contact",
         "item_delivery",
         "item_returns",
         "item_privacy",

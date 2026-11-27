@@ -1,0 +1,172 @@
+{
+  "sections": {
+    "topic": {
+      "type": "help-topic",
+      "blocks": {
+        "q1": {
+          "type": "question",
+          "settings": {
+            "topic": "Dispatch and delivery",
+            "question": "How much is delivery?",
+            "answer": "<p>UK delivery is free on orders over £75. Delivery costs for other orders and countries are shown at checkout before you pay.</p>"
+          }
+        },
+        "q2": {
+          "type": "question",
+          "settings": {
+            "topic": "Dispatch and delivery",
+            "question": "Do you ship internationally?",
+            "answer": "<p>Yes. Choose your country in the footer to see where we ship and what it costs.</p>"
+          }
+        },
+        "q3": {
+          "type": "question",
+          "settings": {
+            "topic": "Dispatch and delivery",
+            "question": "How long will my order take?",
+            "answer": "<p>Estimated delivery times for your address are shown at checkout. You’ll get a dispatch email with tracking once your order is on its way.</p>"
+          }
+        },
+        "q4": {
+          "type": "question",
+          "settings": {
+            "topic": "My order",
+            "question": "Where is my order?",
+            "answer": "<p>Once your order ships you’ll get an email with a tracking link. You can also use <a href=\"/pages/track-order\">Track your order</a> and we’ll look into it for you.</p>"
+          }
+        },
+        "q5": {
+          "type": "question",
+          "settings": {
+            "topic": "My order",
+            "question": "Can I change or cancel my order?",
+            "answer": "<p>If your order hasn’t shipped yet we can usually change it. <a href=\"/pages/message\">Send us a message</a> as soon as you can with your order number.</p>"
+          }
+        },
+        "q6": {
+          "type": "question",
+          "settings": {
+            "topic": "Returns and refunds",
+            "question": "How do I return something?",
+            "answer": "<p>Returns are accepted within 30 days. Unworn items in their original condition can be sent back. Start on our <a href=\"/pages/return\">Return a product</a> page with your email and order number.</p>"
+          }
+        },
+        "q7": {
+          "type": "question",
+          "settings": {
+            "topic": "Returns and refunds",
+            "question": "When will I get my refund?",
+            "answer": "<p>Refunds go back to your original payment method once we’ve received and checked your return.</p>"
+          }
+        },
+        "q8": {
+          "type": "question",
+          "settings": {
+            "topic": "Warranty and after sales service",
+            "question": "What does the warranty cover?",
+            "answer": "<p>Our gear is covered against faults in materials and workmanship. It doesn’t cover normal wear and tear, or damage from misuse.</p>"
+          }
+        },
+        "q9": {
+          "type": "question",
+          "settings": {
+            "topic": "Warranty and after sales service",
+            "question": "How do I make a warranty claim?",
+            "answer": "<p>Use our <a href=\"/pages/warranty\">Request a warranty</a> page with your order number and a description of the problem.</p>"
+          }
+        },
+        "q10": {
+          "type": "question",
+          "settings": {
+            "topic": "General questions",
+            "question": "How do I contact you?",
+            "answer": "<p>You can <a href=\"/pages/message\">send us a message</a> or find other ways to reach us on our <a href=\"/pages/contact\">Contact us</a> page.</p>"
+          }
+        },
+        "q11": {
+          "type": "question",
+          "settings": {
+            "topic": "Payment methods",
+            "question": "Which payment methods do you accept?",
+            "answer": "<p>The payment methods available to you are shown at checkout, including major credit and debit cards.</p>"
+          }
+        },
+        "q12": {
+          "type": "question",
+          "settings": {
+            "topic": "Payment methods",
+            "question": "Is my payment secure?",
+            "answer": "<p>Yes. Payments are processed securely at checkout and we never see or store your full card details.</p>"
+          }
+        },
+        "q13": {
+          "type": "question",
+          "settings": {
+            "topic": "Product support",
+            "question": "How do your sizes fit?",
+            "answer": "<p>Each product page has a size guide. If you’re between sizes, we’d suggest sizing up for a looser fit on the run.</p>"
+          }
+        },
+        "q14": {
+          "type": "question",
+          "settings": {
+            "topic": "Product support",
+            "question": "How should I wash my gear?",
+            "answer": "<p>Wash cold with similar colours, avoid fabric softener and tumble dry on low or hang to dry. Full care details are on each product page.</p>"
+          }
+        }
+      },
+      "block_order": [
+        "q1",
+        "q2",
+        "q3",
+        "q4",
+        "q5",
+        "q6",
+        "q7",
+        "q8",
+        "q9",
+        "q10",
+        "q11",
+        "q12",
+        "q13",
+        "q14"
+      ],
+      "settings": {}
+    },
+    "channels": {
+      "type": "contact-channels",
+      "blocks": {
+        "card_message": {
+          "type": "channel",
+          "settings": {
+            "icon": "message",
+            "title": "Send us a message",
+            "text": "<p>Our team will get back to you shortly with answers about our products and orders.</p>",
+            "link": "/pages/message"
+          }
+        },
+        "card_email": {
+          "type": "channel",
+          "settings": {
+            "icon": "email",
+            "title": "Contact us by email",
+            "text": "<p>Prefer email? Write to us any time and we’ll reply within one working day.</p>",
+            "link": ""
+          }
+        }
+      },
+      "block_order": [
+        "card_message",
+        "card_email"
+      ],
+      "settings": {
+        "heading": "Still need help?"
+      }
+    }
+  },
+  "order": [
+    "topic",
+    "channels"
+  ]
+}

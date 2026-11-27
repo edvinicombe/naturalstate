@@ -1,0 +1,38 @@
+{%- comment -%}
+  24px line icons for the help and contact pages.
+  Usage: {% render 'icon', name: 'delivery' %}
+{%- endcomment -%}
+<svg class="icon" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false">
+  {%- case name -%}
+    {%- when 'delivery' -%}
+      <path d="M3 6h11v9H3z"/><path d="M14 9h4l3 3v3h-7"/><circle cx="7" cy="17" r="2"/><circle cx="17" cy="17" r="2"/>
+    {%- when 'order' -%}
+      <path d="M5 8h14l-1 12H6z"/><path d="M9 8V6a3 3 0 0 1 6 0v2"/>
+    {%- when 'returns' -%}
+      <path d="M3 7.5L12 3l9 4.5v9L12 21l-9-4.5z"/><path d="M3 7.5l9 4.5 9-4.5"/><path d="M12 12v9"/>
+    {%- when 'warranty' -%}
+      <path d="M12 3l8 3v6c0 5-3.5 8-8 9-4.5-1-8-4-8-9V6z"/><path d="M9 12l2 2 4-4"/>
+    {%- when 'help' -%}
+      <circle cx="12" cy="12" r="9"/><path d="M9.6 9.6a2.5 2.5 0 1 1 3.5 2.3c-.7.4-1.1.9-1.1 1.7"/><line x1="12" y1="17" x2="12.01" y2="17"/>
+    {%- when 'payment' -%}
+      <rect x="3" y="5" width="18" height="14" rx="2"/><path d="M3 10h18M7 15h3"/>
+    {%- when 'product' -%}
+      <path d="M3 16V8l4 3 3-1 2 2 5 1.5c2 .5 4 1.5 4 3.5v1H3z"/>
+    {%- when 'account' -%}
+      <circle cx="12" cy="8" r="4"/><path d="M4 21c0-4 4-6 8-6s8 2 8 6"/>
+    {%- when 'phone' -%}
+      <path d="M5 4h4l2 5-2.5 1.5a11 11 0 0 0 5 5L15 13l5 2v4a2 2 0 0 1-2 2A16 16 0 0 1 3 6a2 2 0 0 1 2-2z"/>
+    {%- when 'message' -%}
+      <path d="M4 5h16v11H9l-5 4z"/><path d="M8 9h8M8 12h5"/>
+    {%- when 'chat' -%}
+      <path d="M12 3a9 9 0 1 0 0 18 9 9 0 0 0 4.5-1.2L21 21l-1.2-4.5A9 9 0 0 0 12 3z"/><path d="M8.5 10h7M8.5 13.5h5"/>
+    {%- when 'whatsapp' -%}
+      <path d="M12 3a9 9 0 0 0-7.7 13.6L3 21l4.5-1.2A9 9 0 1 0 12 3z"/><path d="M9 8.5c0 3.5 3 6.5 6.5 6.5l1-1.5-2-1-1 .8a4 4 0 0 1-2.3-2.3l.8-1-1-2z"/>
+    {%- when 'email' -%}
+      <rect x="3" y="5" width="18" height="14" rx="2"/><path d="m3 7 9 6 9-6"/>
+    {%- when 'location' -%}
+      <path d="M12 21s7-6.2 7-11a7 7 0 0 0-14 0c0 4.8 7 11 7 11z"/><circle cx="12" cy="10" r="2.5"/>
+    {%- when 'chevron' -%}
+      <path d="m9 6 6 6-6 6"/>
+  {%- endcase -%}
+</svg>

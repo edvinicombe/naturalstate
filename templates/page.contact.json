@@ -1,117 +1,126 @@
 {
   "sections": {
     "help": {
-      "type": "contact-help",
+      "type": "help-center",
       "blocks": {
-        "q1": {
-          "type": "question",
+        "topic_1": {
+          "type": "topic",
           "settings": {
-            "topic": "Orders",
-            "question": "Where is my order?",
-            "answer": "<p>Once your order ships you’ll get an email with a tracking link. If you haven’t had one yet, send us your order number below and we’ll look into it.</p>"
+            "icon": "delivery",
+            "title": "Dispatch and delivery"
           }
         },
-        "q2": {
-          "type": "question",
+        "topic_2": {
+          "type": "topic",
           "settings": {
-            "topic": "Orders",
-            "question": "Can I change or cancel my order?",
-            "answer": "<p>If your order hasn’t shipped yet we can usually change it. Get in touch as soon as you can with your order number.</p>"
+            "icon": "order",
+            "title": "My order"
           }
         },
-        "q3": {
-          "type": "question",
+        "topic_3": {
+          "type": "topic",
           "settings": {
-            "topic": "Delivery",
-            "question": "How much is delivery?",
-            "answer": "<p>UK delivery is free on orders over £75. Delivery costs for other orders and countries are shown at checkout before you pay.</p>"
+            "icon": "returns",
+            "title": "Returns and refunds"
           }
         },
-        "q4": {
-          "type": "question",
+        "topic_4": {
+          "type": "topic",
           "settings": {
-            "topic": "Delivery",
-            "question": "Do you ship internationally?",
-            "answer": "<p>Yes. Choose your country in the footer to see where we ship and what it costs.</p>"
+            "icon": "warranty",
+            "title": "Warranty and after sales service"
           }
         },
-        "q5": {
-          "type": "question",
+        "topic_5": {
+          "type": "topic",
           "settings": {
-            "topic": "Returns",
-            "question": "How do I return something?",
-            "answer": "<p>Unworn items in their original condition can be returned. Contact us with your order number and we’ll send you the details.</p>"
+            "icon": "help",
+            "title": "General questions"
           }
         },
-        "q6": {
-          "type": "question",
+        "topic_6": {
+          "type": "topic",
           "settings": {
-            "topic": "Returns",
-            "question": "When will I get my refund?",
-            "answer": "<p>Refunds go back to your original payment method once we’ve received and checked your return.</p>"
+            "icon": "payment",
+            "title": "Payment methods"
           }
         },
-        "q7": {
-          "type": "question",
+        "topic_7": {
+          "type": "topic",
           "settings": {
-            "topic": "Sizing and fit",
-            "question": "How do your sizes fit?",
-            "answer": "<p>Each product page has a size guide. If you’re between sizes, we’d suggest sizing up for a looser fit on the run.</p>"
+            "icon": "product",
+            "title": "Product support"
           }
         },
-        "q8": {
-          "type": "question",
+        "service_1": {
+          "type": "service",
           "settings": {
-            "topic": "Product care",
-            "question": "How should I wash my gear?",
-            "answer": "<p>Wash cold with similar colours, avoid fabric softener and tumble dry on low or hang to dry. Full care details are on each product page.</p>"
+            "title": "Track your order",
+            "link": "/pages/track-order"
+          }
+        },
+        "service_2": {
+          "type": "service",
+          "settings": {
+            "title": "Return a product",
+            "link": "/pages/return"
+          }
+        },
+        "service_3": {
+          "type": "service",
+          "settings": {
+            "title": "Request a warranty",
+            "link": "/pages/warranty"
           }
         }
       },
       "block_order": [
-        "q1",
-        "q2",
-        "q3",
-        "q4",
-        "q5",
-        "q6",
-        "q7",
-        "q8"
+        "topic_1",
+        "topic_2",
+        "topic_3",
+        "topic_4",
+        "topic_5",
+        "topic_6",
+        "topic_7",
+        "service_1",
+        "service_2",
+        "service_3"
       ],
       "settings": {}
     },
-    "form": {
-      "type": "contact-form",
+    "channels": {
+      "type": "contact-channels",
       "blocks": {
-        "channel_email": {
+        "card_message": {
+          "type": "channel",
+          "settings": {
+            "icon": "message",
+            "title": "Send us a message",
+            "text": "<p>Our team will get back to you shortly with answers about our products and orders.</p>",
+            "link": "/pages/message"
+          }
+        },
+        "card_email": {
           "type": "channel",
           "settings": {
             "icon": "email",
-            "title": "Email us",
-            "text": "We reply within one working day.",
-            "link_label": "Send an email"
-          }
-        },
-        "channel_returns": {
-          "type": "channel",
-          "settings": {
-            "icon": "returns",
-            "title": "Returns",
-            "text": "Need to send something back? Start here.",
-            "link_label": "Returns policy",
-            "link": "/policies/refund-policy"
+            "title": "Contact us by email",
+            "text": "<p>Prefer email? Write to us any time and we’ll reply within one working day.</p>",
+            "link": ""
           }
         }
       },
       "block_order": [
-        "channel_email",
-        "channel_returns"
+        "card_message",
+        "card_email"
       ],
-      "settings": {}
+      "settings": {
+        "heading": "Contact us"
+      }
     }
   },
   "order": [
     "help",
-    "form"
+    "channels"
   ]
 }

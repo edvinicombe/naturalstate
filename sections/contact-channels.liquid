@@ -1,0 +1,57 @@
+{%- comment -%}"Contact us" cards: one block per way to reach you (phone, message, chat, WhatsApp, email…).{%- endcomment -%}
+<section class="contact-channels section-pad">
+  <div class="page-width">
+    {%- if section.settings.heading != blank -%}
+      <h2 class="h2 contact-channels__title">{{ section.settings.heading }}</h2>
+    {%- endif -%}
+    <div class="contact-channels__grid">
+      {%- for block in section.blocks -%}
+        {%- assign url = block.settings.link -%}
+        {%- if url == blank and block.settings.icon == 'email' and shop.email != blank -%}
+          {%- assign url = 'mailto:' | append: shop.email -%}
+        {%- endif -%}
+        {%- if url != blank -%}
+          <a href="{{ url }}" class="help-card contact-card" {{ block.shopify_attributes }}>
+        {%- else -%}
+          <div class="help-card contact-card" {{ block.shopify_attributes }}>
+        {%- endif -%}
+          <div class="contact-card__head">
+            <h3 class="contact-card__title">{{ block.settings.title }}</h3>
+            {%- render 'icon', name: block.settings.icon -%}
+          </div>
+          <div class="contact-card__text">{{ block.settings.text }}</div>
+        {%- if url != blank -%}</a>{%- else -%}</div>{%- endif -%}
+      {%- endfor -%}
+    </div>
+  </div>
+</section>
+
+{% schema %}
+{
+  "name": "Contact channels",
+  "settings": [
+    { "type": "text", "id": "heading", "label": "Heading", "default": "Contact us" }
+  ],
+  "blocks": [
+    {
+      "type": "channel",
+      "name": "Contact card",
+      "limit": 8,
+      "settings": [
+        { "type": "select", "id": "icon", "label": "Icon", "default": "message", "options": [
+          { "value": "phone", "label": "Phone" },
+          { "value": "message", "label": "Message" },
+          { "value": "chat", "label": "Chat" },
+          { "value": "whatsapp", "label": "WhatsApp" },
+          { "value": "email", "label": "Email" },
+          { "value": "location", "label": "Location" }
+        ] },
+        { "type": "text", "id": "title", "label": "Title", "default": "Send us a message" },
+        { "type": "richtext", "id": "text", "label": "Text", "default": "<p>Our team will get back to you shortly.</p>", "info": "Phone numbers, opening hours and links can go in here." },
+        { "type": "url", "id": "link", "label": "Card link", "info": "Makes the whole card clickable. Email cards use your store’s customer email when this is empty." }
+      ]
+    }
+  ],
+  "presets": [{ "name": "Contact channels" }]
+}
+{% endschema %}

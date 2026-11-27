@@ -1,0 +1,22 @@
+{
+  "sections": {
+    "form": {
+      "type": "service-form",
+      "settings": {
+        "heading": "Send us a message",
+        "intro": "Our team will get back to you shortly regarding questions about our products and orders.",
+        "request_type": "Message",
+        "show_name": true,
+        "show_order_number": true,
+        "order_required": false,
+        "show_message": true,
+        "message_label": "Message",
+        "message_required": true,
+        "button_label": "Send message"
+      }
+    }
+  },
+  "order": [
+    "form"
+  ]
+}
