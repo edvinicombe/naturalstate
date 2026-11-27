@@ -18,7 +18,7 @@
           "type": "item",
           "settings": {
             "icon": "help",
-            "heading": "Get help buying",
+            "heading": "Get help",
             "text": "If you have any questions about our gear, get in touch.",
             "link_label": "Contact us",
             "link": "/pages/contact"
