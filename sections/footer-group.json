@@ -102,7 +102,7 @@
         "item_delivery": {
           "type": "link",
           "settings": {
-            "label": "Delivery",
+            "label": "Shipping policy",
             "url": "/policies/shipping-policy",
             "new_tab": false
           }
@@ -110,7 +110,7 @@
         "item_returns": {
           "type": "link",
           "settings": {
-            "label": "Returns & refunds",
+            "label": "Refund policy",
             "url": "/policies/refund-policy",
             "new_tab": false
           }
