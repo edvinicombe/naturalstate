@@ -121,6 +121,9 @@
               Sold Out
             {%- endif -%}
           </button>
+          {%- if section.settings.shop_label != blank -%}
+            <a href="{{ section.settings.shop_link | default: routes.all_products_collection_url }}" class="btn btn--ghost btn--full btn--lg">{{ section.settings.shop_label }}</a>
+          {%- endif -%}
         </div>
       {%- endform -%}
 
@@ -155,6 +158,8 @@
 {
   "name": "Product",
   "settings": [
+    { "type": "text", "id": "shop_label", "label": "Shop button label", "info": "Sits under Add to Bag. Leave empty to hide it.", "default": "Shop" },
+    { "type": "url", "id": "shop_link", "label": "Shop button link", "info": "Empty = all products." },
     {
       "type": "richtext",
       "id": "size_fit_text",

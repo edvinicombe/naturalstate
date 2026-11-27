@@ -291,15 +291,11 @@ h3, .h3 { font-size: var(--h3-size); }
   .header-icons { justify-self: end; }
 }
 @media (max-width: 899px) {
-  .site-nav     { display: none; }
-  .mobile-toggle { display: block; }
-  .site-header__inner { position: relative; }
-  .site-header__logo {
-    position: absolute;
-    left: 50%;
-    top: 50%;
-    transform: translate(-50%, -50%);
-  }
+  /* Nike-style: logo left, icons then menu button on the right */
+  .site-header__inner > nav { display: none; }   /* empty flex item would add a stray gap before the logo */
+  .mobile-toggle { display: block; order: 3; }
+  .site-header__logo { order: 1; }
+  .header-icons { order: 2; margin-left: auto; margin-right: var(--sp-2); }
 }
 
 /* Mobile drawer */
@@ -321,7 +317,8 @@ h3, .h3 { font-size: var(--h3-size); }
   margin-bottom: var(--sp-4);
   display: block;
   padding: var(--sp-1);
-  margin-left: calc(-1 * var(--sp-1));
+  margin-left: auto;
+  margin-right: calc(-1 * var(--sp-1));
 }
 .mobile-drawer nav {
   display: flex;
@@ -978,7 +975,7 @@ body:has(.hero--header-light) .site-header--transparent .site-header__logo img {
   grid-template-columns: 1.25fr 1fr;
   gap: var(--sp-8);
   align-items: start;
-  padding-block: var(--sp-6) var(--section-gap);
+  padding-block: var(--sp-5) var(--section-gap);   /* 40px below the breadcrumb */
 }
 @media (max-width: 949px) { .product-layout { grid-template-columns: 1fr; gap: var(--sp-4); } }
 
@@ -1138,7 +1135,6 @@ body:has(.hero--header-light) .site-header--transparent .site-header__logo img {
 .breadcrumb {
   font-size: var(--fs-12); line-height: var(--lh-12);
   color: var(--muted);
-  margin-bottom: 24px;
 }
 .breadcrumb a:hover { color: var(--text); }
 
