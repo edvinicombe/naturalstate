@@ -1,5 +1,5 @@
 {%- comment -%}
-  One form for every "service" page: send us a message, return a product, request a warranty,
+  One form for every "service" page: return a product, request a warranty,
   track an order. Each page uses its own template with different settings. Submissions arrive
   as emails to the store's customer email, with "Request type" so you can tell them apart.
 {%- endcomment -%}
@@ -7,7 +7,7 @@
   <div class="page-width service__inner">
     {%- if section.settings.back_link != blank -%}
       <a href="{{ section.settings.back_link }}" class="help-back">
-        <span class="help-back__icon">{%- render 'icon', name: 'chevron' -%}</span>{{ section.settings.back_label }}
+        {%- render 'icon', name: 'back' -%}{{ section.settings.back_label }}
       </a>
     {%- endif -%}
     <h1 class="h1 help-center__title service__title">{{ section.settings.heading | default: page.title }}</h1>
@@ -15,7 +15,7 @@
       <p class="service__intro">{{ section.settings.intro }}</p>
     {%- endif -%}
 
-    <div class="help-card service__card">
+    <div class="service__card">
       {%- form 'contact', id: 'ServiceForm', class: 'service-form' -%}
         {%- if form.posted_successfully? -%}
           <p class="review-form__notice review-form__notice--success" role="status">{{ section.settings.success_text }}</p>
@@ -84,7 +84,7 @@
 {
   "name": "Service form",
   "settings": [
-    { "type": "text", "id": "heading", "label": "Heading (H1)", "default": "Send us a message", "info": "Leave empty to use the page title." },
+    { "type": "text", "id": "heading", "label": "Heading (H1)", "default": "Return a product", "info": "Leave empty to use the page title." },
     { "type": "textarea", "id": "intro", "label": "Intro", "default": "Our team will get back to you shortly." },
     { "type": "text", "id": "request_type", "label": "Request type", "default": "Message", "info": "Added to the email so you can tell the forms apart." },
     { "type": "text", "id": "back_label", "label": "Back link label", "default": "Help center" },

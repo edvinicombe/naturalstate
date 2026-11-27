@@ -91,27 +91,17 @@
     "channels": {
       "type": "contact-channels",
       "blocks": {
-        "card_message": {
-          "type": "channel",
-          "settings": {
-            "icon": "message",
-            "title": "Send us a message",
-            "text": "<p>Our team will get back to you shortly with answers about our products and orders.</p>",
-            "link": "/pages/message"
-          }
-        },
         "card_email": {
           "type": "channel",
           "settings": {
             "icon": "email",
             "title": "Contact us by email",
-            "text": "<p>Prefer email? Write to us any time and we’ll reply within one working day.</p>",
+            "text": "<p>Write to us any time and we’ll reply within one working day.</p>",
             "link": ""
           }
         }
       },
       "block_order": [
-        "card_message",
         "card_email"
       ],
       "settings": {

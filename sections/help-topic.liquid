@@ -9,12 +9,12 @@
   <div class="page-width help-topic__inner">
     {%- if section.settings.back_link != blank -%}
       <a href="{{ section.settings.back_link }}" class="help-back">
-        <span class="help-back__icon">{%- render 'icon', name: 'chevron' -%}</span>{{ section.settings.back_label }}
+        {%- render 'icon', name: 'back' -%}{{ section.settings.back_label }}
       </a>
     {%- endif -%}
     <h1 class="h1 help-center__title help-topic__title">{{ page.title }}</h1>
 
-    <div class="help-card">
+    <div class="help-topic__body">
       <div class="accordion help-faq">
         {%- for block in section.blocks -%}
           {%- assign block_topic = block.settings.topic | handleize -%}

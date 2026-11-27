@@ -48,7 +48,7 @@
           "settings": {
             "topic": "My order",
             "question": "Can I change or cancel my order?",
-            "answer": "<p>You can request a cancellation for 15 minutes after placing your order. After that, contact us as soon as possible: we may be able to make changes before it ships, but once it’s in transit we can’t modify it. <a href=\"/pages/message\">Send us a message</a> with your order number.</p>"
+            "answer": "<p>You can request a cancellation for 15 minutes after placing your order. After that, contact us as soon as possible: we may be able to make changes before it ships, but once it’s in transit we can’t modify it. <a href=\"/pages/contact\">Contact us</a> with your order number.</p>"
           }
         },
         "q7": {
@@ -112,7 +112,7 @@
           "settings": {
             "topic": "General questions",
             "question": "How do I contact you?",
-            "answer": "<p>You can <a href=\"/pages/message\">send us a message</a>, email hello@naturalstate.run, or find other ways to reach us on our <a href=\"/pages/contact\">Contact us</a> page.</p>"
+            "answer": "<p>You can email <a href=\"mailto:hello@naturalstate.run\">hello@naturalstate.run</a>, or find other ways to reach us on our <a href=\"/pages/contact\">Contact us</a> page.</p>"
           }
         },
         "q15": {
@@ -173,27 +173,17 @@
     "channels": {
       "type": "contact-channels",
       "blocks": {
-        "card_message": {
-          "type": "channel",
-          "settings": {
-            "icon": "message",
-            "title": "Send us a message",
-            "text": "<p>Our team will get back to you shortly with answers about our products and orders.</p>",
-            "link": "/pages/message"
-          }
-        },
         "card_email": {
           "type": "channel",
           "settings": {
             "icon": "email",
             "title": "Contact us by email",
-            "text": "<p>Prefer email? Write to us any time and we’ll reply within one working day.</p>",
+            "text": "<p>Write to us any time and we’ll reply within one working day.</p>",
             "link": ""
           }
         }
       },
       "block_order": [
-        "card_message",
         "card_email"
       ],
       "settings": {

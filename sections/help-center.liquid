@@ -8,8 +8,8 @@
     <h1 class="h1 help-center__title">{{ section.settings.heading | default: page.title }}</h1>
 
     <div class="help-center__grid">
-      <div class="help-card">
-        <h2 class="help-card__title">{{ section.settings.topics_heading }}</h2>
+      <div class="help-col">
+        <h2 class="h2 help-col__title">{{ section.settings.topics_heading }}</h2>
         <ul class="help-list">
           {%- for block in section.blocks -%}
             {%- if block.type == 'topic' -%}
@@ -27,8 +27,8 @@
         </ul>
       </div>
 
-      <div class="help-card">
-        <h2 class="help-card__title">{{ section.settings.services_heading }}</h2>
+      <div class="help-col">
+        <h2 class="h2 help-col__title">{{ section.settings.services_heading }}</h2>
         <ul class="help-list">
           {%- for block in section.blocks -%}
             {%- if block.type == 'service' -%}
