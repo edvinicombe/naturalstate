@@ -8,15 +8,15 @@
           "settings": {
             "topic": "Dispatch and delivery",
             "question": "How much is delivery?",
-            "answer": "<p>UK delivery is free on orders over £75. Delivery costs for other orders and countries are shown at checkout before you pay.</p>"
+            "answer": "<p>Shipping charges are calculated at checkout from your destination, order weight and the shipping method you choose. Free standard shipping may be available on selected orders, as shown at checkout.</p>"
           }
         },
         "q2": {
           "type": "question",
           "settings": {
             "topic": "Dispatch and delivery",
-            "question": "Do you ship internationally?",
-            "answer": "<p>Yes. Choose your country in the footer to see where we ship and what it costs.</p>"
+            "question": "Where do you ship?",
+            "answer": "<p>We currently ship to Canada, the United Kingdom and the United States.</p>"
           }
         },
         "q3": {
@@ -24,66 +24,98 @@
           "settings": {
             "topic": "Dispatch and delivery",
             "question": "How long will my order take?",
-            "answer": "<p>Estimated delivery times for your address are shown at checkout. You’ll get a dispatch email with tracking once your order is on its way.</p>"
+            "answer": "<p>Orders are processed within 1 business day (excluding holidays). Orders placed after noon, or at weekends and on holidays, may start processing the next business day. Delivery estimates for your address are shown at checkout; they’re estimates, not guarantees, and start once your order ships.</p>"
           }
         },
         "q4": {
           "type": "question",
           "settings": {
-            "topic": "My order",
-            "question": "Where is my order?",
-            "answer": "<p>Once your order ships you’ll get an email with a tracking link. You can also use <a href=\"/pages/track-order\">Track your order</a> and we’ll look into it for you.</p>"
+            "topic": "Dispatch and delivery",
+            "question": "Will I have to pay customs or import charges?",
+            "answer": "<p>Orders to Canada, the UK and the EU may be subject to taxes, duties and carrier fees. Where these are collected at checkout they’re shown before you pay. Otherwise they may be due before or at delivery. See our <a href=\"/policies/shipping-policy\">shipping policy</a> for details.</p>"
           }
         },
         "q5": {
           "type": "question",
           "settings": {
             "topic": "My order",
-            "question": "Can I change or cancel my order?",
-            "answer": "<p>If your order hasn’t shipped yet we can usually change it. <a href=\"/pages/message\">Send us a message</a> as soon as you can with your order number.</p>"
+            "question": "Where is my order?",
+            "answer": "<p>As soon as your order ships we’ll email you a confirmation with a tracking number and link. Tracking can take a little while to update after you receive it. If you’re still unsure, use <a href=\"/pages/track-order\">Track your order</a> and we’ll look into it.</p>"
           }
         },
         "q6": {
           "type": "question",
           "settings": {
-            "topic": "Returns and refunds",
-            "question": "How do I return something?",
-            "answer": "<p>Returns are accepted within 30 days. Unworn items in their original condition can be sent back. Start on our <a href=\"/pages/return\">Return a product</a> page with your email and order number.</p>"
+            "topic": "My order",
+            "question": "Can I change or cancel my order?",
+            "answer": "<p>You can request a cancellation for 15 minutes after placing your order. After that, contact us as soon as possible: we may be able to make changes before it ships, but once it’s in transit we can’t modify it. <a href=\"/pages/message\">Send us a message</a> with your order number.</p>"
           }
         },
         "q7": {
           "type": "question",
           "settings": {
-            "topic": "Returns and refunds",
-            "question": "When will I get my refund?",
-            "answer": "<p>Refunds go back to your original payment method once we’ve received and checked your return.</p>"
+            "topic": "My order",
+            "question": "Can I correct my delivery address?",
+            "answer": "<p>Please check your address at checkout. If it needs correcting, contact us as soon as possible with your order number.</p>"
           }
         },
         "q8": {
           "type": "question",
           "settings": {
-            "topic": "Warranty and after sales service",
-            "question": "What does the warranty cover?",
-            "answer": "<p>Our gear is covered against faults in materials and workmanship. It doesn’t cover normal wear and tear, or damage from misuse.</p>"
+            "topic": "Returns and refunds",
+            "question": "How do I return something?",
+            "answer": "<p>You can request a return within 30 days after your item is delivered. Items need to be unworn or unused, with tags, in their original packaging. Contact us before sending anything back: items returned without a request aren’t accepted. Start on our <a href=\"/pages/return\">Return a product</a> page. Return shipping is free and we’ll provide a label.</p>"
           }
         },
         "q9": {
           "type": "question",
           "settings": {
-            "topic": "Warranty and after sales service",
-            "question": "How do I make a warranty claim?",
-            "answer": "<p>Use our <a href=\"/pages/warranty\">Request a warranty</a> page with your order number and a description of the problem.</p>"
+            "topic": "Returns and refunds",
+            "question": "When will I get my refund?",
+            "answer": "<p>We’ll let you know once we’ve received and inspected your return. If it’s approved, you’ll be refunded to your original payment method. Your bank or payment provider may need extra time to process it. If you haven’t seen it after a reasonable time, contact us.</p>"
           }
         },
         "q10": {
           "type": "question",
           "settings": {
-            "topic": "General questions",
-            "question": "How do I contact you?",
-            "answer": "<p>You can <a href=\"/pages/message\">send us a message</a> or find other ways to reach us on our <a href=\"/pages/contact\">Contact us</a> page.</p>"
+            "topic": "Returns and refunds",
+            "question": "I’m in the UK or EU. Do I have extra rights?",
+            "answer": "<p>If you’re a consumer in the UK or EU you may have the right to cancel within 14 days after receiving your goods, unless an exemption applies. See our <a href=\"/policies/refund-policy\">refund policy</a> for the full details.</p>"
           }
         },
         "q11": {
+          "type": "question",
+          "settings": {
+            "topic": "Returns and refunds",
+            "question": "Can I exchange an item?",
+            "answer": "<p>Contact us before returning your item to ask about exchange options.</p>"
+          }
+        },
+        "q12": {
+          "type": "question",
+          "settings": {
+            "topic": "Warranty and after sales service",
+            "question": "What if my item arrives damaged or faulty?",
+            "answer": "<p>Please inspect your order when it arrives and contact us straight away if an item is defective or damaged, or if you received the wrong item.</p>"
+          }
+        },
+        "q13": {
+          "type": "question",
+          "settings": {
+            "topic": "Warranty and after sales service",
+            "question": "How do I make a warranty claim?",
+            "answer": "<p>Use our <a href=\"/pages/warranty\">Request a warranty</a> page with your order number and a description of the problem, and we’ll come back to you.</p>"
+          }
+        },
+        "q14": {
+          "type": "question",
+          "settings": {
+            "topic": "General questions",
+            "question": "How do I contact you?",
+            "answer": "<p>You can <a href=\"/pages/message\">send us a message</a>, email hello@naturalstate.run, or find other ways to reach us on our <a href=\"/pages/contact\">Contact us</a> page.</p>"
+          }
+        },
+        "q15": {
           "type": "question",
           "settings": {
             "topic": "Payment methods",
@@ -91,7 +123,7 @@
             "answer": "<p>The payment methods available to you are shown at checkout, including major credit and debit cards.</p>"
           }
         },
-        "q12": {
+        "q16": {
           "type": "question",
           "settings": {
             "topic": "Payment methods",
@@ -99,7 +131,7 @@
             "answer": "<p>Yes. Payments are processed securely at checkout and we never see or store your full card details.</p>"
           }
         },
-        "q13": {
+        "q17": {
           "type": "question",
           "settings": {
             "topic": "Product support",
@@ -107,7 +139,7 @@
             "answer": "<p>Each product page has a size guide. If you’re between sizes, we’d suggest sizing up for a looser fit on the run.</p>"
           }
         },
-        "q14": {
+        "q18": {
           "type": "question",
           "settings": {
             "topic": "Product support",
@@ -130,7 +162,11 @@
         "q11",
         "q12",
         "q13",
-        "q14"
+        "q14",
+        "q15",
+        "q16",
+        "q17",
+        "q18"
       ],
       "settings": {}
     },
